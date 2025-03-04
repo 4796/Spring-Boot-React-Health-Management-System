@@ -20,7 +20,7 @@ import com.example.AuthService.model.User;
 import com.example.AuthService.service.AuthService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/auth/admin")
 public class AdminController {
     @Autowired
     private AuthService authService;
