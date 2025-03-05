@@ -3,7 +3,6 @@ package com.example.gateway.filter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -11,14 +10,16 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
 @Component
 public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
-
+	private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
+	
     @Value("${jwt.secret}")
     private String clientSecret;
 
@@ -34,9 +35,13 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             String authHeader = request.getHeaders().getFirst("Authorization");
-
+            int a=1;
+            if(authHeader==null || authHeader.length()==0)
+            	a=0;
+            String pat = request.getURI().getPath();
+            System.out.println(request.getMethod().toString()+" uri: "+request.getURI()+"  auth:"+a);
             // Preskačemo autentikaciju za /auth/** rute
-            if (request.getURI().getPath().startsWith("/auth")) {
+            if (pat.startsWith("/auth")) {  // service will take care of it
                 return chain.filter(exchange);
             }
 
@@ -49,7 +54,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
             
             // Provera da li je token za klijenta ili servis
             try {
-                // Prvo pokušavamo sa klijentskim secret-om
+                // Prvo pokušavamo sa klijentskim secret-om, ako nije klijent onda baca gresku
                 SecretKey clientKey = Keys.hmacShaKeyFor(clientSecret.getBytes());
                 Claims claims = Jwts.parserBuilder()
                         .setSigningKey(clientKey)
@@ -73,10 +78,6 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
                             .parseClaimsJws(token)
                             .getBody();
 
-                    // Provera da li je token za servis
-                    if (!"service".equals(claims.getSubject())) {
-                        throw new RuntimeException("Invalid service token");
-                    }
 
                     // Provera isteka tokena
                     if (claims.getExpiration().before(new Date())) {

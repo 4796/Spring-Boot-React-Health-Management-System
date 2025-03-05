@@ -335,4 +335,15 @@ public class AuthService {
                 .getBody(); 
         return Long.valueOf(claims.get("id").toString());
 	}
+	
+	public String getRoleFromToken(String token) {
+		SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
+        Claims claims =(Claims) Jwts.parserBuilder() 
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody(); 
+        return claims.get("role").toString();
+		
+	}
 }

@@ -85,6 +85,7 @@ public class AuthController {
         response.setMessage("User logged in successfully!");
         response.setToken(token);
         response.setId(authService.getIdFromToken(token));
+        response.setRole(authService.getRoleFromToken(token));
         return ResponseEntity.ok(response);
     }
 }

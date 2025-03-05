@@ -16,13 +16,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	//for creating and deleting, authorization has to be implemented separately
-    	if(request.getRequestURL().toString().equals("https://localhost:8082/patients") && request.getMethod().equals("POST"))
-    		return true;
-    	//delete
-    	if(request.getRequestURL().toString().contains("https://localhost:8082/patients/") && request.getMethod().equals("DELETE"))
-    		return true;
-    	
     	//normal auth
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
