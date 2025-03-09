@@ -18,7 +18,8 @@ public class GlobalExceptionHandler {
     // Handler za NullPointerException
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
-        return new ResponseEntity<>("Null pointer error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    	ex.printStackTrace();
+        return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Handler za bilo koji drugi izuzetak

@@ -1,6 +1,8 @@
 package com.example.doctorService.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -40,4 +42,13 @@ public class Doctor {
 
     public LocalDate getHireDate() { return hireDate; }
     public void setHireDate(LocalDate hireDate) { this.hireDate = hireDate; }
+    public void setHireDate(String time) {
+    	try {
+    		this.hireDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
+		} catch (Exception e) {
+			this.hireDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+		}
+
+       
+    }
 }

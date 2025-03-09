@@ -62,9 +62,7 @@ public class PatientController {
     @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient, @RequestHeader("Authorization") String token) {
     	token=token.substring(7);
-    	if(jwt.extractClaims(token).get("role").equals("ROLE_PATIENT") && !jwt.extractClaims(token).get("id").toString().equals(id.toString()))
-    			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();        
-    	return ResponseEntity.ok(patientService.updatePatient(id, updatedPatient));
+    	return ResponseEntity.ok(patientService.updatePatient(id, token, updatedPatient));
     }
 
     //can only be deleted if authService sent request

@@ -19,10 +19,13 @@ import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,6 +41,8 @@ public class AppointmentService {
     @Value("${service.secret}")
     private String serviceSecret;
     
+    private List<String> listaSvihTermina;
+    
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository, RestClientUtil restClientUtil,
                               @Value("${patient.service.url}") String patientServiceUrl, JwtUtil jwt) {
@@ -45,9 +50,11 @@ public class AppointmentService {
         this.jwtUtil=jwt;
         this.restClientUtil = restClientUtil;
         this.patientServiceUrl = patientServiceUrl;
+        listaSvihTermina=kreirajListuSvihTermina();
     }
 
-    public List<Appointment> getAllAppointments(String token) {
+
+	public List<Appointment> getAllAppointments(String token) {
     	//returns only appointments of specific doctor or patient from token
     	////////////////proveri da li je doktor ili pacijent i vrati im samo njihove podatke
     	if(isDoctor(token)) {
@@ -60,11 +67,11 @@ public class AppointmentService {
    
 
 	public Appointment bookAppointment(Appointment appointment, String token) throws Exception {
-		//System.out.println(appointment);
-        if(appointment.getAppointmentTime()==null || appointment.getDoctorId()==null || appointment.getPatientId()==null || appointment.getType()==null)
+		
+        if(appointment == null || appointment.getAppointmentTime()==null || appointment.getDoctorId()==null || appointment.getPatientId()==null || appointment.getType()==null)
         	throw new IllegalArgumentException("not enought arguments");
         //appointment time must be in the future
-        if(appointment.getAppointmentTime().isBefore(LocalDateTime.now()))
+        if(appointment.getAppointmentTime().isBefore(LocalDateTime.now().plusMinutes(5)))
         	throw new IllegalArgumentException("Appointment must be in the future");
         
     	// provera da li postoji pacijent
@@ -80,16 +87,20 @@ public class AppointmentService {
 				throw new Exception("Unexpected error");
 		}
         
-
+        
         if (response==null || response.getStatusCode().is2xxSuccessful()) {
             System.out.println("Patient details arrived");
         } else {
             throw new RuntimeException("Failed to fetch patient details");
         }
+        Map<String, Object> patientDetails = (Map<String, Object>) response.getBody();
+        if (patientDetails == null || !patientDetails.containsKey("id")) {
+            throw new RuntimeException("Invalid patient details received");
+        }
         
         ///provera da li postoji doktor
         //bolje da provera doctor service ali jos ga nisam napravio
-        String url2 = "https://localhost:8081/admin/users/" + appointment.getDoctorId();
+        String url2 = "https://localhost:8081/auth/admin/users/" + appointment.getDoctorId();
         ResponseEntity<Object> response2 = null;
         //da se generise token za servis
         String serviceToken=generateServiceToken();
@@ -109,18 +120,27 @@ public class AppointmentService {
         } else {
             throw new RuntimeException("Failed to fetch doctor details");
         }
+        
 ///
         // Zakazivanje termina
-        //provera da li ima vremena, ne sme biti preblizu nekog drugog termina
-        LocalDateTime start=appointment.getAppointmentTime().minusMinutes(15);
-        LocalDateTime end=appointment.getAppointmentTime().plusMinutes(15);
-
+        //provera da li je u okviru radnog vremena i da li je validan termin
+        LocalDateTime vreme=appointment.getAppointmentTime();
+        LocalDateTime start=vreme.withHour(8).withMinute(0);
+        LocalDateTime end=vreme.withHour(13).withMinute(30);
+        if(vreme.isBefore(start) || vreme.isAfter(end))
+        	throw new IllegalArgumentException("Remeber that we work 8-14");
+        int minuti=vreme.getMinute();
+        if(minuti!=0 && minuti !=15 && minuti!=30 && minuti!=45)
+        	throw new IllegalArgumentException("Choose one of the suggested appointment times");
+        vreme=vreme.withSecond(0);
+        vreme=vreme.withNano(0);
         List<Appointment> listOfAppointments =appointmentRepository.findFutureAppointmentsByDocotorId(appointment.getDoctorId(), LocalDateTime.now());
-        for (Appointment a : listOfAppointments) {
+      for (Appointment a : listOfAppointments) {
 			LocalDateTime newA=a.getAppointmentTime();
-			if(newA.isAfter(start) && newA.isBefore(end))
+			if(newA.equals(vreme))
 				throw new Exception("Your appointment time is already taken");
 		}
+        
         return appointmentRepository.save(appointment);
     }
 
@@ -150,6 +170,16 @@ public class AppointmentService {
 		Claims claims=jwtUtil.extractClaims(token);
 		return claims.get("role").toString().equals("ROLE_DOCTOR");
 	}
+     
+     public boolean isDoctorsId(String token, Long id) {
+ 		Claims claims=jwtUtil.extractClaims(token);
+ 		return claims.get("id").toString().equals(id.toString());
+ 	}
+    
+     public boolean isPatient(String token) {
+ 		Claims claims=jwtUtil.extractClaims(token);
+ 		return claims.get("role").toString().equals("ROLE_PATIENT");
+ 	}
     
      
      public String generateServiceToken() throws Exception {
@@ -163,4 +193,76 @@ public class AppointmentService {
          
          
      }
+
+	public List<String> suggestAppointments(Long doctorId, String token, String datum) throws Exception {
+		//autentikacija
+		if(isDoctor(token)) {//token se proverava
+			if(!isDoctorsId(token, doctorId))
+				throw new IllegalArgumentException("Unauthorized");
+		}else if (isPatient(token)) {//salje zahtev za proveru doctorService
+			String url="https://localhost:8085/doctors/"+doctorId;
+			///
+			 ResponseEntity<Object> response = null;
+		        try {
+		        	 response= restClientUtil.sendRequestWithToken(url, HttpMethod.GET, Object.class, token);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					if(e.getMessage().contains("401"))
+						throw new AuthorizationDeniedException("You are not authorized");
+					else
+						throw new Exception("Unexpected error");
+				}
+		       
+
+		        if (response==null || response.getStatusCode().is2xxSuccessful()) {
+		            System.out.println("Doctor approved");
+		        } else {
+		            throw new RuntimeException("Failed to fetch doctor details");
+		        }
+			
+			///
+		}else {//admin
+			throw new IllegalArgumentException("Unauthorized");
+		}
+		//kraj autentikacije
+		System.out.println(1);
+		LocalDateTime date=LocalDateTime.parse(datum+" 00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
+		System.out.println(2);
+		//krece od 8:00 i dodaje po pola sata i proverava da li je nesto zauzeto
+		LocalDateTime start=date.withHour(8).withMinute(0);
+		LocalDateTime end = date.withHour(14).withMinute(0);
+		List<String> lista=new LinkedList<String>(listaSvihTermina);
+		List<Appointment> zauzeti =appointmentRepository.findBookedAppointmentsByDoctorAndDate(doctorId, start, end);
+		List<String> zausetiStringovi=new LinkedList<String>();
+		for (Appointment z : zauzeti) {
+			zausetiStringovi.add(z.getAppointmentTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+		}
+		for (String time : zausetiStringovi) {
+	        lista.remove(time);
+	    }
+		return lista;
+		
+	}
+	
+	
+    private List<String> kreirajListuSvihTermina() {
+		LocalDateTime datum=LocalDateTime.now();//nebitan dan, bitni sati
+		datum=datum.withHour(8).withMinute(0).withSecond(0).withNano(0);
+		List<String> lista=new LinkedList<String>();
+		LocalDateTime kraj=datum.withHour(13).withMinute(30);
+		while(true) {
+			String sat=""+datum.getHour();
+			if(sat.length()==1)
+				sat="0"+sat;
+			String minuti=""+datum.getMinute();
+			if(minuti.length()==1)
+				minuti="0"+minuti;
+			lista.add(sat+":"+minuti);
+			datum=datum.plusMinutes(30);
+			if(datum.equals(kraj))
+				break;
+		}
+		return lista;
+	}
+	
 }

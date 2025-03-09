@@ -12,8 +12,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class JwtUtil {
-    @Value("${jwt.secret}")
+public class JwtForServices {
+	@Value("${service.secret}")
     private String jwtSecret;
 
     public Claims extractClaims(String token) {
@@ -35,10 +35,9 @@ public class JwtUtil {
 
             		
         } catch (Exception e) {
-        	//e.printStackTrace();
+        	e.printStackTrace();
             return false;
         }
-       
         return true;
     }
 }

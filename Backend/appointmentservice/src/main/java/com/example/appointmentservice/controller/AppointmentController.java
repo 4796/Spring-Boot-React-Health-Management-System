@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -49,10 +51,14 @@ public class AppointmentController {
     }
     
     
-    //dalje
+
     //funkcija koja daje predloge kada moze da se zakaze
-    //appointmentSuggestions
-    //daje predlog nekoliko doktora
-    //uzimace podatke iz aplikacije koja cuva doktore za ime doktora i koji je tip doktora
-    //mozda da navede i opciono dan kada zeli da zakaze
+    //izabran je doktor i izabran je dan, vracaju se slobodni termini tog dana kod tog doktora
+    //ako je doktor onda se doktor id uzima od njegovog tokena i proverava da li je to on, 
+    //a ako je pacijent, onda se samo salje id doktora i proverava se da li doktor postoji u doctorService
+    //svakako vraca isti return, vraca stringove u formatu hh:mm koji su slobodni termini tog dana
+    @GetMapping("/suggestions/{doctorId}") //dd.MM.yyyy.
+    public ResponseEntity<List<String>> suggestAppointments(@PathVariable Long doctorId, @RequestHeader("Authorization") String token, @RequestHeader("datum") String datum) throws Exception {
+        return ResponseEntity.ok(appointmentService.suggestAppointments(doctorId, token.substring(7), datum));
+    }
 }

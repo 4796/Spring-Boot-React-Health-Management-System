@@ -2,6 +2,8 @@ package com.example.AuthService.service;
 
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,12 +50,14 @@ public class AuthService {
     }
     
  // Registracija korisnika
-    public String registerUser(String username, String password, String role, String name, String email, String phoneNumber, String medicalHistory) throws Exception {
-    	if(username.length()<3 || username.length()>30)
+    public String registerUser(String token, String username, String password, String role, 
+    		String name, String email, String phoneNumber, String medicalHistory, 
+    		LocalDate hire_date, Double salary, String specialization) throws Exception {
+    	if(username == null || username.length()<3 || username.length()>30)
     		throw new Exception("Username length is not valid");
-    	if(password.length()<3 || password.length()>70)
+    	if(password==null || password.length()<3 || password.length()>70)
     		throw new Exception("Password length is not valid");
-    	if(!(role.equals("ROLE_PATIENT") || role.equals("ROLE_DOCTOR") || role.equals("ROLE_ADMIN")))
+    	if(role==null || !(role.equals("ROLE_PATIENT") || role.equals("ROLE_DOCTOR") || role.equals("ROLE_ADMIN")))
     		throw new Exception("Role value is not supported");
         User user = new User();
         user.setUsername(username);
@@ -63,35 +67,90 @@ public class AuthService {
         if (!optionalUser.isEmpty()) {
             throw new Exception("Username already exists"); // 
         }
-        User savedUser = userRepository.save(user);
+        
+        String maker = null;
+        
+        //cuva svakako pa ako dodje do greske onda se brise
+        User savedUser = userRepository.save(user);//unapred se sacuva da bi se videlo da li dolazi do greske
+        //lakse je prvo ovde pa da se salje, nego da se salje pa onda ovde, ako ovde doje do greske
+        
+        if(role.equals("ROLE_ADMIN") || role.equals("ROLE_DOCTOR")) {
+        	maker=getRoleFromToken(token);
+        	
+        	if(!maker.equals("ROLE_ADMIN")) {
+        		deleteUserLocalFunction(savedUser.getId());
+        		throw new IllegalArgumentException("Unauthorized");
+        	}
+        	//admin making admin
+        	if(role.equals("ROLE_ADMIN"))
+        		return String.valueOf(savedUser.getId()); // Vraćamo ID registrovanog korisnika
+        	//admin making doctor
+        	String serviceToken=generateToken(null);  //poseban token za komunikaciju izmedju servisa
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + serviceToken);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            Map<String, String> telo=new HashMap<String, String>();
+            telo.put("id", savedUser.getId().toString());
+            telo.put("name", name);
+            if(hire_date==null)
+            	hire_date=LocalDate.now();
+            telo.put("hireDate", hire_date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy.")));// HH:mm
+            telo.put("phoneNumber", phoneNumber);
+            telo.put("salary", salary.toString());
+            telo.put("specialization", specialization);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonBody = objectMapper.writeValueAsString(telo);
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers); 
+            ResponseEntity<?> response=null;
+             try {
+            	 response = restTemplate.exchange("https://localhost:8085/doctors", HttpMethod.POST, entity, Object.class);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}finally {
+    	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+    	        	//needs to delete from its own db
+    	        	deleteUserLocalFunction(savedUser.getId());
+    	        	throw new Exception("Autorization problem or internal server error");
+    	        }
+    		}
+             return String.valueOf(savedUser.getId()); // Vraćamo ID registrovanog korisnika
+        }
+        
+        
         //sends new patient to patientDB
-        if(!role.equals("ROLE_PATIENT"))
-        	return String.valueOf(savedUser.getId()); 
-        String serviceToken=generateToken(null);  //poseban token za komunikaciju izmedju servisa
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + serviceToken);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        Map<String, String> telo=new HashMap<String, String>();
-        telo.put("id", savedUser.getId().toString());
-        telo.put("name", name);
-        telo.put("email", email);
-        telo.put("phoneNumber", phoneNumber);
-        telo.put("medicalHistory", medicalHistory);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonBody = objectMapper.writeValueAsString(telo);
-        HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers); 
-        ResponseEntity<?> response=null;
-         try {
-        	 response = restTemplate.exchange("https://localhost:8082/patients", HttpMethod.POST, entity, Object.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
-	        	//needs to delete from its own db
-	        	deleteUserLocalFunction(savedUser.getId());
-	        	throw new Exception("Autorization problem or internal server error");
-	        }
-		}
+        if(role.equals("ROLE_PATIENT")) {
+        	
+        	String serviceToken=generateToken(null);  //poseban token za komunikaciju izmedju servisa
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + serviceToken);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            Map<String, String> telo=new HashMap<String, String>();
+            telo.put("id", savedUser.getId().toString());
+            telo.put("name", name);
+            telo.put("email", email);
+            telo.put("phoneNumber", phoneNumber);
+            telo.put("medicalHistory", medicalHistory);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonBody = objectMapper.writeValueAsString(telo);
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers); 
+            ResponseEntity<?> response=null;
+             try {
+            	 response = restTemplate.exchange("https://localhost:8082/patients", HttpMethod.POST, entity, Object.class);
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    		}finally {
+    	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+    	        	//needs to delete from its own db
+    	        	deleteUserLocalFunction(savedUser.getId());
+    	        	throw new Exception("Autorization problem or internal server error");
+    	        }
+    		}
+             
+           
+        }
+        	
+        
+        
         return String.valueOf(savedUser.getId()); // Vraćamo ID registrovanog korisnika
     }
 
@@ -120,9 +179,16 @@ public class AuthService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<?> response=null;
+        String role =getUserLocal(id).getRole();
          try {
-        	 response = restTemplate.exchange("https://localhost:8082/patients/"+id, HttpMethod.DELETE, entity, Object.class);
-		} catch (Exception e) {
+        	 if(role.equals("ROLE_PATIENT"))
+        		 response = restTemplate.exchange("https://localhost:8082/patients/"+id, HttpMethod.DELETE, entity, Object.class);
+        	 if(role.equals("ROLE_DOCTOR")) {
+        		 response = restTemplate.exchange("https://localhost:8085/doctors/"+id, HttpMethod.DELETE, entity, Object.class);
+        	 }
+        		 
+         } catch (Exception e) {
+        	 System.out.println("User maybe deleted from authService but not from doctorService");
 			e.printStackTrace();
 		}finally {
 			
@@ -327,23 +393,47 @@ public class AuthService {
 	}
 	
 	public Long getIdFromToken(String token) {
-		SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
-        Claims claims =(Claims) Jwts.parserBuilder() 
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody(); 
-        return Long.valueOf(claims.get("id").toString());
+		try {
+			SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
+	        Claims claims =(Claims) Jwts.parserBuilder() 
+	                .setSigningKey(key)
+	                .build()
+	                .parseClaimsJws(token)
+	                .getBody(); 
+	        return Long.valueOf(claims.get("id").toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (long) -1.0;
 	}
 	
 	public String getRoleFromToken(String token) {
-		SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
-        Claims claims =(Claims) Jwts.parserBuilder() 
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody(); 
-        return claims.get("role").toString();
+		try {
+			SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
+			
+	        Claims claims =(Claims) Jwts.parserBuilder() 
+	                .setSigningKey(key)
+	                .build()
+	                .parseClaimsJws(token)
+	                .getBody(); 
+	        return claims.get("role").toString();
+		} catch (Exception e) {//service-service token
+			e.printStackTrace();
+			try {
+				SecretKey key = Keys.hmacShaKeyFor(serviceSecret.getBytes()); 
+				
+		        Claims claims =(Claims) Jwts.parserBuilder() 
+		                .setSigningKey(key)
+		                .build()
+		                .parseClaimsJws(token)
+		                .getBody(); 
+		        return claims.get("role").toString();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			
+		}
 		
+		return "";
 	}
 }

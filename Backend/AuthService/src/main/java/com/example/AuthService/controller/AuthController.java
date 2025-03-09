@@ -22,13 +22,15 @@ public class AuthController {
     //kada se pravi novi admin, mora da vec bude ulogovan drugi admin i da prosledi svoj token
     //doktora takodje moze da napravi samo admin, i kada se pravi ovde, odmah se salje zahtev 
     //da se napravi doctor i u doctorService, kao za pacijenta
-    //pacijent se ovde jednostavno napravi i salje se zahtev patientSerivce da se i tamo napravi
+    //pacijent se ovde jednostavno napravi(bez autorizacije) i salje se zahtev patientSerivce da se i tamo napravi
+   //doktor ne moze da pravi novog korisnika
     @PostMapping("/register")
-    public ResponseEntity<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request, @RequestHeader(value="Authorization", required=false) String AdminToken) throws Exception {
+    public ResponseEntity<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request, @RequestHeader(value="Authorization", required=false) String adminToken) throws Exception {
     	UserRegistrationResponse response = new UserRegistrationResponse();
     	String userId;
+    	adminToken=adminToken.substring(7);
 		try {
-			userId = authService.registerUser(request.getUsername(), request.getPassword(), request.getRole(), request.getName(), request.getEmail(), request.getPhone_number(), request.getMedical_history());
+			userId = authService.registerUser(adminToken, request.getUsername(), request.getPassword(), request.getRole(), request.getName(), request.getEmail(), request.getPhone_number(), request.getMedical_history(), request.getHire_date(), request.getSalary(), request.getSpecialization());
 		} catch (Exception e) {
         	response.setStatus("ERROR");
         	response.setUserId(null);
