@@ -1,7 +1,6 @@
 package com.example.doctorService.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Entity;

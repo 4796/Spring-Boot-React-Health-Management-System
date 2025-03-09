@@ -40,6 +40,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
             	a=0;
             String pat = request.getURI().getPath();
             System.out.println(request.getMethod().toString()+" uri: "+request.getURI()+"  auth:"+a);
+            logger.info(request.getMethod().toString()+" uri: "+request.getURI()+"  auth:"+a);
             // Preskačemo autentikaciju za /auth/** rute
             if (pat.startsWith("/auth")) {  // service will take care of it
                 return chain.filter(exchange);

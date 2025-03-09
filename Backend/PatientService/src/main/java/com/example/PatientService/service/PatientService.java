@@ -3,9 +3,6 @@ package com.example.PatientService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import com.example.PatientService.db.PatientRepository;
@@ -32,15 +29,17 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    public List<Patient> getAllPatients() {
+    public List<Patient> getAllPatients() throws Exception {
         return patientRepository.findAll();
     }
 
-    public Optional<Patient> getPatientById(Long id) {
+    public Optional<Patient> getPatientById(Long id) throws Exception {
         return patientRepository.findById(id);
     }
 
-    public Patient createPatient(String authHeader, Patient patient) throws AuthorizationDeniedException {
+    public Patient createPatient(String authHeader, Patient patient) throws Exception {
+    	if(patient==null)
+    		throw new IllegalArgumentException("Not enough information to create new patient.");
     	boolean input = 
                 patient.getName() != null && 
                 patient.getEmail() != null && 
@@ -53,7 +52,7 @@ public class PatientService {
     	
     	//specific service-service autorization
     	if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-    		throw new AuthorizationDeniedException("");
+    		throw new IllegalArgumentException("Unauthorized");
         }
     	try {
             String token = authHeader.substring(7); // Uzmi token nakon "Bearer "
@@ -63,13 +62,13 @@ public class PatientService {
                     .build()
                     .parseClaimsJws(token);
 		} catch (Exception e) {
-			throw new AuthorizationDeniedException("");
+			throw new IllegalArgumentException("Unauthorized");
 		}
         
         return patientRepository.save(patient);
     }
 
-    public Patient updatePatient(Long id, String token, Patient updatedPatient) {
+    public Patient updatePatient(Long id, String token, Patient updatedPatient) throws Exception {
     	if(jwt.extractClaims(token).get("role").equals("ROLE_PATIENT") && !jwt.extractClaims(token).get("id").toString().equals(id.toString()))
 			throw new IllegalArgumentException("Unauthorized");
     	return patientRepository.findById(id)
@@ -105,10 +104,10 @@ public class PatientService {
     	        .orElseThrow(() -> new RuntimeException("Patient not found"));
     }
 
-    public void deletePatient(String authHeader, Long id) {
+    public void deletePatient(String authHeader, Long id) throws Exception {
     	//specific service-service autorization
     	if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-    		throw new AuthorizationDeniedException("");
+    		throw new IllegalArgumentException("Unauthorized");
         }
     	try {
             String token = authHeader.substring(7); // Uzmi token nakon "Bearer "
@@ -118,12 +117,12 @@ public class PatientService {
                     .build()
                     .parseClaimsJws(token);
 		} catch (Exception e) {
-			throw new AuthorizationDeniedException("");
+			throw new IllegalArgumentException("Unauthorized");
 		}
         patientRepository.deleteById(id);
     }
 
-    public List<Patient> searchPatients(String name, String email) {
+    public List<Patient> searchPatients(String name, String email) throws Exception {
         if (name != null && email != null) {
             return patientRepository.findByNameAndEmail(name, email);
         } else if (name != null) {

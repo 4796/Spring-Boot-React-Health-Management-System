@@ -8,9 +8,8 @@ import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.*;
 import com.example.PatientService.model.Patient;
 import com.example.PatientService.service.PatientService;
-
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/patients")
@@ -27,7 +26,7 @@ public class PatientController {
     
     //doktor
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatients(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<Patient>> getAllPatients(@RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);
     	if(!jwt.extractClaims(token).get("role").equals("ROLE_DOCTOR"))
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
@@ -36,7 +35,7 @@ public class PatientController {
 
     //doktor i jedan pacijent
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id, @RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);
     	if(jwt.extractClaims(token).get("role").equals("ROLE_PATIENT") && !jwt.extractClaims(token).get("id").toString().equals(id.toString())) {
     		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -60,21 +59,21 @@ public class PatientController {
 
     //patient personaly i doctor
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient, @RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);
     	return ResponseEntity.ok(patientService.updatePatient(id, token, updatedPatient));
     }
 
     //can only be deleted if authService sent request
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable Long id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id, @RequestHeader("Authorization") String token) throws Exception {
         patientService.deletePatient(token, id);
         return ResponseEntity.noContent().build();
     }
     
     //doctor
     @GetMapping("/search")
-    public ResponseEntity<List<Patient>> searchPatients(@RequestParam(required = false) String name, @RequestParam(required = false) String email, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<Patient>> searchPatients(@RequestParam(required = false) String name, @RequestParam(required = false) String email, @RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);
     	if(!jwt.extractClaims(token).get("role").equals("ROLE_DOCTOR"))
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();  

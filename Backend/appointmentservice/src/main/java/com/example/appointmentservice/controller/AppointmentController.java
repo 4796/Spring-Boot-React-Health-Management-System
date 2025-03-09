@@ -5,10 +5,6 @@ import com.example.appointmentservice.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -29,7 +25,7 @@ public class AppointmentController {
     	token=token.substring(7);//bearer
         return ResponseEntity.ok(appointmentService.getAllAppointments(token));
     }
-    ///////////////proveri da li appoinment time je okej, neka appointment traje npr 15 minuta, samo da li doktoru odgovara
+
     //only specific patient or doctor
     //proveri da li je id osobe iz tokena taj koji je dat kao parametar
     //date "dd.MM.yyyy. HH:mm"

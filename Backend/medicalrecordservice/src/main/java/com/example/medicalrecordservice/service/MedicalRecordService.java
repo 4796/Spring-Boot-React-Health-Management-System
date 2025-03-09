@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import com.example.medicalrecordservice.db.MedicalRecordRepository;
 import com.example.medicalrecordservice.model.MedicalRecord;
 import com.example.medicalrecordservice.util.JwtUtil;
 import com.example.medicalrecordservice.util.RestClientUtil;
-
 import io.jsonwebtoken.Claims;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +45,7 @@ public class MedicalRecordService {
 	        	System.out.println(claims.get("id"));
 	        	System.out.println(record.getPatientId().toString());
 	        	if(!claims.get("id").toString().equals(record.getPatientId().toString()))
-	        		throw new Exception("Unauthorized");
+	        		throw new IllegalArgumentException("Unauthorized");
 	        }
 	        // Dohvatanje detalja o pacijentu
 	        String url = patientServiceUrl + "/patients/" + record.getPatientId();
@@ -70,17 +67,17 @@ public class MedicalRecordService {
         if(isPatient(token)) {
         	Claims claims=jwtUtil.extractClaims(token);
         	if(!claims.get("id").equals(patientId))
-        		throw new Exception("Unauthorized");
+        		throw new IllegalArgumentException("Unauthorized");
         }
         return medicalRecordRepository.findByPatientId(patientId);
     }
 
     public MedicalRecord createRecord(String token, MedicalRecord record) throws Exception {
     	//System.out.println(record);
-    	if(record.getDiagnosis()==null || record.getMedications()==null || record.getTreatment()==null)
-    		throw new Exception("Not enought information about new record");
+    	if(record ==null || record.getDiagnosis()==null || record.getMedications()==null || record.getTreatment()==null)
+    		throw new IllegalArgumentException("Unauthorized");
         if(isPatient(token))
-        	throw new Exception("Unauthorized");
+        	throw new IllegalArgumentException("Unauthorized");
         Claims claims=jwtUtil.extractClaims(token);
         Long doctorId=Long.valueOf(claims.get("id").toString()) ;
         checkPatient(record.getPatientId(), token);
@@ -93,7 +90,7 @@ public class MedicalRecordService {
 
 	public MedicalRecord updateRecord(String token, Long id, MedicalRecord record) throws Exception {
 		if(isPatient(token))
-        	throw new Exception("Unauthorized");
+			throw new IllegalArgumentException("Unauthorized");
 		MedicalRecord r1=null;
 		try {
 			r1= medicalRecordRepository.findById(id).orElseThrow();
@@ -102,7 +99,7 @@ public class MedicalRecordService {
 		}
 		//if its the right doctor
 		if(!isRightDoctor(token, r1))
-			throw new Exception("Unauthorized");
+			throw new IllegalArgumentException("Unauthorized");
 			
          if(record.getDiagnosis()!=null)
         	 r1.setDiagnosis(record.getDiagnosis());
@@ -117,7 +114,7 @@ public class MedicalRecordService {
 
 	public void deleteRecord(String token, Long id) throws Exception {
     	if(isPatient(token))
-        	throw new Exception("Unauthorized");
+    		throw new IllegalArgumentException("Unauthorized");
     	MedicalRecord record=null;
     	try {
     		record = medicalRecordRepository.findById(id).orElseThrow();
@@ -126,18 +123,17 @@ public class MedicalRecordService {
 		}
     	Claims claims = jwtUtil.extractClaims(token);
     	if(!claims.get("id").toString().equals(record.getDoctorId().toString()))
-    		throw new Exception("Unauthorized");
+    		throw new IllegalArgumentException("Unauthorized");
         medicalRecordRepository.deleteById(id);
     }
 
 
 
-	public List<MedicalRecord> searchRecords(String diagnosis, LocalDateTime startDate, LocalDateTime endDate, Long patientId, String token) {
-    System.out.println("token "+token);
+	public List<MedicalRecord> searchRecords(String diagnosis, LocalDateTime startDate, LocalDateTime endDate, Long patientId, String token) throws Exception {
 		if(isPatient(token)) {
 			Claims claims=jwtUtil.extractClaims(token);
 			if(!claims.get("id").toString().equals(patientId.toString()))
-				throw new AuthorizationDeniedException("Unauthorized");
+				throw new IllegalArgumentException("Unauthorized");
 		}
 		if (diagnosis != null && startDate != null && endDate != null) {
         return medicalRecordRepository.findByDiagnosisAndDateRange(diagnosis, startDate, endDate, patientId);
@@ -150,14 +146,14 @@ public class MedicalRecordService {
     }
 }
 	
-    public boolean isPatient(String token) {
+    public boolean isPatient(String token) throws Exception {
 
         return jwtUtil.extractClaims(token).get("role").toString().equals("ROLE_PATIENT");
         
     }
     
     //is token from the doctor of the record
-    public boolean isRightDoctor(String token, MedicalRecord r1) {
+    public boolean isRightDoctor(String token, MedicalRecord r1) throws Exception {
 		Claims claims=jwtUtil.extractClaims(token);
 		return claims.get("id").toString().equals(r1.getDoctorId().toString());
 		

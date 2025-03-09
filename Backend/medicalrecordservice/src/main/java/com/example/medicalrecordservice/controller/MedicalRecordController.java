@@ -94,7 +94,7 @@ public class MedicalRecordController {
             @RequestParam(required = false) LocalDateTime startDate,
             @RequestParam(required = false) LocalDateTime endDate,
             @RequestHeader("Authorization") String token,
-            @RequestHeader("Patient") Long patientId) {
+            @RequestHeader("Patient") Long patientId) throws Exception {
     	token = token.substring(7);
         List<MedicalRecord> records = medicalRecordService.searchRecords(diagnosis, startDate, endDate, patientId, token);
         return ResponseEntity.ok(records);

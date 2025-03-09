@@ -1,13 +1,9 @@
 package com.example.doctorService.service;
 
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import com.example.doctorService.db.DoctorRepository;
@@ -16,8 +12,6 @@ import com.example.doctorService.util.JwtForServices;
 import com.example.doctorService.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 @Service
 public class DoctorService {
@@ -34,7 +28,7 @@ public class DoctorService {
 		this.jwtServ = jwtServ;
     }
 
-    public List<Doctor> getAllDoctors(String token) {
+    public List<Doctor> getAllDoctors(String token) throws Exception {
     	String role = getRole(token);
     	if(role.equals("ROLE_ADMIN")) {//needs all the information
     		 return doctorRepository.findAll();
@@ -51,7 +45,7 @@ public class DoctorService {
        
     }
 
-    public Doctor getDoctorById(Long id, String token) {
+    public Doctor getDoctorById(Long id, String token) throws Exception {
     	String role=getRole(token);
     	if(role.equals("ROLE_ADMIN"))
     		return doctorRepository.findById(id)
@@ -61,7 +55,7 @@ public class DoctorService {
     				throw new IllegalArgumentException("Unauthorized");
     		return doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
     	}else {//pacijent
-    		Doctor doctor = doctorRepository.findById(id)
+    		doctorRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Doctor not found"));
     		//ako nije bacio gresku
     		return null;
@@ -69,8 +63,9 @@ public class DoctorService {
     		
     }
 
-    public Doctor createDoctor(Doctor doctor, String token) {
-    	System.out.println(doctor);
+    public Doctor createDoctor(Doctor doctor, String token)  throws Exception {
+    	if(doctor==null)
+    		throw new IllegalArgumentException("Not enough information to create new patient.");
     	boolean input = 
     			doctor.getName() != null && 
                 doctor.getSalary() != null && 
@@ -89,26 +84,30 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
-        return doctorRepository.findById(id).map(doctor -> {
-            doctor.setName(updatedDoctor.getName());
-            doctor.setPhoneNumber(updatedDoctor.getPhoneNumber());
-            doctor.setSpecialization(updatedDoctor.getSpecialization());
-            doctor.setSalary(updatedDoctor.getSalary());
-            doctor.setHireDate(updatedDoctor.getHireDate());
-            return doctorRepository.save(doctor);
-        }).orElseThrow(() -> new RuntimeException("Doctor not found"));
-    }
+    
+    
+//    public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
+//        return doctorRepository.findById(id).map(doctor -> {
+//            doctor.setName(updatedDoctor.getName());
+//            doctor.setPhoneNumber(updatedDoctor.getPhoneNumber());
+//            doctor.setSpecialization(updatedDoctor.getSpecialization());
+//            doctor.setSalary(updatedDoctor.getSalary());
+//            doctor.setHireDate(updatedDoctor.getHireDate());
+//            return doctorRepository.save(doctor);
+//        }).orElseThrow(() -> new RuntimeException("Doctor not found"));
+//    }
 
-    public void deleteDoctor(Long id, String token) {
+    public void deleteDoctor(Long id, String token) throws Exception {
     	if(!jwtServ.validateToken(token))
         	throw new IllegalArgumentException("Unauthorized");
         doctorRepository.deleteById(id);
     }
 
-    public void adjustSalary(Long id, Double percentage, String sign, String token) {
+    public void adjustSalary(Long id, Double percentage, String sign, String token) throws Exception {
         Doctor doctor = getDoctorById(id, token);//proverava da li je admin
         double newSalary=0;
+        if(sign==null)
+        	throw new IllegalArgumentException("Not enough information.");
         if(sign.equals("+"))
         	newSalary = doctor.getSalary() * (1 + percentage / 100);
         else if(sign.equals("-"))

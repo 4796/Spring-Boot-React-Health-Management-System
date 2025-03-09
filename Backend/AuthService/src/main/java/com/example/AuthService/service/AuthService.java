@@ -230,7 +230,7 @@ public class AuthService {
         userRepository.deleteById(id);
     }
 
-	public List<User> getAllUsers(String token) {
+	public List<User> getAllUsers(String token) throws Exception {
 		if(!validateToken(token))
 			throw new IllegalArgumentException("Unauthorized");
          if (!isAdmin(token)) 
@@ -317,7 +317,7 @@ public class AuthService {
     }
 
     // Validacija JWT tokena
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token)  throws Exception {
         try {
             Claims claims = extractClaims(token);
             Date expiration = claims.getExpiration();
@@ -330,7 +330,7 @@ public class AuthService {
         return true;
     }
     
-    public boolean validateServiceToken(String token) {
+    public boolean validateServiceToken(String token) throws Exception {
         try {
         	SecretKey key = Keys.hmacShaKeyFor(serviceSecret.getBytes());
             Claims claims = Jwts.parserBuilder()
@@ -348,7 +348,7 @@ public class AuthService {
         return true;
     }
     
-    public Claims extractClaims(String token) {
+    public Claims extractClaims(String token) throws Exception {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -357,7 +357,7 @@ public class AuthService {
                 .getBody();
     }
 
-	public boolean isAdmin(String token) {
+	public boolean isAdmin(String token) throws Exception {
 		try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); // Kreiranje ključa iz tajnog stringa
             Claims claims =(Claims) Jwts.parserBuilder() // Novi API za parsiranje tokena
@@ -373,7 +373,7 @@ public class AuthService {
         }
 	}
 	
-	public boolean isPatient(String token, String id) {
+	public boolean isPatient(String token, String id) throws Exception {
 		try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); // Kreiranje ključa iz tajnog stringa
             Claims claims =(Claims) Jwts.parserBuilder() // Novi API za parsiranje tokena
@@ -392,7 +392,7 @@ public class AuthService {
         }
 	}
 	
-	public Long getIdFromToken(String token) {
+	public Long getIdFromToken(String token) throws Exception {
 		try {
 			SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
 	        Claims claims =(Claims) Jwts.parserBuilder() 
@@ -407,7 +407,7 @@ public class AuthService {
 		return (long) -1.0;
 	}
 	
-	public String getRoleFromToken(String token) {
+	public String getRoleFromToken(String token) throws Exception {
 		try {
 			SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); 
 			

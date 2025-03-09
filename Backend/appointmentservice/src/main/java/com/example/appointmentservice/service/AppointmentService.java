@@ -45,7 +45,7 @@ public class AppointmentService {
     
     @Autowired
     public AppointmentService(AppointmentRepository appointmentRepository, RestClientUtil restClientUtil,
-                              @Value("${patient.service.url}") String patientServiceUrl, JwtUtil jwt) {
+                              @Value("${patient.service.url}") String patientServiceUrl, JwtUtil jwt) throws Exception {
         this.appointmentRepository = appointmentRepository;
         this.jwtUtil=jwt;
         this.restClientUtil = restClientUtil;
@@ -82,7 +82,7 @@ public class AppointmentService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			if(e.getMessage().contains("401"))
-				throw new AuthorizationDeniedException("You are not authorized");
+				throw new IllegalArgumentException("Unauthorized");
 			else
 				throw new Exception("Unexpected error");
 		}
@@ -109,7 +109,7 @@ public class AppointmentService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			if(e.getMessage().contains("401"))
-				throw new AuthorizationDeniedException("You are not authorized");
+				throw new IllegalArgumentException("Unauthorized");
 			else
 				throw new Exception("Unexpected error");
 		}
@@ -154,11 +154,11 @@ public class AppointmentService {
     	Claims claims = jwtUtil.extractClaims(token);
     	if(isDoctor(token)) {
     		if(!appointment.getDoctorId().toString().equals(claims.get("id").toString()))
-    			throw new AuthorizationDeniedException("Not your appointment");
+    			throw new IllegalArgumentException("Not your appointment");
     	}else {//patient(interceptor rejects admins)
     		
     		if(!appointment.getPatientId().toString().equals(claims.get("id").toString()))
-    			throw new AuthorizationDeniedException("Not your appointment");
+    			throw new IllegalArgumentException("Unauthorized");
     	}
     	if(appointment.getAppointmentTime().isBefore(LocalDateTime.now()))
     		throw new IllegalArgumentException("Appointment is in the past");
@@ -208,7 +208,7 @@ public class AppointmentService {
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 					if(e.getMessage().contains("401"))
-						throw new AuthorizationDeniedException("You are not authorized");
+						throw new IllegalArgumentException("Unauthorized");
 					else
 						throw new Exception("Unexpected error");
 				}
@@ -243,7 +243,7 @@ public class AppointmentService {
 	}
 	
 	
-    private List<String> kreirajListuSvihTermina() {
+    private List<String> kreirajListuSvihTermina() throws Exception {
 		LocalDateTime datum=LocalDateTime.now();//nebitan dan, bitni sati
 		datum=datum.withHour(8).withMinute(0).withSecond(0).withNano(0);
 		List<String> lista=new LinkedList<String>();

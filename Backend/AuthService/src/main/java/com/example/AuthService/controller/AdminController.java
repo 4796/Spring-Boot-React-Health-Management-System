@@ -3,10 +3,7 @@ package com.example.AuthService.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,7 +24,7 @@ public class AdminController {
 
     //only admin
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader("Authorization") String token) throws Exception {
     	token = token.substring(7);
     	return ResponseEntity.ok(authService.getAllUsers(token));
     	
@@ -51,7 +48,7 @@ public class AdminController {
     }
     
     
-    
+    //samo za serivce-service komunikaciju
     //za proveru da li postoji doktor za appointment koji treba da se napravi
     //ne zelim da neko dobija podatke o userima, za sad sluzi da proveri da li postoji i proverava da li je doktor
    // a funkcija iz authService klase ce dati podatke o useru samo u okviru servisa
