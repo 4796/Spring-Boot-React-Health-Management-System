@@ -225,9 +225,7 @@ public class AppointmentService {
 			throw new IllegalArgumentException("Unauthorized");
 		}
 		//kraj autentikacije
-		System.out.println(1);
 		LocalDateTime date=LocalDateTime.parse(datum+" 00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
-		System.out.println(2);
 		//krece od 8:00 i dodaje po pola sata i proverava da li je nesto zauzeto
 		LocalDateTime start=date.withHour(8).withMinute(0);
 		LocalDateTime end = date.withHour(14).withMinute(0);
