@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     // Handler za IllegalArgumentException
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    	return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     // Handler za NullPointerException
@@ -26,7 +26,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     public ResponseEntity<String> handleGenericException(Exception ex) {
-    	return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    	ex.printStackTrace();
+    	return new ResponseEntity<>("An error occurred: " + ex.getMessage()+ "(au)", HttpStatus.INTERNAL_SERVER_ERROR);
     	
     }
 }

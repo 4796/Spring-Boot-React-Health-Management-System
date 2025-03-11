@@ -188,7 +188,7 @@ public class AuthService {
         	 }
         		 
          } catch (Exception e) {
-        	 System.out.println("User maybe deleted from authService but not from doctorService");
+        	 System.out.println("User maybe deleted from authService but not from doctorService or patientService");
 			e.printStackTrace();
 		}finally {
 			

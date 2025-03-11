@@ -99,4 +99,19 @@ public class MedicalRecordController {
         List<MedicalRecord> records = medicalRecordService.searchRecords(diagnosis, startDate, endDate, patientId, token);
         return ResponseEntity.ok(records);
     }
+    
+    
+    
+  //kada se obrise pacijent treba da se obrisu svi njegovi recordi, a kada se obrise doktor, moze da se stavi id kao -1 kao znak da vise ne postoji
+    //samo service-service
+    @DeleteMapping
+    public ResponseEntity<Void> deleteRecords(@RequestHeader(value = "patient", required = false) Long patientId, @RequestHeader(value = "doctor", required = false) Long doctorId, @RequestHeader("Authorization") String token) throws Exception {
+        if(doctorId!=null)
+        	medicalRecordService.changeRecordsForDoctor(doctorId, token.substring(7));
+        else if (patientId!=null)
+        	medicalRecordService.deleteRecordsForPatient(patientId, token.substring(7));
+        else
+        	throw new Exception("Unexpected error deleting records");
+        return ResponseEntity.noContent().build();
+    }
 }

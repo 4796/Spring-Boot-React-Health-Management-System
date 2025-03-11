@@ -4,7 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.doctorService.db.DoctorRepository;
 import com.example.doctorService.model.Doctor;
@@ -20,12 +26,14 @@ public class DoctorService {
     private final JwtUtil jwtUtil;
     @Autowired
     private final JwtForServices jwtServ;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public DoctorService(DoctorRepository doctorRepository, JwtUtil jwtUtil, JwtForServices jwtServ) {
+    public DoctorService(DoctorRepository doctorRepository, JwtUtil jwtUtil, JwtForServices jwtServ, RestTemplate restTemplate) {
         this.doctorRepository = doctorRepository;
 		this.jwtUtil = jwtUtil;
 		this.jwtServ = jwtServ;
+		this.restTemplate = restTemplate;
     }
 
     public List<Doctor> getAllDoctors(String token) throws Exception {
@@ -97,9 +105,40 @@ public class DoctorService {
 //        }).orElseThrow(() -> new RuntimeException("Doctor not found"));
 //    }
 
+    //treba i da se obrisu njegovi svi appointmenti iz appointmentService, a medicalRecords da se doctorId postavi na -1
     public void deleteDoctor(Long id, String token) throws Exception {
     	if(!jwtServ.validateToken(token))
         	throw new IllegalArgumentException("Unauthorized");
+    	
+    	//menjanje records
+   	 HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("doctor", id.toString());
+        HttpEntity<String> entity = new HttpEntity<>(headers); 
+        ResponseEntity<?> response=null;
+         try {
+        	 response = restTemplate.exchange("https://localhost:8084/medical-records", HttpMethod.DELETE, entity, Object.class);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}finally {
+	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+	        	throw new Exception("Autorization problem or internal server error");
+	        }
+		}
+         
+         //brisanje iz appoinmentsa
+         try {
+         	 response = restTemplate.exchange("https://localhost:8083/appointments", HttpMethod.DELETE, entity, Object.class);
+ 		} catch (Exception e) {
+ 			System.out.println(e.getMessage());
+ 			e.printStackTrace();
+ 		}finally {
+ 	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+ 	        	throw new Exception("Autorization problem or internal server error");
+ 	        }
+ 		}
         doctorRepository.deleteById(id);
     }
 

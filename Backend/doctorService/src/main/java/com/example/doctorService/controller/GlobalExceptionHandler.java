@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     // Handler za IllegalArgumentException
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-    	ex.printStackTrace();
+
     	return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
     	ex.printStackTrace();
-        return new ResponseEntity<>("Null pointer error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Null pointer error: " + ex.getMessage()+ "(d)", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Handler za bilo koji drugi izuzetak

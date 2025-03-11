@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,11 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, Lo
 
     @Query("SELECT r FROM MedicalRecord r WHERE r.diagnosis like :diagnosis AND r.recordDate BETWEEN :startDate AND :endDate and r.patientId= :patient")
     List<MedicalRecord> findByDiagnosisAndDateRange(@Param("diagnosis") String diagnosis, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("patient") Long patient);
+
+    void deleteByPatientId(Long patientId);
+    
+    @Modifying
+    @Query("UPDATE  MedicalRecord m SET m.doctorId = -1 WHERE m.doctorId = :doctorId")
+    void updateDoctorIdToMinusOne(@Param("doctorId") Long doctorId);
+
 }

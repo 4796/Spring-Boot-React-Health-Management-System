@@ -5,6 +5,7 @@ import com.example.appointmentservice.db.AppointmentRepository;
 import com.example.appointmentservice.model.Appointment;
 import com.example.appointmentservice.util.JwtUtil;
 import com.example.appointmentservice.util.RestClientUtil;
+import com.example.appointmentservice.util.ServiceUtil;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,21 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDate;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.crypto.SecretKey;
 
 @Service
@@ -39,7 +33,10 @@ public class AppointmentService {
     private final String patientServiceUrl;
     private JwtUtil jwtUtil;
     @Value("${service.secret}")
-    private String serviceSecret;
+    private String serviceSecret; //za slanje
+    @Autowired
+    private ServiceUtil serviceUtil;//za primanje
+    
     
     private List<String> listaSvihTermina;
     
@@ -261,6 +258,23 @@ public class AppointmentService {
 				break;
 		}
 		return lista;
+	}
+
+    @Transactional
+	public void cancelAppointmentsForPatient(Long patientId, String token) throws Exception {
+		checkServerAuth(token);
+		appointmentRepository.deleteByPatientId(patientId);
+	}
+
+    @Transactional
+	public void cancelAppointmentsForDoctor(Long doctorId, String token) throws Exception {
+		checkServerAuth(token);
+		appointmentRepository.deleteByDoctorId(doctorId);
+		
+	}
+	
+	public void checkServerAuth(String token) throws Exception {
+		serviceUtil.validateToken(token);
 	}
 	
 }

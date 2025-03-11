@@ -32,4 +32,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findFutureAppointmentsByDocotorId(@Param("doctorId") Long doctorId, @Param("currentDateTime") LocalDateTime currentDateTime);
 	
 	List<Appointment> findByDoctorId(Long doctorId);
+	
+	//kada se brise doctor user
+	void deleteByDoctorId(Long doctorId);
+	
+	//kada se brise patient user
+	void deleteByPatientId(Long patientId);
+	
 }

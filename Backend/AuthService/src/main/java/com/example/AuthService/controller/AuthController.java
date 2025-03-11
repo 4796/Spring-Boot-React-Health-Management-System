@@ -24,11 +24,13 @@ public class AuthController {
     //da se napravi doctor i u doctorService, kao za pacijenta
     //pacijent se ovde jednostavno napravi(bez autorizacije) i salje se zahtev patientSerivce da se i tamo napravi
    //doktor ne moze da pravi novog korisnika
+    //date: "dd.MM.yyyy." ili "dd.MM.yyyy. HH:mm"
     @PostMapping("/register")
     public ResponseEntity<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request, @RequestHeader(value="Authorization", required=false) String adminToken) throws Exception {
     	UserRegistrationResponse response = new UserRegistrationResponse();
     	String userId;
-    	adminToken=adminToken.substring(7);
+    	if(adminToken!=null && adminToken.length()>8)
+    		adminToken=adminToken.substring(7);
 		try {
 			userId = authService.registerUser(adminToken, request.getUsername(), request.getPassword(), request.getRole(), request.getName(), request.getEmail(), request.getPhone_number(), request.getMedical_history(), request.getHire_date(), request.getSalary(), request.getSpecialization());
 		} catch (Exception e) {

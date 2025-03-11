@@ -12,20 +12,22 @@ public class GlobalExceptionHandler {
     // Handler za IllegalArgumentException
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+
+    	return new ResponseEntity<>("Invalid input: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     // Handler za NullPointerException
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
-        return new ResponseEntity<>("Null pointer error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    	ex.printStackTrace();
+    	return new ResponseEntity<>("Null pointer error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     // Handler za bilo koji drugi izuzetak
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     public ResponseEntity<String> handleGenericException(Exception ex) {
-    	//ex.printStackTrace();
-    	return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    	ex.printStackTrace();
+    	return new ResponseEntity<>("An error occurred: " + ex.getMessage() +" (pa)", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

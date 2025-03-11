@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
     // Handler za NullPointerException
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
+    	ex.printStackTrace();
         return new ResponseEntity<>("Null pointer error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -25,7 +26,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) 
     public ResponseEntity<?> handleGenericException(Exception ex) {
-    	return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    	ex.printStackTrace();
+    	return new ResponseEntity<>("An error occurred: " + ex.getMessage()+ "(ap)", HttpStatus.INTERNAL_SERVER_ERROR);
     	
     }
 }

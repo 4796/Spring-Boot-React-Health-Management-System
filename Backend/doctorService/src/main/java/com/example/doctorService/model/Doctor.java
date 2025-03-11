@@ -45,7 +45,12 @@ public class Doctor {
     	try {
     		this.hireDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
 		} catch (Exception e) {
-			this.hireDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+			try {
+				this.hireDate = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			
 		}
 
        

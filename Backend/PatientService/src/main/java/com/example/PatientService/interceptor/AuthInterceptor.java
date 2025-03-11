@@ -22,7 +22,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     	//delete
     	if(request.getRequestURL().toString().contains("https://localhost:8082/patients/") && request.getMethod().equals("DELETE"))
     		return true;
-    	
     	//normal auth
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

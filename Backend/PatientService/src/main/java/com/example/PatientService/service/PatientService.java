@@ -3,7 +3,13 @@ package com.example.PatientService.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.PatientService.db.PatientRepository;
 import com.example.PatientService.model.Patient;
@@ -23,10 +29,12 @@ public class PatientService {
     private JwtUtil jwt;
     @Value("${service.secret}")
     private String serviceSecret;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, RestTemplate restTemplate) {
         this.patientRepository = patientRepository;
+		this.restTemplate = restTemplate;
     }
 
     public List<Patient> getAllPatients() throws Exception {
@@ -104,21 +112,53 @@ public class PatientService {
     	        .orElseThrow(() -> new RuntimeException("Patient not found"));
     }
 
+    
+    //treba da se obrisu i svi medicalRecords i svi appointments iz svojih servisa
     public void deletePatient(String authHeader, Long id) throws Exception {
     	//specific service-service autorization
+    	String token="";
     	if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-    		throw new IllegalArgumentException("Unauthorized");
+    		throw new IllegalArgumentException("Unauthorized1");
         }
     	try {
-            String token = authHeader.substring(7); // Uzmi token nakon "Bearer "
+            token = authHeader.substring(7); // Uzmi token nakon "Bearer "
             SecretKey key = Keys.hmacShaKeyFor(serviceSecret.getBytes());
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Unauthorized");
+			throw new IllegalArgumentException("Unauthorized2");
 		}
+    	//brisanje iz records
+    	 HttpHeaders headers = new HttpHeaders();
+         headers.set("Authorization", "Bearer " + token);
+         headers.setContentType(MediaType.APPLICATION_JSON);
+         headers.set("patient", id.toString());
+         HttpEntity<String> entity = new HttpEntity<>(headers); 
+         ResponseEntity<?> response=null;
+          try {
+         	 response = restTemplate.exchange("https://localhost:8084/medical-records", HttpMethod.DELETE, entity, Object.class);
+ 		} catch (Exception e) {
+ 			System.out.println(e.getMessage());
+ 			e.printStackTrace();
+ 		}finally {
+ 	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+ 	        	throw new Exception("Autorization problem or internal server error");
+ 	        }
+ 		}
+          
+          //brisanje iz appoinmentsa
+          try {
+          	 response = restTemplate.exchange("https://localhost:8083/appointments", HttpMethod.DELETE, entity, Object.class);
+  		} catch (Exception e) {
+  			System.out.println(e.getMessage());
+  			e.printStackTrace();
+  		}finally {
+  	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
+  	        	throw new Exception("Autorization problem or internal server error");
+  	        }
+  		}
         patientRepository.deleteById(id);
     }
 

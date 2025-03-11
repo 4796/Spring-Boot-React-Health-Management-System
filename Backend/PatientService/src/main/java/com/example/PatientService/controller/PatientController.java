@@ -67,7 +67,8 @@ public class PatientController {
     //can only be deleted if authService sent request
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id, @RequestHeader("Authorization") String token) throws Exception {
-        patientService.deletePatient(token, id);
+        
+    	patientService.deletePatient(token, id);
         return ResponseEntity.noContent().build();
     }
     

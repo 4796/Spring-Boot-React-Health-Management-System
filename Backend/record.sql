@@ -29,19 +29,19 @@ CREATE TABLE `medical_record` (
   `record_date` datetime(6) DEFAULT NULL,
   `treatment` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `medical_record` */
 
 insert  into `medical_record`(`id`,`diagnosis`,`doctor_id`,`medications`,`patient_id`,`record_date`,`treatment`) values 
-(1,'death',77,'grave',71,'2025-03-02 19:49:57.000000','none'),
-(2,'death',77,'grave',107,'2025-03-02 19:51:52.000000','none'),
-(3,'Healthy',77,'all',76,'2025-03-02 20:27:59.000000','none'),
-(4,'Healthy again',77,'none',76,'2025-03-02 19:52:46.000000','none'),
-(5,'crazy',77,'none',76,'2025-03-02 19:53:08.000000','none'),
-(6,'crazy',78,'none',76,'2025-03-02 19:53:39.000000','none'),
-(8,'normal',78,'none',71,'2025-03-02 19:54:15.000000','none'),
-(9,'fever',78,'brufen',75,'2025-03-02 19:54:57.000000','stay at home');
+(1,'death',132,'grave',71,'2025-03-02 19:49:57.000000','none'),
+(2,'death',132,'grave',107,'2025-03-02 19:51:52.000000','none'),
+(3,'Healthy',132,'all',76,'2025-03-02 20:27:59.000000','none'),
+(4,'Healthy again',132,'none',76,'2025-03-02 19:52:46.000000','none'),
+(5,'crazy',133,'none',76,'2025-03-02 19:53:08.000000','none'),
+(6,'crazy',134,'none',76,'2025-03-02 19:53:39.000000','none'),
+(8,'normal',134,'none',71,'2025-03-02 19:54:15.000000','none'),
+(9,'fever',134,'brufen',75,'2025-03-02 19:54:57.000000','stay at home');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

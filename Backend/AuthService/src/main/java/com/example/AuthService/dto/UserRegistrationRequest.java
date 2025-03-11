@@ -1,6 +1,7 @@
 package com.example.AuthService.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UserRegistrationRequest extends BaseDto {
     private String username;
@@ -104,5 +105,20 @@ public class UserRegistrationRequest extends BaseDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    
+    public void setHire_date(String time) {
+    	try {
+    		this.hire_date = LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
+		} catch (Exception e) {
+			try {
+				this.hire_date= LocalDate.parse(time, DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+			
+		}
+
+       
     }
 }

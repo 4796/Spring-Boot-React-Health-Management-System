@@ -57,4 +57,19 @@ public class AppointmentController {
     public ResponseEntity<List<String>> suggestAppointments(@PathVariable Long doctorId, @RequestHeader("Authorization") String token, @RequestHeader("datum") String datum) throws Exception {
         return ResponseEntity.ok(appointmentService.suggestAppointments(doctorId, token.substring(7), datum));
     }
+    
+    
+    //kada se obrise doktor ili pacijent, treba da se obrisu svi njegovi zakazani termini
+    //samo service-service
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAppointments(@RequestHeader(value = "patient", required = false) Long patientId, @RequestHeader(value = "doctor", required = false) Long doctorId, @RequestHeader("Authorization") String token) throws Exception {
+        if(doctorId!=null)
+        	appointmentService.cancelAppointmentsForDoctor(doctorId, token.substring(7));
+        else if (patientId!=null)
+        	appointmentService.cancelAppointmentsForPatient(patientId, token.substring(7));
+        else
+        	throw new Exception("Unexpected error deleting appointments");
+        return ResponseEntity.noContent().build();
+    }
+    
 }
