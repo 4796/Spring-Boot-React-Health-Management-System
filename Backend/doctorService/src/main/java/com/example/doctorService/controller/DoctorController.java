@@ -31,7 +31,7 @@ public class DoctorController {
 
     //treba za predloge za appointment i treba adminu
     //dakle servis-servis i admin
-    //doktor i pacijent mogu da dobiju ime i specijalizaciju
+    //doktor i pacijent mogu da dobiju ime i specijalizaciju i sliku
     //servis ce slati token od doktora ili pacijenta koji vec ima
     //admin sve info
     @GetMapping

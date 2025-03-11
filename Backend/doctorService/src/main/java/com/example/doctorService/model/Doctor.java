@@ -17,8 +17,15 @@ public class Doctor {
     private String specialization; // Specijalizacija (npr., "Kardiolog", "Opšta praksa")
     private Double salary;
     private LocalDate hireDate;
+    private String imageUrl;
 
-    @Override
+    public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", specialization="
 				+ specialization + ", salary=" + salary + ", hireDate=" + hireDate + "]";

@@ -27,19 +27,20 @@ CREATE TABLE `doctor` (
   `phone_number` varchar(255) DEFAULT NULL,
   `salary` double DEFAULT NULL,
   `specialization` varchar(255) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `doctor` */
 
-insert  into `doctor`(`id`,`hire_date`,`name`,`phone_number`,`salary`,`specialization`) values 
-(132,'2025-03-07','Blagoje','543224321',15000,'cardiology'),
-(133,'2025-03-07','Stanislav Binicki','5432',20000,'neurosurgeon'),
-(134,'2025-03-07','Nemanja Ciric','3461036',10000,'neurosurgeon'),
-(135,'2025-03-07','Lidija Pesic','3461036',10000,'Dermatologist'),
-(136,'2025-03-07','Nestorovic','0656',9000,'pulmonologist'),
-(138,'2025-03-07','Todor','0656242',10000,'Oncologist'),
-(139,'2025-03-07','Vucicevic','06562423634635634265',5000,'Pediatrician');
+insert  into `doctor`(`id`,`hire_date`,`name`,`phone_number`,`salary`,`specialization`,`image_url`) values 
+(132,'2025-03-07','Blagoje','543224321',15000,'cardiology','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m1.jpeg'),
+(133,'2025-03-07','Stanislav Binicki','5432',20000,'neurosurgeon','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m2.jpeg'),
+(134,'2025-03-07','Nemanja Ciric','3461036',10000,'neurosurgeon','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m3.jpeg'),
+(135,'2025-03-07','Lidija Pesic','3461036',10000,'Dermatologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f1.jpeg'),
+(136,'2025-03-07','Nestorovic','0656',9000,'pulmonologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m4.jpeg'),
+(138,'2025-03-07','Jovana Jovanovic','0656242',10000,'Oncologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f3.jpeg'),
+(139,'2025-03-07','Bojana','06562423634635634265',5000,'Pediatrician','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f2.jpeg');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
