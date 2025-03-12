@@ -14,7 +14,7 @@ const Navbar = () => {
 
         <ul className="uppercase font-bold">
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/profile">Profile Settings</NavLink>
           </li>
         </ul>
       </Container>

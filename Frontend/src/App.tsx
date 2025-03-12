@@ -5,6 +5,9 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -32,9 +35,32 @@ const App = () => {
           ),
           errorElement: <ErrorPage />,
         },
+        {
+          path: "/edit-profile",
+          element: (
+            <PrivateRoute>
+              <EditProfilePage />
+            </PrivateRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/change-credentials",
+          element: (
+            <PrivateRoute>
+              <ChangeCredentialsPage />
+            </PrivateRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
       ],
     },
     { path: "/login", element: <LoginPage />, errorElement: <ErrorPage /> },
+    {
+      path: "/register",
+      element: <RegisterPage />,
+      errorElement: <ErrorPage />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

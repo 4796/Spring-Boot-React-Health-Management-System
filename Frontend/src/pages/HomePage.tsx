@@ -7,7 +7,14 @@ const HomePage = () => {
   let component = null;
   switch (globalParams.role) {
     case "ROLE_PATIENT":
-      component = <AppointmentListings />;
+      component = (
+        <>
+          <h1 className="text-4xl text-sky-700 font-bold my-4">
+            Your Appointments
+          </h1>
+          <AppointmentListings />
+        </>
+      );
       break;
     case "ROLE_DOCTOR":
       component = <>Doctor Dashboard.</>;

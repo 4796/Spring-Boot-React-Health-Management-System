@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
-import LoginForm from "../components/LoginForm";
-import { login } from "../services/auth";
-import { useEffect, useState } from "react";
-import Spinner from "../components/Spinner";
-import { isLoggedIn } from "../services/session";
 
-const LoginPage = () => {
+import Spinner from "../components/Spinner";
+
+import { isLoggedIn } from "../services/session";
+import RegisterForm from "../components/RegisterForm";
+import { register } from "../services/auth";
+
+const RegisterPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   useEffect(() => {
@@ -14,6 +16,7 @@ const LoginPage = () => {
     if (isLoggedIn()) navigate("/");
     setLoading(false);
   }, []);
+
   return loading ? (
     <Spinner loading={loading} />
   ) : (
@@ -22,20 +25,17 @@ const LoginPage = () => {
       containerCssAdd="min-h-[100dvh] flex flex-col items-center justify-center gap-4"
     >
       <h1 className="font-bold xl:text-4xl text-3xl w-full text-center">
-        Login
+        Register
       </h1>
-      <LoginForm
-        sendData={login}
+      <RegisterForm
+        sendData={register}
         className="flex flex-col items-center gap-4 "
       />
-      <Link
-        to="/register"
-        className="px-4 py-1 rounded-md underline text-center"
-      >
-        Don't have an account? Register.
+      <Link to="/login" className="px-4 py-1 rounded-md underline text-center">
+        Already have an account? Login.
       </Link>
     </Container>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
