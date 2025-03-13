@@ -42,7 +42,7 @@ public class DoctorController {
 
     
     //admin, i doktor za sebe licno moze da izvuce sve podatke
-    //pacijent moze samo da proveri da li postoji, ali ne moze da dobije podatke
+    //pacijent moze samo osnovne podatke
     @GetMapping("/{id}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id, @RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);

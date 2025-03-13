@@ -63,10 +63,13 @@ public class DoctorService {
     				throw new IllegalArgumentException("Unauthorized");
     		return doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
     	}else {//pacijent
-    		doctorRepository.findById(id)
+    		Doctor d = doctorRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Doctor not found"));
-    		//ako nije bacio gresku
-    		return null;
+    		d.setSalary(null);
+    		LocalDate date=null;
+    		d.setHireDate(date);
+    		d.setPhoneNumber(null);
+    		return d;
     	}
     		
     }

@@ -57,7 +57,7 @@ public class PatientController {
 		}
     }
 
-    //patient personaly i doctor
+    //patient personaly 
     @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient, @RequestHeader("Authorization") String token) throws Exception {
     	token=token.substring(7);

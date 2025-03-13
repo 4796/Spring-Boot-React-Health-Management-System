@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.AuthService.service.*;
 import com.example.AuthService.dto.*;
+import com.example.AuthService.model.User;
 
 @RestController
 @RequestMapping("/auth")
@@ -88,8 +89,11 @@ public class AuthController {
         response.setStatus("SUCCESS");
         response.setMessage("User logged in successfully!");
         response.setToken(token);
-        response.setId(authService.getIdFromToken(token));
-        response.setRole(authService.getRoleFromToken(token));
+        Long id=authService.getIdFromToken(token);
+        User u=authService.getUserLocal(id);
+        response.setId(id);
+        response.setRole(u.getRole());
+        response.setUsername(u.getUsername());
         return ResponseEntity.ok(response);
     }
 }

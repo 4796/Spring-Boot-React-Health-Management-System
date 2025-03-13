@@ -263,7 +263,16 @@ public class AuthService {
     		throw new IllegalArgumentException("Nothing to change");    
 		if(!validateToken(token))
 			throw new IllegalArgumentException("Unauthorized");
-
+		if(user.getUsername() != null && (user.getUsername().length()<3 || user.getUsername().length()>30))
+    		throw new Exception("Username length is not valid");
+		if(user.getUsername()!=null) {
+			Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+			if (!optionalUser.isEmpty() && !optionalUser.get().getUsername().equals(user.getUsername()) ) {
+				throw new Exception("Username already exists"); // 
+			}
+		}
+    	if(user.getPassword()!=null && (user.getPassword().length()<3 || user.getPassword().length()>70))
+    		throw new Exception("Password length is not valid");
         user.setId(id);
         
         
@@ -279,25 +288,27 @@ public class AuthService {
 		if(user.getUsername()==null)
 			user.setUsername(u.getUsername());
 		user.setRole(u.getRole());//can not change role
-		
-		return userRepository.save(user);
+		User r = userRepository.save(user);
+		r.setPassword("");
+		return r;
 	}
 	
 	
 	
 	// Generisanje JWT tokena
     public String generateToken(String username) throws Exception {
+    	//service-service
     	//when username is null, then it needs token for service-service comunication
         Map<String, Object> claims = new HashMap<>();
         if(username==null) {
         	SecretKey key1 = Keys.hmacShaKeyFor(serviceSecret.getBytes());
         	return Jwts.builder()
-                    .setIssuedAt(new Date())
+                    .setIssuedAt(new Date())						
                     .setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000)) // Token ističe za 1 sat
                     .signWith(key1, SignatureAlgorithm.HS512) // Koristimo HMAC SHA-512
                     .compact();
         }
-        
+        //regular
         
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes()); // Kreiranje ključa iz tajnog stringa
         Optional<User> u=userRepository.findByUsername(username);
@@ -310,7 +321,7 @@ public class AuthService {
                 .setSubject(username)
                 .claim("role", u1.getRole())
                 .claim("id", u1.getId())
-                .setIssuedAt(new Date())
+                .setIssuedAt(new Date())							
                 .setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000)) // Token ističe za 1 sat
                 .signWith(key, SignatureAlgorithm.HS512) // Koristimo HMAC SHA-512
                 .compact();

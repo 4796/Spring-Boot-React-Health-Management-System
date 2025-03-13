@@ -1,6 +1,7 @@
 package com.example.gateway.filter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -8,10 +9,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.cert.CertificateExpiredException;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -33,6 +37,7 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+        //	System.out.println("AAA");
             ServerHttpRequest request = exchange.getRequest();
             String authHeader = request.getHeaders().getFirst("Authorization");
             int a=1;
@@ -63,13 +68,12 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
                         .parseClaimsJws(token)
                         .getBody();
 
-                // Provera isteka tokena
-                if (claims.getExpiration().before(new Date())) {
-                    throw new RuntimeException("Token expired");
-                }
-
                 return chain.filter(exchange);
-            } catch (Exception clientEx) {
+            }catch (ExpiredJwtException e) { //istekao token HttpStatus.FORBIDDEN
+            	exchange.getResponse().setStatusCode(HttpStatusCode.valueOf(419));
+                return exchange.getResponse().setComplete();
+            }
+            catch (Exception clientEx) {
                 try {
                     // Pokušavamo sa servisnim secret-om
                     SecretKey serviceKey = Keys.hmacShaKeyFor(serviceSecret.getBytes());
