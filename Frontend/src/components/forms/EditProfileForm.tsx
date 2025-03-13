@@ -1,19 +1,15 @@
 import { FormEvent, useState } from "react";
-import { RegisterResponse, Role } from "../services/auth";
-import { RegisterArgs } from "./RegisterForm";
+
+import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { getToken } from "../services/session";
+import { All } from "../../roles/All";
 
 const EditProfileForm = ({
   sendData,
   oldArgs,
   className,
 }: {
-  sendData: (
-    args: RegisterArgs,
-    id: string,
-    token: string
-  ) => Promise<RegisterResponse | null>;
+  sendData: (args: RegisterArgs) => Promise<boolean>;
   oldArgs: RegisterArgs | null;
   className?: string;
 }) => {
@@ -21,6 +17,7 @@ const EditProfileForm = ({
   const [phone, setPhone] = useState<string>(
     oldArgs?.phoneNumber ? oldArgs.phoneNumber : ""
   );
+  // patient only
   const [email, setEmail] = useState<string>(
     oldArgs?.email ? oldArgs.email : ""
   );
@@ -28,7 +25,8 @@ const EditProfileForm = ({
     oldArgs?.medicalHistory ? oldArgs.medicalHistory : ""
   );
 
-  const globalParams: { id: string; role: Role } = useOutletContext();
+  //
+  const globalParams: { user: All } = useOutletContext();
   const navigate = useNavigate();
   // submiting
 
@@ -36,30 +34,61 @@ const EditProfileForm = ({
     e.preventDefault();
     if (confirm("Are you sure you want to apply these changes?")) {
       const data: RegisterArgs = {
+        // patient only
         name,
-        phoneNumber: phone,
         email,
         medicalHistory,
+        // doctor and patient
+        phoneNumber: phone,
       };
-      sendData(data, globalParams.id, getToken());
+      sendData(data);
       navigate(-1);
     }
   };
 
   return (
     <form onSubmit={submitForm} className={className}>
-      <div>
-        <label htmlFor="name">Name: </label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Name"
-          className="w-full border-black border-[1px] rounded-md p-1"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          required
-        />
-      </div>
+      {globalParams.user.getRole() === "ROLE_PATIENT" && (
+        <>
+          <div>
+            <label htmlFor="name">Name: </label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              className="w-full border-black border-[1px] rounded-md p-1"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email">Email: </label>
+            <input
+              type="email"
+              id="email"
+              placeholder="user@mail.com"
+              className="w-full border-black border-[1px] rounded-md p-1"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="medical_history">Medical History: </label>
+
+            <input
+              type="text"
+              id="medical_history"
+              placeholder="Medical History"
+              className="w-full border-black border-[1px] rounded-md p-1"
+              onChange={(e) => setMedicalHistory(e.target.value)}
+              value={medicalHistory}
+            />
+          </div>
+        </>
+      )}
       <div>
         <label htmlFor="phone">Phone Number: </label>
         <input
@@ -70,30 +99,6 @@ const EditProfileForm = ({
           onChange={(e) => setPhone(e.target.value)}
           value={phone}
           required
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input
-          type="email"
-          id="email"
-          placeholder="user@mail.com"
-          className="w-full border-black border-[1px] rounded-md p-1"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Medical History: </label>
-
-        <input
-          type="text"
-          id="medical_history"
-          placeholder="Medical History"
-          className="w-full border-black border-[1px] rounded-md p-1"
-          onChange={(e) => setMedicalHistory(e.target.value)}
-          value={medicalHistory}
         />
       </div>
       <div className="flex justify-between">

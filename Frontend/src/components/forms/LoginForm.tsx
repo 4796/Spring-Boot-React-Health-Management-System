@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
-import { LoginResponse } from "../services/auth";
+import { LoginResponse } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-import { startSession } from "../services/session";
+import { startSession } from "../../services/session";
 
 export type LoginArgs = { username: string; password: string };
 const LoginForm = ({
@@ -23,7 +23,7 @@ const LoginForm = ({
       if (result) {
         if (result.status === "SUCCESS") {
           navigate("/");
-          startSession(result.token, result.role, result.id);
+          startSession(result.token, result.role, result.id, data.username);
           console.log(result);
         } else {
           alert("Invalid credentials.");

@@ -1,18 +1,34 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Role } from "../services/auth";
-import { getId, getRole } from "../services/session";
+import { getId, getRole, getToken, getUsername } from "../services/session";
 import Navbar from "../components/Navbar";
+import { Patient } from "../roles/Patient";
+import { Doctor } from "../roles/Doctor";
+import { All } from "../roles/All";
+import { Admin } from "../roles/Admin";
 
 const MainLayout = () => {
-  const [role] = useState<Role | null>(getRole());
-  const [id] = useState<string | null>(getId());
-  console.log("Role MainLayout: ", role);
-
+  let userObj: All | null = null;
+  switch (getRole()) {
+    case "ROLE_PATIENT":
+      userObj = new Patient(getId(), getUsername(), getToken());
+      break;
+    case "ROLE_DOCTOR":
+      userObj = new Doctor(getId(), getUsername(), getToken());
+      break;
+    case "ROLE_ADMIN":
+      userObj = new Admin(getId(), getUsername(), getToken());
+      break;
+    default:
+      userObj = new Patient(getId(), getUsername(), getToken());
+  }
+  console.log("Main Layout:", userObj);
+  const [user] = useState<All>(userObj);
   return (
     <>
       <Navbar />
-      <Outlet context={{ role, id }} />
+      <Outlet context={{ user }} />
     </>
   );
 };

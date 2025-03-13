@@ -5,7 +5,7 @@ import Container from "../components/Container";
 import Spinner from "../components/Spinner";
 
 import { isLoggedIn } from "../services/session";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/forms/RegisterForm";
 import { register } from "../services/auth";
 
 const RegisterPage = () => {

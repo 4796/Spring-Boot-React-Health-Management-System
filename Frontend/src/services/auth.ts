@@ -1,5 +1,5 @@
-import { LoginArgs } from "../components/LoginForm";
-import { RegisterArgs } from "../components/RegisterForm";
+import { LoginArgs } from "../components/forms/LoginForm";
+import { RegisterArgs } from "../components/forms/RegisterForm";
 export type Role = "ROLE_ADMIN" | "ROLE_PATIENT" | "ROLE_DOCTOR";
 export const roles: Role[] = ["ROLE_ADMIN", "ROLE_PATIENT", "ROLE_DOCTOR"];
 export type LoginResponse = {

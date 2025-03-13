@@ -1,5 +1,5 @@
 import Container from "../components/Container";
-import EditAuthForm from "../components/EditAuthForm";
+import EditAuthForm from "../components/forms/EditAuthForm";
 import { editCredentials } from "../services/auth";
 
 const ChangeCredentialsPage = () => {
@@ -10,7 +10,6 @@ const ChangeCredentialsPage = () => {
       </h1>
       <EditAuthForm
         sendData={editCredentials}
-        oldUsername="lazar2"
         className="flex flex-col items-start gap-4 my-4 [&>div]:w-full"
       />
     </Container>

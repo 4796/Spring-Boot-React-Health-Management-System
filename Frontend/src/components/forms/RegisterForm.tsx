@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { RegisterResponse, Role } from "../services/auth";
+import { RegisterResponse, Role } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 
 export type RegisterArgs = {
@@ -17,9 +17,12 @@ export type RegisterArgs = {
   medical_history?: string;
   medicalHistory?: string;
   //doctor
-  hire_date?: String;
+  hire_date?: string;
+  hireDate?: string;
   Salary?: number;
+  salary?: number;
   specialization?: string;
+  imageUrl?: string;
 };
 const RegisterForm = ({
   sendData,

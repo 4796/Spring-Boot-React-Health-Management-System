@@ -1,13 +1,14 @@
 import { FormEvent, useState } from "react";
-import { LoginResponse, RegisterResponse, Role } from "../services/auth";
-import { RegisterArgs } from "./RegisterForm";
+import { LoginResponse } from "../../services/auth";
+
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { getToken } from "../services/session";
-import { LoginArgs } from "./LoginForm";
+import { getToken } from "../../services/session";
+import { LoginArgs } from "./../forms/LoginForm";
+import { All } from "../../roles/All";
 
 const EditAuthForm = ({
   sendData,
-  oldUsername,
+
   className,
 }: {
   sendData: (
@@ -15,14 +16,16 @@ const EditAuthForm = ({
     id: string,
     token: string
   ) => Promise<LoginResponse | null>;
-  oldUsername: string;
+
   className?: string;
 }) => {
-  const [username, setUsername] = useState<string>(oldUsername);
+  const globalParams: { user: All } = useOutletContext();
+  const [username, setUsername] = useState<string>(
+    globalParams.user.getUsername()
+  );
   const [password, setPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
-  const globalParams: { id: string; role: Role } = useOutletContext();
 
   const navigate = useNavigate();
   // submiting
@@ -38,7 +41,7 @@ const EditAuthForm = ({
         username,
         password,
       };
-      sendData(data, globalParams.id, getToken());
+      sendData(data, globalParams.user.getId(), getToken());
       navigate(-1);
     }
   };
