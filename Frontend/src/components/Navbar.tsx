@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import Container from "./Container";
 import logo from "../assets/react.svg";
+
+import { FaGear } from "react-icons/fa6";
 const Navbar = () => {
   return (
     <nav className="bg-sky-700 text-white">
@@ -14,7 +16,9 @@ const Navbar = () => {
 
         <ul className="uppercase font-bold">
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/profile">
+              <FaGear className="text-2xl" />
+            </NavLink>
           </li>
         </ul>
       </Container>

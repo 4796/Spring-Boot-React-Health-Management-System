@@ -1,16 +1,17 @@
+import { useOutletContext } from "react-router-dom";
 import Container from "../components/Container";
-import { destroySession } from "../services/session";
+import Options from "../components/profile_page/Options";
+import YourProfile from "../components/profile_page/YourProfile";
+import { All } from "../roles/All";
 
 const ProfilePage = () => {
+  const globalParams: { user: All } = useOutletContext();
   return (
-    <Container styleCssOverride=" ">
-      <div>ProfilePage</div>
-      <button
-        onClick={destroySession}
-        className="bg-red-600 text-white px-4 py-1 rounded-md"
-      >
-        Logout
-      </button>
+    <Container>
+      <div className="flex flex-col gap-4">
+        {globalParams.user.getRole() !== "ROLE_ADMIN" && <YourProfile />}
+        <Options />
+      </div>
     </Container>
   );
 };

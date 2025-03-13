@@ -1,5 +1,4 @@
 import { AppointmentData } from "../components/AppointmentListing";
-import { destroySession } from "./session";
 
 export const getAppointments = async (
   token: string
@@ -15,6 +14,8 @@ export const getAppointments = async (
       const data = await res.json();
       return data;
     } else {
+      console.log(res);
+
       console.log("Unathorized access.");
       //destroySession();
       return null;
