@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { isLoggedIn } from "../services/session";
+import { isLoggedIn } from "../../services/session";
 import Spinner from "./Spinner";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {

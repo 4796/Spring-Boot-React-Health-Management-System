@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Container from "../components/Container";
+import Container from "../components/reusable/Container";
 
-import Spinner from "../components/Spinner";
+import Spinner from "../components/reusable/Spinner";
 
 import { isLoggedIn } from "../services/session";
 import RegisterForm from "../components/forms/RegisterForm";

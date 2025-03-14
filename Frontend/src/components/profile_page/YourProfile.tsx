@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { data, Link, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";
-import Spinner from "../Spinner";
+import Spinner from "../reusable/Spinner";
 import { RegisterArgs } from "../forms/RegisterForm";
 
 const YourProfile = () => {

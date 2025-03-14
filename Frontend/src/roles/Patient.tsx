@@ -1,12 +1,12 @@
 import { JSX } from "react";
-import { RegisterResponse, Role } from "../services/auth";
+import { Role } from "../services/auth";
 import { All } from "./All";
 import AppointmentListings from "../components/AppointmentListings";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 
 export class Patient extends All {
-  constructor(id: string, username: string, token: string) {
-    super(id, username, token);
+  constructor(id: string, token: string) {
+    super(id, token);
   }
 
   async editUserInfo(args: RegisterArgs): Promise<boolean> {

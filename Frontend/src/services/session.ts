@@ -1,23 +1,12 @@
 import { Role, roles } from "./auth";
 
-export const startSession = (
-  token: string,
-  role: Role,
-  id: number,
-  username: string
-) => {
+export const startSession = (token: string, role: Role, id: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("role", role);
   localStorage.setItem("id", `${id}`);
-  localStorage.setItem("username", username);
 
   localStorage.setItem("exp", `${Date.now() + 3600 * 1000}`);
   console.log(Date.now() + (3600 - 10) * 1000);
-};
-
-export const getUsername = (): string => {
-  const username = localStorage.getItem("username");
-  return username ? username : "";
 };
 
 export const getToken = (): string => {
@@ -43,7 +32,6 @@ export const destroySession = () => {
   localStorage.removeItem("role");
   localStorage.removeItem("exp");
   localStorage.removeItem("id");
-  localStorage.removeItem("username");
   window.location.reload();
 };
 export const isLoggedIn = (): boolean => {

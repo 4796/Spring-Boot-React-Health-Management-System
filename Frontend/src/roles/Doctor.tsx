@@ -4,8 +4,8 @@ import { All } from "./All";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 
 export class Doctor extends All {
-  constructor(id: string, username: string, token: string) {
-    super(id, username, token);
+  constructor(id: string, token: string) {
+    super(id, token);
   }
 
   async editUserInfo(args: RegisterArgs): Promise<boolean> {

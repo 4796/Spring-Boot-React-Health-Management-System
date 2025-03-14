@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Container from "../components/Container";
+import { useEffect, useState } from "react";
+import Container from "../components/reusable/Container";
 import EditProfileForm from "../components/forms/EditProfileForm";
-
 import { useOutletContext } from "react-router-dom";
 import { RegisterArgs } from "../components/forms/RegisterForm";
-
-import Spinner from "../components/Spinner";
-
+import Spinner from "../components/reusable/Spinner";
 import { All } from "../roles/All";
 
 const EditProfilePage = () => {

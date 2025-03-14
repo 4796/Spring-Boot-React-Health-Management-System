@@ -3,7 +3,7 @@ import ErrorPage from "./pages/ErrorPage";
 import MainLayout from "./layouts/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/reusable/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";

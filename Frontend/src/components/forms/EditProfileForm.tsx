@@ -103,6 +103,7 @@ const EditProfileForm = ({
       </div>
       <div className="flex justify-between">
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             navigate(-1);
