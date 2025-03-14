@@ -46,6 +46,7 @@ public class MedicalRecordController {
   //posto moze i doktorov token da bude, mora da prosledi i id pacijenta
     @GetMapping
     public ResponseEntity<List<MedicalRecord>> getAllRecords(@RequestHeader("Authorization") String token, @RequestHeader("Patient") Long patientId) throws Exception {
+        
         String jwtToken = token.substring(7); // Uklanja "Bearer " prefiks
         return ResponseEntity.ok(medicalRecordService.getAllRecords(jwtToken, patientId));
     }

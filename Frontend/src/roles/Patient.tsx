@@ -3,6 +3,7 @@ import { Role } from "../services/auth";
 import { All } from "./All";
 import AppointmentListings from "../components/AppointmentListings";
 import { RegisterArgs } from "../components/forms/RegisterForm";
+import MedicalHistoryListings from "../components/MedicalHistoryListings";
 
 export class Patient extends All {
   constructor(id: string, token: string) {
@@ -64,6 +65,10 @@ export class Patient extends All {
           Your Appointments
         </h1>
         <AppointmentListings />
+        <h1 className="text-4xl text-sky-700 font-bold my-4">
+          Your Medical Records
+        </h1>
+        <MedicalHistoryListings />
       </>
     );
   }

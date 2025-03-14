@@ -3,6 +3,7 @@ import { Role } from "../services/auth";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import { LoginArgs } from "../components/forms/LoginForm";
 import { AppointmentData } from "../components/AppointmentListing";
+import { MedicalHistoryType } from "../components/MedicalHistoryListing";
 
 export abstract class All {
   protected id: string;
@@ -59,6 +60,31 @@ export abstract class All {
         method: "GET",
         headers: {
           Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        console.log(res);
+
+        console.log("Unathorized access.");
+        //destroySession();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async getMedicalRecords(): Promise<MedicalHistoryType[] | null> {
+    try {
+      const res = await fetch("/api/medical-records", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          Patient: this.id,
         },
       });
       if (res.ok) {

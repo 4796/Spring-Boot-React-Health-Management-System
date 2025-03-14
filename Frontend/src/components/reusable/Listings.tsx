@@ -28,11 +28,7 @@ const Listings = ({
     <div>{noDataText}</div>
   ) : (
     <div>
-      <div
-        className={`grid xl:grid-cols-${String(
-          minListingsToShow
-        )} grid-cols-1 gap-4`}
-      >
+      <div className="grid xl:grid-cols-3 grid-cols-1 gap-4">
         {(listedAll === true ? data : data.slice(0, minListingsToShow)).map(
           mapFunction
         )}

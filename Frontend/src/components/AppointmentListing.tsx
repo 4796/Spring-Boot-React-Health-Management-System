@@ -19,12 +19,12 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
           Appointment for: {data.type}
         </h1>
         <div>
-          <div>Time: {data.appointmentTime}</div>
           {isDoctor ? (
             <div>Patient: {data.patientId}</div>
           ) : (
             <div>Doctor: {data.doctorId}</div>
           )}
+          <div>Time: {data.appointmentTime}</div>
         </div>
       </div>
       <Button style="DANGER">Cancel Appointment</Button>

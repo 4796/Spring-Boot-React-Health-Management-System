@@ -1,4 +1,4 @@
-export type styleType = "REGULAR" | "DANGER";
+export type styleType = "REGULAR" | "DANGER" | "DANGER_OUTLINE";
 const Button = ({
   type = "button",
   onClick,
@@ -10,7 +10,10 @@ const Button = ({
   style?: styleType;
   children: React.ReactNode;
 }) => {
-  const stylings: { style: "REGULAR" | "DANGER"; styling: string }[] = [
+  const stylings: {
+    style: styleType;
+    styling: string;
+  }[] = [
     {
       style: "REGULAR",
       styling: "bg-sky-600 text-white",
@@ -18,6 +21,10 @@ const Button = ({
     {
       style: "DANGER",
       styling: "bg-red-600 text-white",
+    },
+    {
+      style: "DANGER_OUTLINE",
+      styling: "bg-inherit text-red-600 border-2 border-red-600 ",
     },
   ];
 
@@ -27,7 +34,7 @@ const Button = ({
       onClick={onClick}
       className={`${
         stylings.find((s) => s.style === style)?.styling
-      } px-4 py-1 rounded-md`}
+      } px-4 py-1 rounded-md font-semibold`}
     >
       {children}
     </button>

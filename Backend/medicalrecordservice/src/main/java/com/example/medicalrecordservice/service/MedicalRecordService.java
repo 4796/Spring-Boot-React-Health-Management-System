@@ -72,7 +72,8 @@ public class MedicalRecordService {
     	// if it is patinet, checks if it is theirs record
         if(isPatient(token)) {
         	Claims claims=jwtUtil.extractClaims(token);
-        	if(!claims.get("id").equals(patientId))
+
+        	if(!claims.get("id").toString().equals(patientId.toString()))
         		throw new IllegalArgumentException("Unauthorized");
         }
         return medicalRecordRepository.findByPatientId(patientId);
