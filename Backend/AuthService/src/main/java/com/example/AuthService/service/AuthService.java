@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.crypto.SecretKey;
+
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -265,12 +268,6 @@ public class AuthService {
 			throw new IllegalArgumentException("Unauthorized");
 		if(user.getUsername() != null && (user.getUsername().length()<3 || user.getUsername().length()>30))
     		throw new Exception("Username length is not valid");
-		if(user.getUsername()!=null) {
-			Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
-			if (!optionalUser.isEmpty() && !optionalUser.get().getUsername().equals(user.getUsername()) ) {
-				throw new Exception("Username already exists"); // 
-			}
-		}
     	if(user.getPassword()!=null && (user.getPassword().length()<3 || user.getPassword().length()>70))
     		throw new Exception("Password length is not valid");
         user.setId(id);
@@ -288,7 +285,13 @@ public class AuthService {
 		if(user.getUsername()==null)
 			user.setUsername(u.getUsername());
 		user.setRole(u.getRole());//can not change role
-		User r = userRepository.save(user);
+		User r=null;
+		try {
+			 r = userRepository.save(user);
+		} catch (DataIntegrityViolationException e) { 
+			throw new IllegalArgumentException("Choose unique username");
+		}
+		
 		r.setPassword("");
 		return r;
 	}

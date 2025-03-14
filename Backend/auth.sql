@@ -25,8 +25,9 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `user` */
 
@@ -35,7 +36,7 @@ insert  into `user`(`id`,`password`,`role`,`username`) values
 (72,'$2a$10$vw1I6b6SPKuXFghvnMAEIOJQepWETC1D6M7MRpa4/g1c7poXMrAF2','ROLE_PATIENT','lazar2'),
 (74,'$2a$10$c7EsjoF.mSWQsvNf1xl8Xez6cZMbZoHlPze9MMyxPEi1DPU1aDGr.','ROLE_PATIENT','korisnik'),
 (75,'$2a$10$VC0joWDOn.IP87UFSbw4SusrvbU4nzOAPXHzk6gCijwWRIqiSEAWC','ROLE_PATIENT','someone'),
-(76,'$2a$10$vz.8fDgVHmZcNkiKTpsS..Cy4uqLVAMiGQs7wdlxsEO0Iy8OWz86e','ROLE_PATIENT','aaaa'),
+(76,'$2a$10$cFZvFWAYCWzmD99GslAVCuPrxGRHX57osgLQEe.Mt2zRyG36JCFhS','ROLE_PATIENT','aaaa'),
 (81,'$2a$10$2zCJsdRBmXkZwaQEYDg3E.rl3SrHV6UVF6fopigzNTM8ohhh9BYo.','ROLE_ADMIN','admin'),
 (107,'$2a$10$fcYS1NxjH0.xH7Ubh6TBu.d55KN7l0SIG4y3QA/cxBOdL/LFbUngy','ROLE_PATIENT','stanko123'),
 (110,'$2a$10$iu87KSLPPW66aIekRr7P/ei8HUrqwGyGg2/7hI0dWCwT/SxSC8c/y','ROLE_PATIENT','radasin'),
