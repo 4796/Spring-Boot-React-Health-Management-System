@@ -70,11 +70,3 @@ export const register = async (
     return null;
   }
 };
-
-export const editCredentials = async (
-  args: LoginArgs,
-  id: string,
-  token: string
-): Promise<LoginResponse | null> => {
-  return null;
-};

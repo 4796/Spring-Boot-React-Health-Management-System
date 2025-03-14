@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Role } from "../services/auth";
-import { getId, getRole, getToken, getUsername } from "../services/session";
+import { getId, getRole, getToken } from "../services/session";
 import Navbar from "../components/Navbar";
 import { Patient } from "../roles/Patient";
 import { Doctor } from "../roles/Doctor";
@@ -12,16 +11,16 @@ const MainLayout = () => {
   let userObj: All | null = null;
   switch (getRole()) {
     case "ROLE_PATIENT":
-      userObj = new Patient(getId(), getUsername(), getToken());
+      userObj = new Patient(getId(), getToken());
       break;
     case "ROLE_DOCTOR":
-      userObj = new Doctor(getId(), getUsername(), getToken());
+      userObj = new Doctor(getId(), getToken());
       break;
     case "ROLE_ADMIN":
-      userObj = new Admin(getId(), getUsername(), getToken());
+      userObj = new Admin(getId(), getToken());
       break;
     default:
-      userObj = new Patient(getId(), getUsername(), getToken());
+      userObj = new Patient(getId(), getToken());
   }
   console.log("Main Layout:", userObj);
   const [user] = useState<All>(userObj);

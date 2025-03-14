@@ -1,29 +1,21 @@
 import { FormEvent, useState } from "react";
-import { LoginResponse } from "../../services/auth";
 
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { getToken } from "../../services/session";
-import { LoginArgs } from "./../forms/LoginForm";
+import { LoginArgs } from "./LoginForm";
 import { All } from "../../roles/All";
 
 const EditAuthForm = ({
   sendData,
-
   className,
 }: {
-  sendData: (
-    args: LoginArgs,
-    id: string,
-    token: string
-  ) => Promise<LoginResponse | null>;
+  sendData: (args: LoginArgs) => Promise<boolean>;
 
   className?: string;
 }) => {
   const globalParams: { user: All } = useOutletContext();
-  const [username, setUsername] = useState<string>(
-    globalParams.user.getUsername()
-  );
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
 
@@ -39,9 +31,10 @@ const EditAuthForm = ({
     if (confirm("Are you sure you want to apply these changes?")) {
       const data: LoginArgs = {
         username,
-        password,
+        password: newPassword,
       };
-      sendData(data, globalParams.user.getId(), getToken());
+
+      sendData(data);
       navigate(-1);
     }
   };
@@ -49,26 +42,14 @@ const EditAuthForm = ({
   return (
     <form onSubmit={submitForm} className={className}>
       <div>
-        <label htmlFor="username">Username: </label>
+        <label htmlFor="username">New Username: </label>
         <input
           type="text"
           id="username"
-          placeholder="Username"
+          placeholder="New Username"
           className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Current Password: </label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          className="w-full border-black border-[1px] rounded-md p-1"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
           required
         />
       </div>
@@ -98,6 +79,7 @@ const EditAuthForm = ({
       </div>
       <div className="flex justify-between">
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             navigate(-1);

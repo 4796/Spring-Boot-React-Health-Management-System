@@ -3,7 +3,7 @@ import { LoginResponse } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { startSession } from "../../services/session";
 
-export type LoginArgs = { username: string; password: string };
+export type LoginArgs = { username?: string; password?: string };
 const LoginForm = ({
   sendData,
   className,
@@ -23,7 +23,7 @@ const LoginForm = ({
       if (result) {
         if (result.status === "SUCCESS") {
           navigate("/");
-          startSession(result.token, result.role, result.id, data.username);
+          startSession(result.token, result.role, result.id);
           console.log(result);
         } else {
           alert("Invalid credentials.");

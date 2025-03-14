@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom";
-import Container from "../components/Container";
+import Container from "../components/reusable/Container";
 import Options from "../components/profile_page/Options";
 import YourProfile from "../components/profile_page/YourProfile";
 import { All } from "../roles/All";

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Container from "./Container";
+import Container from "./reusable/Container";
 import logo from "../assets/react.svg";
 
 import { FaGear } from "react-icons/fa6";
