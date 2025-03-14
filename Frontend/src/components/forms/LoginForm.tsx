@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { LoginResponse } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { startSession } from "../../services/session";
+import Button from "../reusable/Button";
 
 export type LoginArgs = { username?: string; password?: string };
 const LoginForm = ({
@@ -56,12 +57,7 @@ const LoginForm = ({
         value={password}
       />
 
-      <button
-        type="submit"
-        className="bg-sky-600 text-white px-4 py-1 rounded-md"
-      >
-        Login
-      </button>
+      <Button type="submit">Login</Button>
     </form>
   );
 };

@@ -1,20 +1,24 @@
 import { useState } from "react";
 import AppointmentListing, { AppointmentData } from "./AppointmentListing";
 import Listings from "./reusable/Listings";
-import { getAppointments } from "../services/api_calls";
-import { getToken } from "../services/session";
+
+import { useOutletContext } from "react-router-dom";
+import { All } from "../roles/All";
 
 const AppointmentListings = () => {
   const [data, setData] = useState<AppointmentData[] | null>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const globalParams: { user: All } = useOutletContext();
   return (
     <Listings
       useEffectFunction={() => {
-        getAppointments(getToken()).then((d: AppointmentData[] | null) => {
-          // setData(d ? d.slice(0, 1) : []); // for testing
-          setData(d);
-          setLoading(false);
-        });
+        globalParams.user
+          .getAppointments()
+          .then((d: AppointmentData[] | null) => {
+            // setData(d ? d.slice(0, 1) : []); // for testing
+            setData(d);
+            setLoading(false);
+          });
       }}
       loading={loading}
       minListingsToShow={3}

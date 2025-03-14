@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";
+import Button from "../reusable/Button";
 
 const EditProfileForm = ({
   sendData,
@@ -102,22 +103,16 @@ const EditProfileForm = ({
         />
       </div>
       <div className="flex justify-between">
-        <button
-          type="button"
+        <Button
           onClick={(e) => {
             e.preventDefault();
             navigate(-1);
           }}
-          className="bg-red-600 text-white px-4 py-1 rounded-md"
+          style="DANGER"
         >
           Cancel
-        </button>
-        <button
-          type="submit"
-          className="bg-sky-600 text-white px-4 py-1 rounded-md"
-        >
-          Confirm Changes
-        </button>
+        </Button>
+        <Button type="submit">Confirm Changes</Button>
       </div>
     </form>
   );

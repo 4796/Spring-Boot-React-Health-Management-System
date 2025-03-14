@@ -2,6 +2,7 @@ import { JSX } from "react";
 import { Role } from "../services/auth";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import { LoginArgs } from "../components/forms/LoginForm";
+import { AppointmentData } from "../components/AppointmentListing";
 
 export abstract class All {
   protected id: string;
@@ -50,5 +51,29 @@ export abstract class All {
   }
   // abstract getters
   abstract getRole(): Role;
+  // jsx
   abstract getHomePage(): JSX.Element;
+  async getAppointments(): Promise<AppointmentData[] | null> {
+    try {
+      const res = await fetch("/api/appointments", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        console.log(res);
+
+        console.log("Unathorized access.");
+        //destroySession();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";
 import Spinner from "../reusable/Spinner";
 import { RegisterArgs } from "../forms/RegisterForm";
+import Button from "../reusable/Button";
 
 const YourProfile = () => {
   const [loading, setLoading] = useState<boolean>(true);
-
   const globalParams: { user: All } = useOutletContext();
   const [data, setData] = useState<RegisterArgs | null>(null);
+  const navigate = useNavigate();
   useEffect(() => {
     globalParams.user.getUserInfo().then((d) => {
       console.log(d);
@@ -66,12 +67,14 @@ const YourProfile = () => {
         )}
       </div>
       <div>
-        <Link
-          to={"/edit-profile"}
-          className="inline-block bg-sky-600 text-white px-4 py-1 rounded-md"
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/edit-profile");
+          }}
         >
           Edit Profile
-        </Link>
+        </Button>
       </div>
     </>
   );

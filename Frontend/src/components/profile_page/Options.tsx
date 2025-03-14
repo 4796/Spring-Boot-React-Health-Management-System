@@ -1,26 +1,27 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { destroySession } from "../../services/session";
+import Button from "../reusable/Button";
 
 const Options = () => {
+  const navigate = useNavigate();
   return (
     <>
       <h1 className="text-4xl text-sky-700 font-bold my-4">Options</h1>
       <div className="flex flex-col  gap-2">
         <div>
-          <Link
-            to={"/change-credentials"}
-            className="inline-block bg-sky-600 text-white px-4 py-1 rounded-md"
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/change-credentials");
+            }}
           >
             Change Login Credentials
-          </Link>
+          </Button>
         </div>
         <div>
-          <button
-            onClick={destroySession}
-            className="bg-red-600 text-white px-4 py-1 rounded-md"
-          >
+          <Button onClick={destroySession} style="DANGER">
             Logout
-          </button>
+          </Button>
         </div>
       </div>
     </>

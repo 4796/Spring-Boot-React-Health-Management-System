@@ -1,3 +1,4 @@
+import { AppointmentData } from "../components/AppointmentListing";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import { Role } from "../services/auth";
 import { All } from "./All";
@@ -18,5 +19,8 @@ export class Admin extends All {
   }
   getRole(): Role {
     return "ROLE_ADMIN";
+  }
+  override async getAppointments(): Promise<AppointmentData[] | null> {
+    return [];
   }
 }

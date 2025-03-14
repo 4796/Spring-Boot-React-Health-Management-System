@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { RegisterResponse, Role } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
+import Button from "../reusable/Button";
 
 export type RegisterArgs = {
   id?: number;
@@ -116,12 +117,7 @@ const RegisterForm = ({
         required
       />
 
-      <button
-        type="submit"
-        className="bg-sky-600 text-white px-4 py-1 rounded-md"
-      >
-        Register
-      </button>
+      <Button type="submit">Register</Button>
     </form>
   );
 };

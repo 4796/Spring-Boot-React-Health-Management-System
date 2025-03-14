@@ -3,6 +3,8 @@ import { Role } from "../services/auth";
 import { All } from "./All";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 
+import AppointmentListings from "../components/AppointmentListings";
+
 export class Doctor extends All {
   constructor(id: string, token: string) {
     super(id, token);
@@ -59,9 +61,16 @@ export class Doctor extends All {
     }
   }
   getHomePage(): JSX.Element {
-    return <>Doctor Dashboard.</>;
+    return (
+      <>
+        <h1 className="text-4xl text-sky-700 font-bold my-4">
+          Booked Appointments
+        </h1>
+        <AppointmentListings />
+      </>
+    );
   }
-  public getRole(): Role {
+  getRole(): Role {
     return "ROLE_DOCTOR";
   }
 }

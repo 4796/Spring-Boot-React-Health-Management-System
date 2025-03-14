@@ -1,9 +1,7 @@
 import { FormEvent, useState } from "react";
-
-import { useNavigate, useOutletContext } from "react-router-dom";
-import { getToken } from "../../services/session";
+import { useNavigate } from "react-router-dom";
 import { LoginArgs } from "./LoginForm";
-import { All } from "../../roles/All";
+import Button from "../reusable/Button";
 
 const EditAuthForm = ({
   sendData,
@@ -13,7 +11,6 @@ const EditAuthForm = ({
 
   className?: string;
 }) => {
-  const globalParams: { user: All } = useOutletContext();
   const [username, setUsername] = useState<string>("");
 
   const [newPassword, setNewPassword] = useState<string>("");
@@ -78,22 +75,16 @@ const EditAuthForm = ({
         />
       </div>
       <div className="flex justify-between">
-        <button
-          type="button"
+        <Button
           onClick={(e) => {
             e.preventDefault();
             navigate(-1);
           }}
-          className="bg-red-600 text-white px-4 py-1 rounded-md"
+          style="DANGER"
         >
           Cancel
-        </button>
-        <button
-          type="submit"
-          className="bg-sky-600 text-white px-4 py-1 rounded-md"
-        >
-          Change
-        </button>
+        </Button>
+        <Button type="submit">Change</Button>
       </div>
     </form>
   );
