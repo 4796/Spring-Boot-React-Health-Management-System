@@ -17,7 +17,7 @@ const MedicalHistoryListings = () => {
         globalParams.user
           .getMedicalRecords()
           .then((d: MedicalHistoryType[] | null) => {
-            // setData(d ? d.slice(0, 1) : []); // for testing
+            //setData(d ? d.slice(0, 1) : []); // for testing
             setData(d);
             setLoading(false);
           });

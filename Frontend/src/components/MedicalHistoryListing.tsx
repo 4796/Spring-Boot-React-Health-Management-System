@@ -17,14 +17,14 @@ const MedicalHistoryListing = ({ data }: { data: MedicalHistoryType }) => {
         <h1 className="text-xl font-bold min-h-[3lh]">
           Diagnosis: {data.diagnosis}
         </h1>
-        <p>
+        <div>
           <div>Medication: {data.medications}</div>
           <div>Treatment: {data.treatment}</div>
-        </p>
-        <p>
+        </div>
+        <div>
           <div>Doctor: {data.doctorId}</div>
           <div>Record date: {data.recordDate}</div>
-        </p>
+        </div>
       </div>
       <Button style="DANGER_OUTLINE">Delete Record</Button>
     </div>
