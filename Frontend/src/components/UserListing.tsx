@@ -11,9 +11,11 @@ const UserListing = ({ data }: { data: UserType }) => {
         <h1 className="text-xl font-bold">{data.username}</h1>
         <div>Id: {data.id}</div>
       </div>
-
-      <Button onClick={() => navigate(`/users/${data.id}`)}>Edit</Button>
-
+      {data.role !== "ROLE_ADMIN" && (
+        <Button onClick={() => navigate(`/users/${data.role}/${data.id}`)}>
+          Open
+        </Button>
+      )}
       {
         ///         <Button style="DANGER">Delete</Button>
         ///<div>Role: {data.role}</div>

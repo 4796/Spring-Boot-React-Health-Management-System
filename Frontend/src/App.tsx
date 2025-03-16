@@ -8,6 +8,8 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";
 import EditProfilePage from "./pages/EditProfilePage";
+import AdminRoute from "./components/reusable/AdminRoute";
+import UserPage from "./pages/UserPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -50,6 +52,15 @@ const App = () => {
             <PrivateRoute>
               <ChangeCredentialsPage />
             </PrivateRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/users/:role/:id",
+          element: (
+            <AdminRoute>
+              <UserPage />
+            </AdminRoute>
           ),
           errorElement: <ErrorPage />,
         },

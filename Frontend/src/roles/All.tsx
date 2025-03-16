@@ -64,6 +64,7 @@ export abstract class All {
       });
       if (res.ok) {
         const data = await res.json();
+
         return data;
       } else {
         console.log(res);

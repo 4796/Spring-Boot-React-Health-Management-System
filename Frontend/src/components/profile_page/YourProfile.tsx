@@ -5,13 +5,14 @@ import Spinner from "../reusable/Spinner";
 import { RegisterArgs } from "../forms/RegisterForm";
 import Button from "../reusable/Button";
 
-const YourProfile = () => {
+const YourProfile = ({ user }: { user?: All }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const globalParams: { user: All } = useOutletContext();
   const [data, setData] = useState<RegisterArgs | null>(null);
   const navigate = useNavigate();
+
   useEffect(() => {
-    globalParams.user.getUserInfo().then((d) => {
+    (user ? user : globalParams.user).getUserInfo().then((d) => {
       console.log(d);
       setData(d);
       setLoading(false);
@@ -21,7 +22,9 @@ const YourProfile = () => {
     <Spinner loading={loading} />
   ) : (
     <>
-      <h1 className="text-4xl text-sky-700 font-bold my-4">Your Profile</h1>
+      {!user && (
+        <h1 className="text-4xl text-sky-700 font-bold my-4">Your Profile</h1>
+      )}
       <div className="flex flex-col items-center gap-2">
         {data?.imageUrl && (
           <div
@@ -66,16 +69,18 @@ const YourProfile = () => {
           </div>
         )}
       </div>
-      <div>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/edit-profile");
-          }}
-        >
-          Edit Profile
-        </Button>
-      </div>
+      {!user && (
+        <div>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/edit-profile");
+            }}
+          >
+            Edit Profile
+          </Button>
+        </div>
+      )}
     </>
   );
 };
