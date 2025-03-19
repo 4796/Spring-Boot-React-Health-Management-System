@@ -28,7 +28,7 @@ const YourProfile = ({ user }: { user?: All }) => {
       <div className="flex flex-col items-center gap-2">
         {data?.imageUrl && (
           <div
-            className="w-1/2 h-1/2 max-w-[300px] max-h-[300px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-cover border-2 border-sky-700"
+            className="w-1/2 h-1/2 max-w-[300px] max-h-[300px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center  bg-contain bg-no-repeat  border-2 border-sky-700"
             style={{ backgroundImage: `url(${data.imageUrl})` }}
           ></div>
         )}
