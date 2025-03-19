@@ -4,6 +4,7 @@ import { getToken } from "../services/session";
 import DoctorListingPreview from "./DoctorListingPreview";
 import { RegisterArgs } from "./forms/RegisterForm";
 import Button from "./reusable/Button";
+import GrayCard from "./reusable/GrayCard";
 
 export type MedicalHistoryType = {
   id: number;
@@ -36,22 +37,10 @@ const MedicalHistoryListing = ({
     <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between">
       <h1 className="text-xl font-bold">Diagnosis: {data.diagnosis}</h1>
       <div className="justify-self-end">
-        <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-          <span className="font-bold">Medications: </span>
-          <hr />
-          <div className="pl-4">{data.medications}</div>
-        </div>
-        <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-          <span className="font-bold">Treatment: </span>
-          <hr />
-          <div className="pl-4">{data.treatment}</div>
-        </div>
+        <GrayCard title="Medications: " content={[data.medications, ""]} />
+        <GrayCard title="Treatment: " content={[data.treatment, ""]} />
         <DoctorListingPreview subjectData={subjectData} />
-        <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-          <span className="font-bold">Record date: </span>
-          {data.recordDate}
-          {/* <hr /> */}
-        </div>
+        <GrayCard title="Record date: " content={[data.recordDate]} />
         {!isPatient && (
           <div className="flex [&>*]:w-full mt-4">
             <Button

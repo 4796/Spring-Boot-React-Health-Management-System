@@ -7,6 +7,7 @@ import { getToken } from "../services/session";
 import { RegisterArgs } from "./forms/RegisterForm";
 import { Patient } from "../roles/Patient";
 import DoctorListingPreview from "./DoctorListingPreview";
+import GrayCard from "./reusable/GrayCard";
 
 export type AppointmentData = {
   appointmentTime: string;
@@ -40,38 +41,26 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
               onClick={() => {
                 navigate(`/patients/${subject.getId()}`);
               }}
-              className="cursor-pointer border-[1px] border-sky-700 text-sky-700 p-4 rounded-md my-4"
+              className="cursor-pointer border-[1px] border-sky-700 text-sky-700 hover:bg-sky-700 hover:text-white transition-colors  p-4 rounded-md my-4"
             >
               <span className="font-bold">Patient: </span>
               {subjectData?.name}
 
               {/* <hr /> */}
             </div>
-
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-              <span className="font-bold">Contact: </span>
-              <hr />
-              <div className="pl-4">
-                <div>{subjectData?.email}</div>
-                <div>{subjectData?.phoneNumber}</div>
-              </div>
-            </div>
-
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-              <span className="font-bold">Medical History:</span>
-              <hr />
-
-              <div className="pl-4">{subjectData?.medicalHistory}</div>
-            </div>
+            <GrayCard
+              title="Contact: "
+              content={[subjectData?.email, subjectData?.phoneNumber]}
+            />
+            <GrayCard
+              title="Medical History: "
+              content={[subjectData?.medicalHistory, ""]}
+            />
           </>
         ) : (
           <DoctorListingPreview subjectData={subjectData} />
         )}
-        <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4">
-          <span className="font-bold">For: </span>
-          {data.appointmentTime}
-          {/* <hr /> */}
-        </div>
+        <GrayCard title="For: " content={[data.appointmentTime]} />
 
         <div className="flex [&>*]:w-full mt-4">
           <Button style="DANGER">Cancel Appointment</Button>

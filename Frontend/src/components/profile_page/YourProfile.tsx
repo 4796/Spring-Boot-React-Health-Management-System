@@ -4,6 +4,7 @@ import { All } from "../../roles/All";
 import Spinner from "../reusable/Spinner";
 import { RegisterArgs } from "../forms/RegisterForm";
 import Button from "../reusable/Button";
+import GrayCard from "../reusable/GrayCard";
 
 const YourProfile = ({ user }: { user?: All }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,58 +26,42 @@ const YourProfile = ({ user }: { user?: All }) => {
       {!user && (
         <h1 className="text-4xl text-sky-700 font-bold my-4">Your Profile</h1>
       )}
-      <div className="border-[1px] p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
+      <div className="border-[1px] border-black p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
         {data?.imageUrl && (
           <div
-            className="w-1/2 h-1/2 max-w-[300px] max-h-[300px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
+            className="border-black w-1/2 h-1/2 max-w-[300px] max-h-[300px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
             style={{ backgroundImage: `url(${data.imageUrl})` }}
           ></div>
         )}
 
-        <div className="w-full">
+        <div className="w-full text-left">
           {data?.name && (
-            <div>
+            <div className="xl:text-left text-center">
               <span className="text-xl font-bold my-4">{data.name}</span>
-              <hr />
             </div>
           )}
-          <hr />
-          {data?.specialization && <div>{data.specialization}</div>}
-          {data?.email && (
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4 text-left">
-              <span className="font-bold">Email: </span>
-              {data.email}
-              {/* <hr /> */}
+          <hr className="border-black" />
+          {data?.specialization && (
+            <div className="xl:text-left text-center">
+              {data.specialization}
             </div>
           )}
+          {data?.email && <GrayCard title="Email: " content={[data.email]} />}
           {data?.phoneNumber && (
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4 text-left">
-              <span className="font-bold">Phone Number: </span>
-              {data.phoneNumber}
-              {/* <hr /> */}
-            </div>
+            <GrayCard title="Phone Number: " content={[data.phoneNumber]} />
           )}
           {data?.medicalHistory && (
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4 text-left">
-              <span className="font-bold">Medical History:</span>
-              <hr />
-
-              <div className="pl-4">{data.medicalHistory}</div>
-            </div>
+            <GrayCard
+              title="Medical History:"
+              content={[data.medicalHistory, ""]}
+            />
           )}
 
           {data?.salary && (
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4 text-left">
-              <span className="font-bold">Salary:</span> ${data.salary}
-              {/* <hr /> */}
-            </div>
+            <GrayCard title="Salary: " content={["$" + data.salary]} />
           )}
           {data?.hireDate && (
-            <div className="bg-neutral-100 border-[1px] p-4 rounded-md my-4 text-left">
-              <span className="font-bold">Hired: </span>
-              {data.hireDate}
-              {/* <hr /> */}
-            </div>
+            <GrayCard title="Hired: " content={[data.hireDate]} />
           )}
         </div>
       </div>
