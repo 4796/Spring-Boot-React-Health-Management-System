@@ -4,12 +4,37 @@ import { All } from "./All";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 
 import AppointmentListings from "../components/AppointmentListings";
+import { MedicalHistoryType } from "../components/MedicalHistoryListing";
 
 export class Doctor extends All {
   constructor(id: string, token: string) {
     super(id, token);
   }
+  async makeMedicalRecord(args: MedicalHistoryType) {
+    try {
+      const res = await fetch(`/api/medical-records`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(args),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        return data;
+      } else {
+        console.log(res);
 
+        console.log("Unathorized access.");
+        //destroySession();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
   async editUserInfo(args: RegisterArgs): Promise<boolean> {
     try {
       const res = await fetch(

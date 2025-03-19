@@ -3,14 +3,14 @@ import ErrorPage from "./pages/ErrorPage";
 import MainLayout from "./layouts/MainLayout";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import PrivateRoute from "./components/reusable/PrivateRoute";
+import PrivateRoute from "./components/reusable/routes/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";
 import EditProfilePage from "./pages/EditProfilePage";
-import AdminRoute from "./components/reusable/AdminRoute";
+import AdminRoute from "./components/reusable/routes/AdminRoute";
 import UserPage from "./pages/UserPage";
-import DoctorRoute from "./components/reusable/DoctorRoute";
+import DoctorRoute from "./components/reusable/routes/DoctorRoute";
 import PatientPage from "./pages/PatientPage";
 
 const App = () => {

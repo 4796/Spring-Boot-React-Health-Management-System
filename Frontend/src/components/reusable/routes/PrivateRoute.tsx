@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { getRole, isLoggedIn } from "../../services/session";
-import Spinner from "./Spinner";
+import { isLoggedIn } from "../../../services/session";
+import Spinner from "./../Spinner";
 
-const DoctorRoute = ({ children }: { children: React.ReactNode }) => {
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
 
@@ -12,12 +12,12 @@ const DoctorRoute = ({ children }: { children: React.ReactNode }) => {
     //   setUser(data);
     //   setLoading(false);
     // });
-    setUser(isLoggedIn() && getRole() === "ROLE_DOCTOR");
+    setUser(isLoggedIn());
     setLoading(false);
   }, []);
 
   if (loading) return <Spinner loading={loading} />;
-  return user ? children : <Navigate to="/" />;
+  return user ? children : <Navigate to="/login" />;
 };
 
-export default DoctorRoute;
+export default PrivateRoute;

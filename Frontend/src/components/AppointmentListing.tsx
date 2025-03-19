@@ -22,7 +22,7 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
   const [subjectData, setSubjectData] = useState<RegisterArgs | null>();
   const navigate = useNavigate();
 
-  const subject: Doctor | null = isDoctor
+  const subject: Doctor | Patient = isDoctor
     ? new Patient("" + data.patientId, getToken())
     : new Doctor("" + data.doctorId, getToken());
   useEffect(() => {
