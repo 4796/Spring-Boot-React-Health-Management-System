@@ -14,9 +14,17 @@ export type MedicalHistoryType = {
   medications: string;
   recordDate: string;
 };
-const MedicalHistoryListing = ({ data }: { data: MedicalHistoryType }) => {
+const MedicalHistoryListing = ({
+  data,
+  doctorId = "",
+}: {
+  data: MedicalHistoryType;
+  doctorId?: string;
+}) => {
   console.log(data);
   const doctor: Doctor = new Doctor("" + data.doctorId, getToken());
+  const canDoctorEdit: boolean = doctorId === "" + data.doctorId;
+  const isPatient: boolean = doctorId === "";
   const [subjectData, setSubjectData] = useState<RegisterArgs | null>();
   useEffect(() => {
     doctor.getUserInfo().then((d) => {
@@ -44,9 +52,20 @@ const MedicalHistoryListing = ({ data }: { data: MedicalHistoryType }) => {
           {data.recordDate}
           {/* <hr /> */}
         </div>
-        <div className="flex [&>*]:w-full mt-4">
-          <Button style="DANGER_OUTLINE">Delete Record</Button>
-        </div>
+        {!isPatient && (
+          <div className="flex [&>*]:w-full mt-4">
+            <Button
+              onClick={() => {
+                if (confirm("Are you sure you want to delete this record?"))
+                  console.log("DELETED");
+              }}
+              style={canDoctorEdit ? "DANGER_OUTLINE" : "DISABLED_OUTLINE"}
+              disabled={!canDoctorEdit}
+            >
+              Delete Record
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

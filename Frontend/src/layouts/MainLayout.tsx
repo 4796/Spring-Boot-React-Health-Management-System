@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { getId, getRole, getToken } from "../services/session";
 import Navbar from "../components/Navbar";
 import { Patient } from "../roles/Patient";
@@ -23,6 +23,12 @@ const MainLayout = () => {
       userObj = new Patient(getId(), getToken());
   }
   console.log("Main Layout:", userObj);
+  // scroll to top when changing page
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   const [user] = useState<All>(userObj);
   return (
     <>

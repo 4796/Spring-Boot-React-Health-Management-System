@@ -6,15 +6,22 @@ import Listings from "./reusable/Listings";
 import MedicalHistoryListing, {
   MedicalHistoryType,
 } from "./MedicalHistoryListing";
+import { Patient } from "../roles/Patient";
 
-const MedicalHistoryListings = () => {
+const MedicalHistoryListings = ({
+  patient,
+  doctorId = "",
+}: {
+  patient?: Patient;
+  doctorId?: string;
+}) => {
   const [data, setData] = useState<MedicalHistoryType[] | null>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const globalParams: { user: All } = useOutletContext();
   return (
     <Listings
       useEffectFunction={() => {
-        globalParams.user
+        (patient ? patient : globalParams.user)
           .getMedicalRecords()
           .then((d: MedicalHistoryType[] | null) => {
             //setData(d ? d.slice(0, 1) : []); // for testing
@@ -26,8 +33,12 @@ const MedicalHistoryListings = () => {
       minListingsToShow={3}
       data={data}
       noDataText="No medical history."
-      mapFunction={(record) => (
-        <MedicalHistoryListing data={record} key={record.id} />
+      mapFunction={(record: MedicalHistoryType) => (
+        <MedicalHistoryListing
+          data={record}
+          key={record.id}
+          doctorId={doctorId}
+        />
       )}
     />
   );

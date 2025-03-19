@@ -59,8 +59,8 @@ public class DoctorService {
     		return doctorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
     	else if(role.equals("ROLE_DOCTOR")) {
-    		if(!getId(token).equals(id.toString()))  //doktor hoce podatke o drugom doktoru
-    				throw new IllegalArgumentException("Unauthorized");
+    		// if(!getId(token).equals(id.toString()))  //doktor hoce podatke o drugom doktoru
+    		// 		throw new IllegalArgumentException("Unauthorized");
     		return doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
     	}else {//pacijent
     		Doctor d = doctorRepository.findById(id)

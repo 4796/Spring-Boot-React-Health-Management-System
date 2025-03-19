@@ -10,12 +10,15 @@ import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import AdminRoute from "./components/reusable/AdminRoute";
 import UserPage from "./pages/UserPage";
+import DoctorRoute from "./components/reusable/DoctorRoute";
+import PatientPage from "./pages/PatientPage";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <MainLayout />,
+
       errorElement: <ErrorPage />,
       children: [
         {
@@ -61,6 +64,15 @@ const App = () => {
             <AdminRoute>
               <UserPage />
             </AdminRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/patients/:id",
+          element: (
+            <DoctorRoute>
+              <PatientPage />
+            </DoctorRoute>
           ),
           errorElement: <ErrorPage />,
         },
