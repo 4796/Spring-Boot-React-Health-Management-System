@@ -16,7 +16,15 @@ const AppointmentListings = () => {
           .getAppointments()
           .then((d: AppointmentData[] | null) => {
             // setData(d ? d.slice(0, 1) : []); // for testing
-            setData(d);
+            setData(
+              d
+                ? d.sort(
+                    (a, b) =>
+                      Date.parse(a.appointmentTime) -
+                      Date.parse(b.appointmentTime)
+                  )
+                : d
+            );
             setLoading(false);
           });
       }}

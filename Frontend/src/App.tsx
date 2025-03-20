@@ -12,6 +12,8 @@ import AdminRoute from "./components/reusable/routes/AdminRoute";
 import UserPage from "./pages/UserPage";
 import DoctorRoute from "./components/reusable/routes/DoctorRoute";
 import PatientPage from "./pages/PatientPage";
+import AddRecordPage from "./pages/AddRecordPage";
+import EditRecordPage from "./pages/EditRecordPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -72,6 +74,24 @@ const App = () => {
           element: (
             <DoctorRoute>
               <PatientPage />
+            </DoctorRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/add-record/:id",
+          element: (
+            <DoctorRoute>
+              <AddRecordPage />
+            </DoctorRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/edit-record/:id",
+          element: (
+            <DoctorRoute>
+              <EditRecordPage />
             </DoctorRoute>
           ),
           errorElement: <ErrorPage />,

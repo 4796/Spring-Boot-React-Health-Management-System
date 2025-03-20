@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../roles/All";
 import Button from "./reusable/Button";
 import { useEffect, useState } from "react";
@@ -20,7 +20,6 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
   const globalParams: { user: All } = useOutletContext();
   const isDoctor: boolean = globalParams.user.getRole() === "ROLE_DOCTOR";
   const [subjectData, setSubjectData] = useState<RegisterArgs | null>();
-  const navigate = useNavigate();
 
   const subject: Doctor | Patient = isDoctor
     ? new Patient("" + data.patientId, getToken())
@@ -37,17 +36,21 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
       <div className="justify-self-end">
         {isDoctor ? (
           <>
-            <div
-              onClick={() => {
-                navigate(`/patients/${subject.getId()}`);
-              }}
-              className="cursor-pointer border-[1px] border-sky-700 text-sky-700 hover:bg-sky-700 hover:text-white transition-colors  p-4 rounded-md my-4"
-            >
-              <span className="font-bold">Patient: </span>
-              {subjectData?.name}
+            <GrayCard
+              title=""
+              content={[
+                <span className="flex xl:flex-row flex-col justify-between items-center gap-2">
+                  <span className="font-bold">{subjectData?.name}</span>
+                  <Link
+                    to={`/patients/${subject.getId()}`}
+                    className="inline-block w-full [&>*]:w-full xl:w-auto"
+                  >
+                    <Button>Open</Button>
+                  </Link>
+                </span>,
+              ]}
+            />
 
-              {/* <hr /> */}
-            </div>
             <GrayCard
               title="Contact: "
               content={[subjectData?.email, subjectData?.phoneNumber]}

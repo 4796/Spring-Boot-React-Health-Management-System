@@ -17,7 +17,7 @@ const DoctorRoute = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   if (loading) return <Spinner loading={loading} />;
-  return user ? children : <Navigate to="/" />;
+  return user ? children : <Navigate to="/" replace />;
 };
 
 export default DoctorRoute;

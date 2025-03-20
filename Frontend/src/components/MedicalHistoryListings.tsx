@@ -25,7 +25,15 @@ const MedicalHistoryListings = ({
           .getMedicalRecords()
           .then((d: MedicalHistoryType[] | null) => {
             //setData(d ? d.slice(0, 1) : []); // for testing
-            setData(d);
+            setData(
+              d
+                ? d.sort(
+                    (a, b) =>
+                      Date.parse(b.recordDate ? b.recordDate : "0") -
+                      Date.parse(a.recordDate ? a.recordDate : "0")
+                  )
+                : d
+            );
             setLoading(false);
           });
       }}

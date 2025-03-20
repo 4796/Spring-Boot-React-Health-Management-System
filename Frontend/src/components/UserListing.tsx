@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./reusable/Button";
 import { UserType } from "./UserListings";
 
 const UserListing = ({ data }: { data: UserType }) => {
   console.log(data);
-  const navigate = useNavigate();
+
   return (
     <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-wrap xl:flex-row flex-col xl:items-center justify-between gap-4 ">
       <div>
@@ -12,9 +12,12 @@ const UserListing = ({ data }: { data: UserType }) => {
         <div>Id: {data.id}</div>
       </div>
       {data.role !== "ROLE_ADMIN" && (
-        <Button onClick={() => navigate(`/users/${data.role}/${data.id}`)}>
-          Open
-        </Button>
+        <Link
+          to={`/users/${data.role}/${data.id}`}
+          className="inline-block w-full [&>*]:w-full xl:w-auto"
+        >
+          <Button>Open</Button>
+        </Link>
       )}
       {
         ///         <Button style="DANGER">Delete</Button>

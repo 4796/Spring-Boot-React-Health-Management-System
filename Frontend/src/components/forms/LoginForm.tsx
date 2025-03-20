@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { LoginResponse } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { startSession } from "../../services/session";
@@ -12,6 +12,7 @@ const LoginForm = ({
   sendData: (args: LoginArgs) => Promise<LoginResponse | null>;
   className?: string;
 }) => {
+  const usernameRef = useRef<HTMLInputElement>(null);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -30,6 +31,7 @@ const LoginForm = ({
           alert("Invalid credentials.");
           setUsername("");
           setPassword("");
+          usernameRef.current?.focus();
         }
       } else {
         console.error("Can't login.");
@@ -46,6 +48,7 @@ const LoginForm = ({
         className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
+        ref={usernameRef}
       />
 
       <input
