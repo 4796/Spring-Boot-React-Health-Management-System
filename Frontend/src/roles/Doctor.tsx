@@ -7,6 +7,8 @@ import AppointmentListings from "../components/AppointmentListings";
 import { MedicalHistoryType } from "../components/MedicalHistoryListing";
 import H1 from "../components/reusable/h/H1";
 
+import SearchPatients from "../components/SearchPatients";
+
 export class Doctor extends All {
   constructor(id: string, token: string) {
     super(id, token);
@@ -162,9 +164,35 @@ export class Doctor extends All {
       return null;
     }
   }
+  async getPatients(): Promise<RegisterArgs[] | null> {
+    try {
+      const res = await fetch(`/api/patients`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        return data;
+      } else {
+        console.log(res);
+
+        console.log("Unathorized access.");
+        //destroySession();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
   getHomePage(): JSX.Element {
     return (
       <>
+        <H1>Search Patients</H1>
+        <SearchPatients />
         <H1>Booked Appointments</H1>
         <AppointmentListings />
       </>

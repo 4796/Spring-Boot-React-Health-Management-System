@@ -47,6 +47,15 @@ const MedicalHistoryListing = ({
           <div className="flex flex-col gap-2 [&>*]:w-full mt-4">
             <Button
               onClick={() => {
+                navigate(`/edit-record/${data.id}`);
+              }}
+              style={canDoctorEdit ? "REGULAR_OUTLINE" : "DISABLED_OUTLINE"}
+              disabled={!canDoctorEdit}
+            >
+              Edit Record
+            </Button>
+            <Button
+              onClick={() => {
                 if (confirm("Are you sure you want to delete this record?")) {
                   doctor.deleteMedicalRecord("" + data.id);
                   window.location.reload();
@@ -56,16 +65,6 @@ const MedicalHistoryListing = ({
               disabled={!canDoctorEdit}
             >
               Delete Record
-            </Button>
-
-            <Button
-              onClick={() => {
-                navigate(`/edit-record/${data.id}`);
-              }}
-              style={canDoctorEdit ? "REGULAR_OUTLINE" : "DISABLED_OUTLINE"}
-              disabled={!canDoctorEdit}
-            >
-              Edit Record
             </Button>
           </div>
         )}
