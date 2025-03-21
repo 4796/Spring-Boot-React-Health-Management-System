@@ -5,6 +5,7 @@ import { Admin } from "../roles/Admin";
 import { useEffect, useState } from "react";
 import UserListing from "./UserListing";
 import { Role } from "../services/auth";
+import H2 from "./reusable/h/H2";
 export type UserType = {
   id: number;
   username: string;
@@ -31,7 +32,7 @@ const UserListings = () => {
   }, []);
   return (
     <>
-      <h1 className="text-2xl text-sky-700 font-bold my-4">Admins</h1>
+      <H2>Admins</H2>
       <Listings
         useEffectFunction={() => {}}
         loading={loading}
@@ -40,7 +41,7 @@ const UserListings = () => {
         noDataText="No admins."
         mapFunction={(user) => <UserListing data={user} key={user.id} />}
       />
-      <h1 className="text-2xl text-sky-700 font-bold my-4">Patients</h1>
+      <H2>Patients</H2>
 
       <Listings
         useEffectFunction={() => {}}
@@ -50,7 +51,7 @@ const UserListings = () => {
         noDataText="No patients."
         mapFunction={(user) => <UserListing data={user} key={user.id} />}
       />
-      <h1 className="text-2xl text-sky-700 font-bold my-4">Doctors</h1>
+      <H2>Doctors</H2>
 
       <Listings
         useEffectFunction={() => {}}

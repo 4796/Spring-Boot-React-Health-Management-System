@@ -2,6 +2,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import RecordForm from "../components/forms/RecordForm";
 import { Doctor } from "../roles/Doctor";
 import Container from "../components/reusable/Container";
+import H1 from "../components/reusable/h/H1";
 
 const AddRecordPage = () => {
   const { id } = useParams();
@@ -9,7 +10,7 @@ const AddRecordPage = () => {
 
   return (
     <Container>
-      <h1 className="text-4xl text-sky-700 font-bold my-4">Add Record</h1>
+      <H1>Add Record</H1>
       <RecordForm
         sendData={globalParams.user.makeMedicalRecord.bind(globalParams.user)}
         patientId={id ? id : ""}

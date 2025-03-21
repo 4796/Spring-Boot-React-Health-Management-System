@@ -5,6 +5,7 @@ import { Patient } from "../roles/Patient";
 import { getId, getToken } from "../services/session";
 import Button from "../components/reusable/Button";
 import MedicalHistoryListings from "../components/MedicalHistoryListings";
+import H1 from "../components/reusable/h/H1";
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,9 +13,7 @@ const PatientPage = () => {
   return (
     <Container>
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl text-sky-700 font-bold my-4">
-          Patient Profile
-        </h1>
+        <H1>Patient Profile</H1>
         <YourProfile user={patient} />
         <Link to={`/add-record/${id}`}>
           <Button style="GOOD">Add Record</Button>

@@ -5,6 +5,7 @@ import { RegisterArgs } from "../components/forms/RegisterForm";
 
 import AppointmentListings from "../components/AppointmentListings";
 import { MedicalHistoryType } from "../components/MedicalHistoryListing";
+import H1 from "../components/reusable/h/H1";
 
 export class Doctor extends All {
   constructor(id: string, token: string) {
@@ -164,9 +165,7 @@ export class Doctor extends All {
   getHomePage(): JSX.Element {
     return (
       <>
-        <h1 className="text-4xl text-sky-700 font-bold my-4">
-          Booked Appointments
-        </h1>
+        <H1>Booked Appointments</H1>
         <AppointmentListings />
       </>
     );

@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import Spinner from "../components/reusable/Spinner";
 import { All } from "../roles/All";
+import H1 from "../components/reusable/h/H1";
 
 const EditProfilePage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -21,7 +22,7 @@ const EditProfilePage = () => {
     <Spinner loading={loading} />
   ) : (
     <Container>
-      <h1 className="text-4xl text-sky-700 font-bold my-4">Edit Profile</h1>
+      <H1>Edit Profile</H1>
       <EditProfileForm
         sendData={globalParams.user.editUserInfo.bind(globalParams.user)}
         oldArgs={oldArgs}

@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import EditProfileForm from "../components/forms/EditProfileForm";
+
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import Container from "../components/reusable/Container";
 import Spinner from "../components/reusable/Spinner";
-import { All } from "../roles/All";
+
 import { Doctor } from "../roles/Doctor";
 import { getToken } from "../services/session";
 import EditDoctorForm from "../components/forms/EditDoctorForm";
 import { Admin } from "../roles/Admin";
+import H1 from "../components/reusable/h/H1";
 
 const EditDoctorPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,7 +28,7 @@ const EditDoctorPage = () => {
     <Spinner loading={loading} />
   ) : (
     <Container>
-      <h1 className="text-4xl text-sky-700 font-bold my-4">Edit Profile</h1>
+      <H1>Edit Profile</H1>
       <EditDoctorForm
         sendData={globalParams.user.changeDoctorSalary.bind(globalParams.user)}
         oldArgs={oldArgs}

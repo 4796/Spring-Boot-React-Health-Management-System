@@ -5,6 +5,7 @@ import Button from "../components/reusable/Button";
 import UserListings, { UserType } from "../components/UserListings";
 import { RegisterResponse, Role } from "../services/auth";
 import { All } from "./All";
+import H1 from "../components/reusable/h/H1";
 
 export class Admin extends All {
   constructor(id: string, token: string) {
@@ -99,7 +100,7 @@ export class Admin extends All {
   getHomePage(): React.ReactElement {
     return (
       <>
-        <h1 className="text-4xl text-sky-700 font-bold my-4">Users</h1>
+        <H1>Users</H1>
         <UserListings />
         <Link to="/register-doctor" className="inline-block mt-4">
           <Button style="GOOD">Register New Doctor</Button>

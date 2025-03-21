@@ -6,6 +6,7 @@ import { MedicalHistoryType } from "../components/MedicalHistoryListing";
 import Container from "../components/reusable/Container";
 import RecordForm from "../components/forms/RecordForm";
 import { getId } from "../services/session";
+import H1 from "../components/reusable/h/H1";
 
 const EditRecordPage = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const EditRecordPage = () => {
     <Navigate to={`/patients/${oldArgs?.patientId}`} replace />
   ) : (
     <Container>
-      <h1 className="text-4xl text-sky-700 font-bold my-4">Edit Record</h1>
+      <H1>Edit Record</H1>
       <RecordForm
         sendData={globalParams.user.editMedicalRecord.bind(globalParams.user)}
         patientId={oldArgs ? "" + oldArgs.patientId : ""}
