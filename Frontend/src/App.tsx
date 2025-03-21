@@ -14,6 +14,8 @@ import DoctorRoute from "./components/reusable/routes/DoctorRoute";
 import PatientPage from "./pages/PatientPage";
 import AddRecordPage from "./pages/AddRecordPage";
 import EditRecordPage from "./pages/EditRecordPage";
+import DoctorRegisterPage from "./pages/DoctorRegisterPage";
+import EditDoctorPage from "./pages/EditDoctorPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -65,6 +67,24 @@ const App = () => {
           element: (
             <AdminRoute>
               <UserPage />
+            </AdminRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/register-doctor",
+          element: (
+            <AdminRoute>
+              <DoctorRegisterPage />
+            </AdminRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/users/ROLE_DOCTOR/:id/edit",
+          element: (
+            <AdminRoute>
+              <EditDoctorPage />
             </AdminRoute>
           ),
           errorElement: <ErrorPage />,

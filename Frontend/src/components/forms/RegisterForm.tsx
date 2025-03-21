@@ -28,17 +28,25 @@ export type RegisterArgs = {
 const RegisterForm = ({
   sendData,
   className,
+  registerDoctor = false,
 }: {
   sendData: (args: RegisterArgs) => Promise<RegisterResponse | null>;
   className?: string;
+  registerDoctor?: boolean;
 }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
+  // patient
   const [email, setEmail] = useState<string>("");
   const [medicalHistory, setMedicalHistory] = useState<string>("");
-  const role: Role = "ROLE_PATIENT";
+  // doctor
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [specialization, setSpecialization] = useState<string>("");
+  const [salary, setSalary] = useState<number>(0);
+  //
+  const role: Role = registerDoctor ? "ROLE_DOCTOR" : "ROLE_PATIENT";
   const navigate = useNavigate();
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,13 +58,21 @@ const RegisterForm = ({
       name,
       phone_number: phone,
       //patient
-      email,
-      medical_history: medicalHistory,
+      email: !registerDoctor ? email : undefined,
+      medical_history: !registerDoctor ? medicalHistory : undefined,
+      //doctor
+      imageUrl: registerDoctor ? imageUrl : undefined,
+      specialization: registerDoctor ? specialization : undefined,
+      salary: registerDoctor ? salary : undefined,
     };
     sendData(data).then((result: RegisterResponse | null) => {
+      if (registerDoctor && salary <= 0) {
+        alert("Invalid Salary Number.");
+        return;
+      }
       if (result) {
         if (result.status === "ERROR") console.log("KONFLIKT");
-        else navigate("/login");
+        else registerDoctor ? navigate(-1) : navigate("/login");
       } else console.error("REGISTER ERROR.");
     });
   };
@@ -80,24 +96,57 @@ const RegisterForm = ({
         value={phone}
         required
       />
-
-      <input
-        type="email"
-        id="email"
-        placeholder="user@mail.com"
-        className="w-full border-black border-[1px] rounded-md p-1"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        required
-      />
-      <input
-        type="text"
-        id="medical_history"
-        placeholder="Medical History"
-        className="w-full border-black border-[1px] rounded-md p-1"
-        onChange={(e) => setMedicalHistory(e.target.value)}
-        value={medicalHistory}
-      />
+      {registerDoctor ? (
+        <>
+          <input
+            type="text"
+            id="image_url"
+            placeholder="www.image.com/imgurl"
+            className="w-full border-black border-[1px] rounded-md p-1"
+            onChange={(e) => setImageUrl(e.target.value)}
+            value={imageUrl}
+            required
+          />
+          <input
+            type="text"
+            id="specialization"
+            placeholder="Neurologist"
+            className="w-full border-black border-[1px] rounded-md p-1"
+            onChange={(e) => setSpecialization(e.target.value)}
+            value={specialization}
+            required
+          />
+          <input
+            type="number"
+            id="salary"
+            placeholder="$1000"
+            className="w-full border-black border-[1px] rounded-md p-1"
+            onChange={(e) => setSalary(Number(e.target.value))}
+            value={salary}
+            required
+          />
+        </>
+      ) : (
+        <>
+          <input
+            type="email"
+            id="email"
+            placeholder="user@mail.com"
+            className="w-full border-black border-[1px] rounded-md p-1"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+          />
+          <input
+            type="text"
+            id="medical_history"
+            placeholder="Medical History"
+            className="w-full border-black border-[1px] rounded-md p-1"
+            onChange={(e) => setMedicalHistory(e.target.value)}
+            value={medicalHistory}
+          />
+        </>
+      )}
       <input
         type="text"
         id="username"
@@ -116,8 +165,22 @@ const RegisterForm = ({
         value={password}
         required
       />
-
-      <Button type="submit">Register</Button>
+      {registerDoctor ? (
+        <div className="flex justify-between w-full">
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+            style="DANGER"
+          >
+            Cancel
+          </Button>{" "}
+          <Button type="submit">Register</Button>
+        </div>
+      ) : (
+        <Button type="submit">Register</Button>
+      )}
     </form>
   );
 };
