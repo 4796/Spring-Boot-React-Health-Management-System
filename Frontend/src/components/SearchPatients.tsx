@@ -27,7 +27,9 @@ const SearchPatients = () => {
       data
         ? data
             .filter((d) =>
-              (d.name ? d.name : "").toLowerCase().startsWith(search)
+              (d.name ? d.name : "")
+                .toLowerCase()
+                .startsWith(search.toLowerCase())
             )
             .slice(0, 3)
         : []
@@ -51,7 +53,7 @@ const SearchPatients = () => {
           (patient) =>
             (patient.name ? patient.name : "")
               .toLowerCase()
-              .startsWith(search) && (
+              .startsWith(search.toLowerCase()) && (
               <PatientListingPreview subjectData={patient} key={patient.id} />
             )
         )}
