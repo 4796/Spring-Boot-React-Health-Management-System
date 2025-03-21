@@ -16,7 +16,7 @@ const SearchPatients = () => {
   const navigate = useNavigate();
   useEffect(() => {
     globalParams.user.getPatients().then((d) => {
-      setData(d ? d : []);
+      setData(d ? d.reverse() : []);
       setCurrentData(d ? d.slice(0, 3) : []);
       setLoading(false);
     });
