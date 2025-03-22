@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Doctor } from "../roles/Doctor";
 import { RegisterArgs } from "./forms/RegisterForm";
 import SearchForm from "./forms/SearchForm";
@@ -54,7 +54,13 @@ const SearchPatients = () => {
             (patient.name ? patient.name : "")
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
-              <PatientListingPreview subjectData={patient} key={patient.id} />
+              <Link to={`/patients/${patient?.id}`}>
+                <PatientListingPreview
+                  subjectData={patient}
+                  addCssStyle="hover:bg-white"
+                  key={patient.id}
+                />
+              </Link>
             )
         )}
       </div>

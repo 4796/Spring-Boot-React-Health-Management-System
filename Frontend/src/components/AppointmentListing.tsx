@@ -8,6 +8,7 @@ import { RegisterArgs } from "./forms/RegisterForm";
 import { Patient } from "../roles/Patient";
 import DoctorListingPreview from "./DoctorListingPreview";
 import GrayCard from "./reusable/GrayCard";
+import PatientListingPreview from "./PatientListingPreview";
 
 export type AppointmentData = {
   appointmentTime: string;
@@ -33,10 +34,16 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
   return (
     <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between">
       <h1 className="text-xl font-bold">Appointment for: {data.type}</h1>
-      <div className="justify-self-end">
+      <div>
         {isDoctor ? (
           <>
-            <GrayCard
+            <Link to={`/patients/${subjectData?.id}`}>
+              <PatientListingPreview
+                subjectData={subjectData}
+                addCssStyle="my-4 hover:bg-white"
+              />
+            </Link>
+            {/* <GrayCard
               title=""
               content={[
                 <span className="flex xl:flex-row flex-col justify-between items-center gap-2">
@@ -49,19 +56,19 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
                   </Link>
                 </span>,
               ]}
-            />
-
+            /> */}
+            {/* 
             <GrayCard
               title="Contact: "
               content={[subjectData?.email, subjectData?.phoneNumber]}
-            />
-            <GrayCard
+            /> */}
+            {/* <GrayCard
               title="Medical History: "
               content={[subjectData?.medicalHistory, ""]}
-            />
+            /> */}
           </>
         ) : (
-          <DoctorListingPreview subjectData={subjectData} />
+          <DoctorListingPreview subjectData={subjectData} addCssStyle="my-4" />
         )}
         <GrayCard title="For: " content={[data.appointmentTime]} />
 

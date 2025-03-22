@@ -36,13 +36,21 @@ const MedicalHistoryListing = ({
     });
   }, []);
   return (
-    <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between">
+    <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between gap-4">
       <h1 className="text-xl font-bold">Diagnosis: {data.diagnosis}</h1>
       <div className="justify-self-end">
-        <GrayCard title="Medications: " content={[data.medications, ""]} />
-        <GrayCard title="Treatment: " content={[data.treatment, ""]} />
-        <DoctorListingPreview subjectData={subjectData} />
-        <GrayCard title="Record date: " content={[data.recordDate]} />
+        <div className="grid xl:grid-cols-3 gap-4 ">
+          <div className="grid gap-4 xl:col-span-2">
+            <GrayCard title="Medications: " content={[data.medications, ""]} />
+            <GrayCard title="Treatment: " content={[data.treatment, ""]} />
+          </div>
+          <div className="flex flex-col gap-4 ">
+            <DoctorListingPreview subjectData={subjectData} />
+            <GrayCard title="Record date: " content={[data.recordDate]} />
+          </div>
+        </div>
+
+        <div className="xl:[&>*]:mb-0"></div>
         {!isPatient && (
           <div className="flex flex-col gap-2 [&>*]:w-full mt-4">
             <Button

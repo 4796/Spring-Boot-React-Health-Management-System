@@ -29,23 +29,25 @@ const YourProfile = ({ user }: { user?: All }) => {
       <div className="border-[1px] border-black p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
         {data?.imageUrl && (
           <div
-            className="border-black w-1/2 h-1/2 max-w-[300px] max-h-[300px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
+            className="border-black w-1/2 h-1/2 max-w-[260px] max-h-[260px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
             style={{ backgroundImage: `url(${data.imageUrl})` }}
           ></div>
         )}
 
-        <div className="w-full text-left">
-          {data?.name && (
-            <div className="xl:text-left text-center">
-              <span className="text-xl font-bold my-4">{data.name}</span>
-            </div>
-          )}
-          <hr className="border-black" />
-          {data?.specialization && (
-            <div className="xl:text-left text-center">
-              {data.specialization}
-            </div>
-          )}
+        <div className="w-full text-left grid gap-4">
+          <div>
+            {data?.name && (
+              <div className="xl:text-left text-center">
+                <span className="text-xl font-bold my-4">{data.name}</span>
+              </div>
+            )}
+            <hr className="border-black" />
+            {data?.specialization && (
+              <div className="xl:text-left text-center">
+                {data.specialization}
+              </div>
+            )}
+          </div>
           {data?.email && <GrayCard title="Email: " content={[data.email]} />}
           {data?.phoneNumber && (
             <GrayCard title="Phone Number: " content={[data.phoneNumber]} />

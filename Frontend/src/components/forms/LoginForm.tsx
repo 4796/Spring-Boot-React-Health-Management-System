@@ -29,8 +29,8 @@ const LoginForm = ({
           console.log(result);
         } else {
           alert("Invalid credentials.");
-          setUsername("");
-          setPassword("");
+          // setUsername("");
+          // setPassword("");
           usernameRef.current?.focus();
         }
       } else {
