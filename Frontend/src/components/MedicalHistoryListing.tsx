@@ -44,38 +44,40 @@ const MedicalHistoryListing = ({
             <GrayCard title="Medications: " content={[data.medications, ""]} />
             <GrayCard title="Treatment: " content={[data.treatment, ""]} />
           </div>
-          <div className="flex flex-col gap-4 ">
-            <DoctorListingPreview subjectData={subjectData} />
-            <GrayCard title="Record date: " content={[data.recordDate]} />
+          <div className="flex flex-col gap-4 justify-between">
+            <div className="flex flex-col gap-4">
+              <DoctorListingPreview subjectData={subjectData} />
+              <GrayCard title="Record date: " content={[data.recordDate]} />
+            </div>
+            {!isPatient && (
+              <div className="flex flex-col gap-2 [&>*]:w-full">
+                <Button
+                  onClick={() => {
+                    navigate(`/edit-record/${data.id}`);
+                  }}
+                  style={canDoctorEdit ? "REGULAR_OUTLINE" : "DISABLED_OUTLINE"}
+                  disabled={!canDoctorEdit}
+                >
+                  Edit Record
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (
+                      confirm("Are you sure you want to delete this record?")
+                    ) {
+                      doctor.deleteMedicalRecord("" + data.id);
+                      window.location.reload();
+                    }
+                  }}
+                  style={canDoctorEdit ? "DANGER_OUTLINE" : "DISABLED_OUTLINE"}
+                  disabled={!canDoctorEdit}
+                >
+                  Delete Record
+                </Button>
+              </div>
+            )}
           </div>
         </div>
-
-        <div className="xl:[&>*]:mb-0"></div>
-        {!isPatient && (
-          <div className="flex flex-col gap-2 [&>*]:w-full mt-4">
-            <Button
-              onClick={() => {
-                navigate(`/edit-record/${data.id}`);
-              }}
-              style={canDoctorEdit ? "REGULAR_OUTLINE" : "DISABLED_OUTLINE"}
-              disabled={!canDoctorEdit}
-            >
-              Edit Record
-            </Button>
-            <Button
-              onClick={() => {
-                if (confirm("Are you sure you want to delete this record?")) {
-                  doctor.deleteMedicalRecord("" + data.id);
-                  window.location.reload();
-                }
-              }}
-              style={canDoctorEdit ? "DANGER_OUTLINE" : "DISABLED_OUTLINE"}
-              disabled={!canDoctorEdit}
-            >
-              Delete Record
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
