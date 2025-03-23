@@ -54,11 +54,10 @@ const SearchPatients = () => {
             (patient.name ? patient.name : "")
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
-              <Link to={`/patients/${patient?.id}`}>
+              <Link to={`/patients/${patient?.id}`} key={patient.id}>
                 <PatientListingPreview
                   subjectData={patient}
                   addCssStyle="hover:bg-white"
-                  key={patient.id}
                 />
               </Link>
             )

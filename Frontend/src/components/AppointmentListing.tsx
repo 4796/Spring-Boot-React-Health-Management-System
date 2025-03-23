@@ -1,5 +1,5 @@
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { All } from "../roles/All";
+import { Link, useOutletContext } from "react-router-dom";
+
 import Button from "./reusable/Button";
 import { useEffect, useState } from "react";
 import { Doctor } from "../roles/Doctor";
@@ -18,7 +18,7 @@ export type AppointmentData = {
   type: string;
 };
 const AppointmentListing = ({ data }: { data: AppointmentData }) => {
-  const globalParams: { user: All } = useOutletContext();
+  const globalParams: { user: Patient | Doctor } = useOutletContext();
   const isDoctor: boolean = globalParams.user.getRole() === "ROLE_DOCTOR";
   const [subjectData, setSubjectData] = useState<RegisterArgs | null>();
 
@@ -73,7 +73,21 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
         <GrayCard title="For: " content={[data.appointmentTime]} />
 
         <div className="flex [&>*]:w-full mt-4">
-          <Button style="DANGER">Cancel Appointment</Button>
+          <Button
+            style="DANGER"
+            onClick={() => {
+              if (
+                confirm("Are you sure you want to cancel this appointment?")
+              ) {
+                globalParams.user.cancelAppointment(
+                  "" + (data.id ? data.id : "")
+                );
+                window.location.reload();
+              }
+            }}
+          >
+            Cancel Appointment
+          </Button>
         </div>
       </div>
     </div>
