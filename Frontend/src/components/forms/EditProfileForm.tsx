@@ -54,9 +54,10 @@ const EditProfileForm = ({
           <div>
             <label htmlFor="name">Name: </label>
             <input
+              maxLength={30}
               type="text"
               id="name"
-              placeholder="Name"
+              placeholder="John Doe"
               className="w-full border-black border-[1px] rounded-md p-1"
               onChange={(e) => setName(e.target.value)}
               value={name}
@@ -82,7 +83,7 @@ const EditProfileForm = ({
             <input
               type="text"
               id="medical_history"
-              placeholder="Medical History"
+              placeholder="Operations, allergies..."
               className="w-full border-black border-[1px] rounded-md p-1"
               onChange={(e) => setMedicalHistory(e.target.value)}
               value={medicalHistory}

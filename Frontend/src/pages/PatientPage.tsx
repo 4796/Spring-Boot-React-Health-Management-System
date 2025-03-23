@@ -12,17 +12,18 @@ const PatientPage = () => {
   const patient: Patient = new Patient(id ? id : "", getToken());
   return (
     <Container>
-      <div className="flex flex-col gap-4">
-        <H1>Patient Profile</H1>
-        <YourProfile user={patient} />
-        <Link to={`/add-record/${id}`}>
+      <H1>Patient Profile</H1>
+      <YourProfile user={patient} />
+      <div className="flex items-center justify-between">
+        <H1>Records</H1>
+        <Link to={`/add-record/${id}`} className="block">
           <Button style="GOOD">Add Record</Button>
         </Link>
-        <MedicalHistoryListings
-          patient={new Patient(id ? id : "", getToken())}
-          doctorId={getId()}
-        />
       </div>
+      <MedicalHistoryListings
+        patient={new Patient(id ? id : "", getToken())}
+        doctorId={getId()}
+      />
     </Container>
   );
 };

@@ -41,9 +41,11 @@ const EditAuthForm = ({
       <div>
         <label htmlFor="username">New Username: </label>
         <input
+          minLength={3}
+          maxLength={20}
           type="text"
           id="username"
-          placeholder="New Username"
+          placeholder=""
           className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
@@ -53,9 +55,10 @@ const EditAuthForm = ({
       <div>
         <label htmlFor="newPassword">New Password: </label>
         <input
+          minLength={3}
           type="password"
           id="newPassword"
-          placeholder="New Password"
+          placeholder=""
           className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setNewPassword(e.target.value)}
           value={newPassword}
@@ -65,9 +68,10 @@ const EditAuthForm = ({
       <div>
         <label htmlFor="newPasswordConfirm">Confirm New Password: </label>
         <input
+          minLength={3}
           type="password"
           id="newPasswordConfirm"
-          placeholder="Confirm New Password"
+          placeholder=""
           className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setConfirmNewPassword(e.target.value)}
           value={confirmNewPassword}

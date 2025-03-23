@@ -81,6 +81,7 @@ const RegisterForm = ({
       <input
         type="text"
         id="name"
+        maxLength={30}
         placeholder="Name"
         className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setName(e.target.value)}
@@ -148,6 +149,8 @@ const RegisterForm = ({
         </>
       )}
       <input
+        minLength={3}
+        maxLength={20}
         type="text"
         id="username"
         placeholder="Username"
@@ -157,6 +160,7 @@ const RegisterForm = ({
         required
       />
       <input
+        minLength={3}
         type="password"
         id="password"
         placeholder="Password"

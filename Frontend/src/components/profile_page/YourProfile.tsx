@@ -68,7 +68,7 @@ const YourProfile = ({ user }: { user?: All }) => {
         </div>
       </div>
       {!user && (
-        <div>
+        <div className="mt-2">
           <Button
             onClick={(e) => {
               e.preventDefault();

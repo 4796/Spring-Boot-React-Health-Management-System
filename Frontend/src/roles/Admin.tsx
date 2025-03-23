@@ -91,6 +91,29 @@ export class Admin extends All {
       return null;
     }
   }
+  async deleteUser(id: string): Promise<boolean> {
+    try {
+      const res = await fetch(`/api/auth/admin/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (res.ok) {
+        //const data = await res.json();
+        return true;
+      } else {
+        console.log(res);
+
+        console.log("Unathorized access.");
+        //destroySession();
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
   async editUserInfo(args: RegisterArgs): Promise<boolean> {
     throw new Error("Method not implemented.");
   }

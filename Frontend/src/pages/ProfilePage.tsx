@@ -8,7 +8,7 @@ const ProfilePage = () => {
   const globalParams: { user: All } = useOutletContext();
   return (
     <Container>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col ">
         {globalParams.user.getRole() !== "ROLE_ADMIN" && <YourProfile />}
         <Options />
       </div>

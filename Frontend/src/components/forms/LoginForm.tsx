@@ -42,6 +42,8 @@ const LoginForm = ({
   return (
     <form onSubmit={submitForm} className={className}>
       <input
+        minLength={3}
+        maxLength={20}
         type="text"
         id="username"
         placeholder="Username"
@@ -52,6 +54,7 @@ const LoginForm = ({
       />
 
       <input
+        minLength={3}
         type="password"
         id="password"
         placeholder="Password"
