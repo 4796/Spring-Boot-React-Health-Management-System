@@ -164,14 +164,22 @@ export class Doctor extends All {
       return null;
     }
   }
-  async getPatients(): Promise<RegisterArgs[] | null> {
+  async getPatients(
+    name?: string,
+    email?: string
+  ): Promise<RegisterArgs[] | null> {
     try {
-      const res = await fetch(`/api/patients`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
+      const res = await fetch(
+        `/api/patients/search?${name ? `name=${name}` : ""}${
+          name && email ? "&" : ""
+        }${email ? `email=${email}` : ""}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        }
+      );
       if (res.ok) {
         const data = await res.json();
         console.log(data);
@@ -188,6 +196,7 @@ export class Doctor extends All {
       return null;
     }
   }
+
   getHomePage(): JSX.Element {
     return (
       <>
