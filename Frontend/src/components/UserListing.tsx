@@ -2,27 +2,25 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "./reusable/Button";
 import { UserType } from "./UserListings";
 
-const UserListing = ({ data }: { data: UserType }) => {
+const UserListing = ({
+  data,
+  addCssStyle = "",
+}: {
+  data: UserType;
+  addCssStyle?: string;
+}) => {
   console.log(data);
 
   return (
-    <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-wrap xl:flex-row flex-col xl:items-center justify-between gap-4 ">
-      <div>
-        <h1 className="text-xl font-bold">{data.username}</h1>
+    <div
+      className={`border-black bg-neutral-100 border-[1px] p-4 rounded-md flex xl:flex-row flex-col xl:text-left text-center justify-between items-center ${addCssStyle}`}
+    >
+      <div className="w-full">
+        <div className="font-bold">{data.username}</div>
+        <hr className="border-black" />
         <div>Id: {data.id}</div>
+        {/* <div>{subjectData?.phoneNumber}</div> */}
       </div>
-      {data.role !== "ROLE_ADMIN" && (
-        <Link
-          to={`/users/${data.role}/${data.id}`}
-          className="inline-block w-full [&>*]:w-full xl:w-auto"
-        >
-          <Button>Open</Button>
-        </Link>
-      )}
-      {
-        ///         <Button style="DANGER">Delete</Button>
-        ///<div>Role: {data.role}</div>
-      }
     </div>
   );
 };

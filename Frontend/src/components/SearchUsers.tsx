@@ -1,35 +1,26 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { Doctor } from "../roles/Doctor";
-import { RegisterArgs } from "./forms/RegisterForm";
+
 import SearchForm from "./forms/SearchForm";
-import Spinner from "./reusable/Spinner";
 
-import DoctorListingPreview from "./DoctorListingPreview";
-import { Patient } from "../roles/Patient";
+import UserListing from "./UserListing";
+import { UserType } from "./UserListings";
 
-const SearchDoctors = () => {
-  const [data, setData] = useState<RegisterArgs[]>([]);
-  const [currentData, setCurrentData] = useState<RegisterArgs[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const SearchUsers = ({ data }: { data: UserType[] }) => {
+  //const [data, setData] = useState<LoginArgs[]>(data);
+  const [currentData, setCurrentData] = useState<UserType[]>([]);
+
   const [showingAll, setShowingAll] = useState<boolean>(false);
   const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
-  const globalParams: { user: Patient } = useOutletContext();
+
   const navigate = useNavigate();
-  useEffect(() => {
-    globalParams.user.getDoctors().then((d) => {
-      setData(d ? d.reverse() : []);
-      setCurrentData(d ? d.slice(0, 3) : []);
-      setLoading(false);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    if (loading) return;
     const filtered = data
       ? data.filter((d) =>
-          (d.specialization ? d.specialization : "")
+          (d.username ? d.username : "")
             .toLowerCase()
             .startsWith(search.toLowerCase())
         )
@@ -37,16 +28,13 @@ const SearchDoctors = () => {
     setThereIsMoreToSee(filtered.length > 3);
 
     setCurrentData(showingAll ? filtered : filtered.slice(0, 3));
-  }, [search, showingAll]);
-  return loading ? (
-    <Spinner loading={loading} />
-  ) : (
+  }, [search, data, showingAll]);
+  return (
     <div className="flex flex-col gap-4">
       <SearchForm
-        placeholder="Neurologist"
+        placeholder="user"
         submitForm={(e) => {
           e.preventDefault();
-          if (currentData[0]) navigate(`/patients/${currentData[0].id}`);
         }}
         searchQuery={search}
         setSearchQuery={setSearch}
@@ -58,15 +46,12 @@ const SearchDoctors = () => {
         }`}
       >
         {currentData.map(
-          (doctor) =>
-            (doctor.specialization ? doctor.specialization : "")
+          (d) =>
+            (d.username ? d.username : "")
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
-              <Link to={`/book-appointment/${doctor?.id}`} key={doctor.id}>
-                <DoctorListingPreview
-                  subjectData={doctor}
-                  addCssStyle="hover:bg-white"
-                />
+              <Link to={`/users/${d.role}/${d.id}`} key={d.id}>
+                <UserListing data={d} addCssStyle="hover:bg-white" />
               </Link>
             )
         )}
@@ -86,4 +71,4 @@ const SearchDoctors = () => {
   );
 };
 
-export default SearchDoctors;
+export default SearchUsers;

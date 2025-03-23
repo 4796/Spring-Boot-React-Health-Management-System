@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import UserListing from "./UserListing";
 import { Role } from "../services/auth";
 import H2 from "./reusable/h/H2";
+import SearchUsers from "./SearchUsers";
+import Spinner from "./reusable/Spinner";
 export type UserType = {
   id: number;
   username: string;
@@ -30,37 +32,18 @@ const UserListings = () => {
       setLoading(false);
     });
   }, []);
-  return (
+  return loading ? (
+    <Spinner loading={loading} />
+  ) : (
     <>
       <H2>Admins</H2>
-      <Listings
-        useEffectFunction={() => {}}
-        loading={loading}
-        minListingsToShow={3}
-        data={data ? data[0] : []}
-        noDataText="No admins."
-        mapFunction={(user) => <UserListing data={user} key={user.id} />}
-      />
+
+      <SearchUsers data={data ? data[0] : []} />
       <H2>Patients</H2>
+      <SearchUsers data={data ? data[1] : []} />
 
-      <Listings
-        useEffectFunction={() => {}}
-        loading={loading}
-        minListingsToShow={3}
-        data={data ? data[1] : []}
-        noDataText="No patients."
-        mapFunction={(user) => <UserListing data={user} key={user.id} />}
-      />
       <H2>Doctors</H2>
-
-      <Listings
-        useEffectFunction={() => {}}
-        loading={loading}
-        minListingsToShow={3}
-        data={data ? data[2] : []}
-        noDataText="No doctors."
-        mapFunction={(user) => <UserListing data={user} key={user.id} />}
-      />
+      <SearchUsers data={data ? data[2] : []} />
     </>
   );
 };

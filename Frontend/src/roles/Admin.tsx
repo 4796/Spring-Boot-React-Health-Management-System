@@ -6,6 +6,8 @@ import UserListings, { UserType } from "../components/UserListings";
 import { RegisterResponse, Role } from "../services/auth";
 import { All } from "./All";
 import H1 from "../components/reusable/h/H1";
+import SearchDoctors from "../components/SearchDoctors";
+import SearchUsers from "../components/SearchUsers";
 
 export class Admin extends All {
   constructor(id: string, token: string) {
