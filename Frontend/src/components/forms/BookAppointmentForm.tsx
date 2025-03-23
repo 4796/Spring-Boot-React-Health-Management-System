@@ -47,7 +47,10 @@ const BookAppointmentForm = ({
         type,
       };
 
-      sendData(appointment);
+      sendData(appointment).then((d) => {
+        if (d) navigate(-1);
+        else alert("There is an error!");
+      });
     }
   };
   return (

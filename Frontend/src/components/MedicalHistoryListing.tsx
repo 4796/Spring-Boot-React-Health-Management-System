@@ -5,7 +5,7 @@ import DoctorListingPreview from "./DoctorListingPreview";
 import { RegisterArgs } from "./forms/RegisterForm";
 import Button from "./reusable/Button";
 import GrayCard from "./reusable/GrayCard";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export type MedicalHistoryType = {
   id?: number;
@@ -46,7 +46,17 @@ const MedicalHistoryListing = ({
           </div>
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex flex-col gap-4">
-              <DoctorListingPreview subjectData={subjectData} />
+              {isPatient && subjectData ? (
+                <Link to={`/book-appointment/${subjectData?.id}`}>
+                  <DoctorListingPreview
+                    subjectData={subjectData}
+                    addCssStyle="hover:bg-white"
+                  />
+                </Link>
+              ) : (
+                <DoctorListingPreview subjectData={subjectData} />
+              )}
+
               <GrayCard
                 title="Record date: "
                 content={[data.recordDate?.slice(0, -3).split("T").join(" ")]}

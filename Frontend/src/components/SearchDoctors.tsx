@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { Doctor } from "../roles/Doctor";
+
 import { RegisterArgs } from "./forms/RegisterForm";
 import SearchForm from "./forms/SearchForm";
 import Spinner from "./reusable/Spinner";
@@ -65,7 +65,7 @@ const SearchDoctors = () => {
               <Link to={`/book-appointment/${doctor?.id}`} key={doctor.id}>
                 <DoctorListingPreview
                   subjectData={doctor}
-                  addCssStyle="hover:bg-white"
+                  addCssStyle="hover:bg-white "
                 />
               </Link>
             )

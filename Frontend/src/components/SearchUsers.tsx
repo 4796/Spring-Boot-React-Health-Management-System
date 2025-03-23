@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import SearchForm from "./forms/SearchForm";
 
-import UserListing from "./UserListing";
+import UserListing from "./UserListingPreview";
 import { UserType } from "./UserListings";
 
 const SearchUsers = ({ data }: { data: UserType[] }) => {
-  //const [data, setData] = useState<LoginArgs[]>(data);
   const [currentData, setCurrentData] = useState<UserType[]>([]);
-
   const [showingAll, setShowingAll] = useState<boolean>(false);
   const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
 
-  const navigate = useNavigate();
   useEffect(() => {}, []);
 
   useEffect(() => {

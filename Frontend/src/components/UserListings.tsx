@@ -1,9 +1,8 @@
-import { data, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 
-import Listings from "./reusable/Listings";
 import { Admin } from "../roles/Admin";
 import { useEffect, useState } from "react";
-import UserListing from "./UserListing";
+
 import { Role } from "../services/auth";
 import H2 from "./reusable/h/H2";
 import SearchUsers from "./SearchUsers";

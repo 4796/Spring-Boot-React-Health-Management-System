@@ -20,8 +20,8 @@ const AppointmentListings = () => {
               d
                 ? d.sort(
                     (a, b) =>
-                      Date.parse(a.appointmentTime) -
-                      Date.parse(b.appointmentTime)
+                      Date.parse(a.appointmentTime ? a.appointmentTime : "") -
+                      Date.parse(b.appointmentTime ? b.appointmentTime : "")
                   )
                 : d
             );

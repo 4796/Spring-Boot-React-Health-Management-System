@@ -68,7 +68,12 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
             /> */}
           </>
         ) : (
-          <DoctorListingPreview subjectData={subjectData} addCssStyle="my-4" />
+          <Link to={`/book-appointment/${subjectData?.id}`}>
+            <DoctorListingPreview
+              subjectData={subjectData}
+              addCssStyle="my-4 hover:bg-white"
+            />
+          </Link>
         )}
         <GrayCard
           title="For: "
