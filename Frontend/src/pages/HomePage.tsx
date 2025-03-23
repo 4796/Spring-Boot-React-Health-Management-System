@@ -5,12 +5,7 @@ import { All } from "../roles/All";
 const HomePage = () => {
   const globalParams: { user: All } = useOutletContext();
 
-  return (
-    <Container>
-      <div>HomePage</div>
-      {globalParams.user.getHomePage()}
-    </Container>
-  );
+  return <Container>{globalParams.user.getHomePage()}</Container>;
 };
 
 export default HomePage;
