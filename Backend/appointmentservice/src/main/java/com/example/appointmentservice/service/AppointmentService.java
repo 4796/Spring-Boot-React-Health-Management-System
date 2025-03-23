@@ -64,7 +64,7 @@ public class AppointmentService {
    
 
 	public Appointment bookAppointment(Appointment appointment, String token) throws Exception {
-		
+			
         if(appointment == null || appointment.getAppointmentTime()==null || appointment.getDoctorId()==null || appointment.getPatientId()==null || appointment.getType()==null)
         	throw new IllegalArgumentException("not enought arguments");
         //appointment time must be in the future

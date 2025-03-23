@@ -49,8 +49,8 @@ public class Appointment {
     }
     
     public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = LocalDateTime.parse(appointmentTime, DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
-       
+        // this.appointmentTime = LocalDateTime.parse(appointmentTime, DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm"));
+        this.appointmentTime = LocalDateTime.parse(appointmentTime);
     }
 
     public String getType() {
