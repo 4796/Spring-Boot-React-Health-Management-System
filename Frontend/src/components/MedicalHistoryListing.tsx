@@ -47,7 +47,10 @@ const MedicalHistoryListing = ({
           <div className="flex flex-col gap-4 justify-between">
             <div className="flex flex-col gap-4">
               <DoctorListingPreview subjectData={subjectData} />
-              <GrayCard title="Record date: " content={[data.recordDate]} />
+              <GrayCard
+                title="Record date: "
+                content={[data.recordDate?.slice(0, -3).split("T").join(" ")]}
+              />
             </div>
             {!isPatient && (
               <div className="flex flex-col gap-2 [&>*]:w-full">

@@ -5,19 +5,20 @@ import { RegisterArgs } from "./forms/RegisterForm";
 import SearchForm from "./forms/SearchForm";
 import Spinner from "./reusable/Spinner";
 
-import PatientListingPreview from "./PatientListingPreview";
+import DoctorListingPreview from "./DoctorListingPreview";
+import { Patient } from "../roles/Patient";
 
-const SearchPatients = () => {
+const SearchDoctors = () => {
   const [data, setData] = useState<RegisterArgs[]>([]);
   const [currentData, setCurrentData] = useState<RegisterArgs[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showingAll, setShowingAll] = useState<boolean>(false);
   const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
-  const globalParams: { user: Doctor } = useOutletContext();
+  const globalParams: { user: Patient } = useOutletContext();
   const navigate = useNavigate();
   useEffect(() => {
-    globalParams.user.getPatients().then((d) => {
+    globalParams.user.getDoctors().then((d) => {
       setData(d ? d.reverse() : []);
       setCurrentData(d ? d.slice(0, 3) : []);
       setLoading(false);
@@ -28,7 +29,9 @@ const SearchPatients = () => {
     if (loading) return;
     const filtered = data
       ? data.filter((d) =>
-          (d.name ? d.name : "").toLowerCase().startsWith(search.toLowerCase())
+          (d.specialization ? d.specialization : "")
+            .toLowerCase()
+            .startsWith(search.toLowerCase())
         )
       : [];
     setThereIsMoreToSee(filtered.length > 3);
@@ -40,7 +43,7 @@ const SearchPatients = () => {
   ) : (
     <div className="flex flex-col gap-4">
       <SearchForm
-        placeholder="John Doe"
+        placeholder="Neurologist"
         submitForm={(e) => {
           e.preventDefault();
           if (currentData[0]) navigate(`/patients/${currentData[0].id}`);
@@ -51,13 +54,13 @@ const SearchPatients = () => {
 
       <div className="grid xl:grid-cols-3 gap-4">
         {currentData.map(
-          (patient) =>
-            (patient.name ? patient.name : "")
+          (doctor) =>
+            (doctor.specialization ? doctor.specialization : "")
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
-              <Link to={`/patients/${patient?.id}`} key={patient.id}>
-                <PatientListingPreview
-                  subjectData={patient}
+              <Link to={`/book-appointment/${doctor?.id}`} key={doctor.id}>
+                <DoctorListingPreview
+                  subjectData={doctor}
                   addCssStyle="hover:bg-white"
                 />
               </Link>
@@ -79,4 +82,4 @@ const SearchPatients = () => {
   );
 };
 
-export default SearchPatients;
+export default SearchDoctors;

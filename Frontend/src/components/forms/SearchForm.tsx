@@ -1,10 +1,12 @@
 import { FormEvent } from "react";
 
 const SearchForm = ({
+  placeholder = "Search...",
   searchQuery,
   setSearchQuery,
   submitForm,
 }: {
+  placeholder?: string;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   submitForm: (e: FormEvent<HTMLFormElement>) => any;
@@ -12,7 +14,7 @@ const SearchForm = ({
   return (
     <form onSubmit={submitForm}>
       <input
-        placeholder="Search..."
+        placeholder={placeholder}
         type="text"
         name="search"
         id="search"

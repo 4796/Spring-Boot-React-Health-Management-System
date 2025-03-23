@@ -16,6 +16,8 @@ import AddRecordPage from "./pages/AddRecordPage";
 import EditRecordPage from "./pages/EditRecordPage";
 import DoctorRegisterPage from "./pages/DoctorRegisterPage";
 import EditDoctorPage from "./pages/EditDoctorPage";
+import BookAppointmentPage from "./pages/BookAppointmentPage";
+import NotAdminRoute from "./components/reusable/routes/NotAdminRoute";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -59,6 +61,15 @@ const App = () => {
             <PrivateRoute>
               <ChangeCredentialsPage />
             </PrivateRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/book-appointment/:id",
+          element: (
+            <NotAdminRoute>
+              <BookAppointmentPage />
+            </NotAdminRoute>
           ),
           errorElement: <ErrorPage />,
         },

@@ -54,7 +54,31 @@ export abstract class All {
   abstract getRole(): Role;
   // jsx
   abstract getHomePage(): JSX.Element;
+  async bookAppointment(args: AppointmentData): Promise<boolean> {
+    console.log(args);
+    try {
+      const res = await fetch(`/api/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(args),
+      });
+      if (res.ok) {
+        return true;
+      } else {
+        console.log(res);
+        console.log("Unathorized access.");
 
+        //destroySession();
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
   async cancelAppointment(id: string): Promise<boolean> {
     try {
       const res = await fetch(`/api/appointments/${id}`, {

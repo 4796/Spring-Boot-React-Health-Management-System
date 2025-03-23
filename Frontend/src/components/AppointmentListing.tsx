@@ -11,11 +11,11 @@ import GrayCard from "./reusable/GrayCard";
 import PatientListingPreview from "./PatientListingPreview";
 
 export type AppointmentData = {
-  appointmentTime: string;
-  doctorId: number;
-  id: number;
-  patientId: number;
-  type: string;
+  appointmentTime?: string;
+  doctorId?: number;
+  id?: number;
+  patientId?: number;
+  type?: string;
 };
 const AppointmentListing = ({ data }: { data: AppointmentData }) => {
   const globalParams: { user: Patient | Doctor } = useOutletContext();
@@ -70,7 +70,14 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
         ) : (
           <DoctorListingPreview subjectData={subjectData} addCssStyle="my-4" />
         )}
-        <GrayCard title="For: " content={[data.appointmentTime]} />
+        <GrayCard
+          title="For: "
+          content={[
+            data.appointmentTime
+              ? data.appointmentTime.slice(0, -3).split("T").join(" ")
+              : "",
+          ]}
+        />
 
         <div className="flex [&>*]:w-full mt-4">
           <Button
