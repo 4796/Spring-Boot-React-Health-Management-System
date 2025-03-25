@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { Doctor } from "../roles/Doctor";
 import { RegisterArgs } from "./forms/RegisterForm";
 import SearchForm from "./forms/SearchForm";
@@ -18,7 +18,6 @@ const SearchPatients = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const globalParams: { user: Doctor } = useOutletContext();
-  const navigate = useNavigate();
 
   const abortController = useRef<AbortController | null>(null);
   const getPatients = () => {
@@ -52,7 +51,9 @@ const SearchPatients = () => {
   };
 
   const submitForm = () => {
-    getPatients();
+    if (name.trim() !== "" || email.trim() !== "") {
+      getPatients();
+    }
   };
   useEffect(() => {
     setThereIsMoreToSee(data.length > 3);

@@ -9,6 +9,7 @@ import { Patient } from "../roles/Patient";
 import DoctorListingPreview from "./DoctorListingPreview";
 import GrayCard from "./reusable/GrayCard";
 import PatientListingPreview from "./PatientListingPreview";
+export type AppointmentSuggestions = string[];
 
 export type AppointmentData = {
   appointmentTime?: string;

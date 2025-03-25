@@ -1,8 +1,11 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Button from "../reusable/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
-import { AppointmentData } from "../AppointmentListing";
+import { AppointmentData, AppointmentSuggestions } from "../AppointmentListing";
+import { All } from "../../roles/All";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../reusable/Spinner";
 
 const BookAppointmentForm = ({
   doctorId,
@@ -15,28 +18,38 @@ const BookAppointmentForm = ({
   sendData: (args: AppointmentData) => Promise<boolean>;
   className?: string;
 }) => {
-  const navigate = useNavigate();
-  const [type, setType] = useState<string>("");
-
-  const [date, setDate] = useState<string>("");
-  const [time, setTime] = useState<string>("");
-
-  const getNextWeek = () => {
+  const getTomorrow = () => {
     const now = new Date();
-    now.setDate(now.getDate() + 1 - now.getDay()); // Pomera na sledeću nedelju
-    now.setHours(8, 0, 0, 0); // Početak radnog vremena
-    return now.toISOString().slice(0, 10); // Format za datetime-local
+    now.setDate(now.getDate() + 1);
+
+    return now.toISOString().slice(0, 10);
   };
 
   const getNextWeekMax = () => {
     const now = new Date();
-    now.setDate(now.getDate() + (7 - now.getDay())); // Pomera na sledeću nedelju
-    now.setHours(8, 0, 0, 0); // Početak radnog vremena
-
+    now.setDate(now.getDate() + 8);
     const maxDate = new Date(now.toISOString().slice(0, 16));
-    maxDate.setHours(14, 0, 0, 0); // Kraj radnog vremena
+
     return maxDate.toISOString().slice(0, 10);
   };
+  const navigate = useNavigate();
+  const [type, setType] = useState<string>("");
+  const [date, setDate] = useState<string>(getTomorrow());
+  const [time, setTime] = useState<string>("");
+  const globalParams: { user: All } = useOutletContext();
+
+  const { data, isLoading, error } = useQuery<string[] | null>({
+    queryKey: ["date", date],
+    queryFn: (): Promise<string[] | null> => {
+      return globalParams.user.getAppointmentSuggestions("" + doctorId, date);
+    },
+
+    staleTime: 1000 * 60 * 5, // 5 mins
+  });
+  useEffect(() => {
+    setTime(data ? data[0] : "");
+  }, [data]);
+
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (confirm("Are you sure you want to book this appointment?")) {
@@ -53,6 +66,8 @@ const BookAppointmentForm = ({
       });
     }
   };
+  if (isLoading) return <Spinner loading={isLoading} />;
+
   return (
     <form onSubmit={submitForm} className={className}>
       <input
@@ -73,20 +88,24 @@ const BookAppointmentForm = ({
           setDate(e.target.value);
         }}
         value={date}
-        min={getNextWeek()}
+        min={getTomorrow()}
         max={getNextWeekMax()}
         required
       />
-      <input
-        type="time"
+      <select
         className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => {
           setTime(e.target.value);
+          console.log(time);
         }}
         value={time}
-        step={1800}
         required
-      />
+      >
+        {data?.map((time, i) => (
+          <option key={i}>{time}</option>
+        ))}
+      </select>
+
       <div className="flex justify-between">
         <Button
           onClick={(e) => {

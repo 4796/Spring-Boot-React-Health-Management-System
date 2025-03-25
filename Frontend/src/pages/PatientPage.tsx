@@ -12,7 +12,13 @@ const PatientPage = () => {
   const patient: Patient = new Patient(id ? id : "", getToken());
   return (
     <Container>
-      <H1>Patient Profile</H1>
+      <div className="flex items-center justify-between">
+        <H1>Patient Profile</H1>
+        <Link to={`/book-appointment/${id}`} className="block">
+          <Button style="GOOD">Book Appointment</Button>
+        </Link>
+      </div>
+
       <YourProfile user={patient} />
       <div className="flex items-center justify-between">
         <H1>Records</H1>

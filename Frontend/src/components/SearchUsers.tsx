@@ -12,8 +12,6 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
   const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     const filtered = data
       ? data.filter((d) =>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 import { RegisterArgs } from "./forms/RegisterForm";
 import SearchForm from "./forms/SearchForm";
@@ -16,7 +16,7 @@ const SearchDoctors = () => {
   const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
   const globalParams: { user: Patient } = useOutletContext();
-  const navigate = useNavigate();
+
   useEffect(() => {
     globalParams.user.getDoctors().then((d) => {
       setData(d ? d.reverse() : []);
@@ -46,7 +46,6 @@ const SearchDoctors = () => {
         placeholder="Neurologist"
         submitForm={(e) => {
           e.preventDefault();
-          if (currentData[0]) navigate(`/patients/${currentData[0].id}`);
         }}
         searchQuery={search}
         setSearchQuery={setSearch}

@@ -2,7 +2,10 @@ import { JSX } from "react";
 import { Role } from "../services/auth";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import { LoginArgs } from "../components/forms/LoginForm";
-import { AppointmentData } from "../components/AppointmentListing";
+import {
+  AppointmentData,
+  AppointmentSuggestions,
+} from "../components/AppointmentListing";
 import { MedicalHistoryType } from "../components/MedicalHistoryListing";
 
 export abstract class All {
@@ -54,6 +57,36 @@ export abstract class All {
   abstract getRole(): Role;
   // jsx
   abstract getHomePage(): JSX.Element;
+
+  async getAppointmentSuggestions(
+    doctorId: string,
+    date: string
+  ): Promise<string[] | null> {
+    try {
+      const res = await fetch(`/api/appointments/suggestions/${doctorId}`, {
+        method: "GET",
+        headers: {
+          datum: date,
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        return data;
+      } else {
+        console.log(res);
+        console.log("Unathorized access.");
+
+        //destroySession();
+        return null;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   async bookAppointment(args: AppointmentData): Promise<boolean> {
     console.log(args);
     try {
