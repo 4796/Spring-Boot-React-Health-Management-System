@@ -44,6 +44,7 @@ const LoginForm = ({
       <input
         minLength={3}
         maxLength={20}
+        autoCapitalize="none"
         type="text"
         id="username"
         placeholder="Username"

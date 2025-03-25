@@ -44,6 +44,7 @@ const EditAuthForm = ({
           minLength={3}
           maxLength={20}
           type="text"
+          autoCapitalize="none"
           id="username"
           placeholder=""
           className="w-full border-black border-[1px] rounded-md p-1"
