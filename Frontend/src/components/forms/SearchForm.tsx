@@ -8,6 +8,7 @@ const SearchForm = ({
   onChangeCall,
   inputType = "search",
   className,
+  autoCapitalize,
 }: {
   placeholder?: string;
   searchQuery: string;
@@ -16,12 +17,14 @@ const SearchForm = ({
   onChangeCall?: Function;
   inputType?: React.HTMLInputTypeAttribute;
   className?: string;
+  autoCapitalize?: string;
 }) => {
   return (
     <form onSubmit={submitForm} className={className}>
       <input
         placeholder={placeholder}
         type={inputType}
+        autoCapitalize={autoCapitalize}
         name="search"
         id="search"
         className="w-full border-black border-[1px] rounded-md p-1"

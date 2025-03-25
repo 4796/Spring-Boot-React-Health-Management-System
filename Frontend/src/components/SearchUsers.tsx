@@ -27,6 +27,7 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
   return (
     <div className="flex flex-col gap-4">
       <SearchForm
+        autoCapitalize="none"
         placeholder="user"
         submitForm={(e) => {
           e.preventDefault();
