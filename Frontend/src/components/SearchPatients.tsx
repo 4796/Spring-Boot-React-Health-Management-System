@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Doctor } from "../roles/Doctor";
 import { RegisterArgs } from "./forms/RegisterForm";
@@ -19,23 +19,40 @@ const SearchPatients = () => {
   const [email, setEmail] = useState<string>("");
   const globalParams: { user: Doctor } = useOutletContext();
   const navigate = useNavigate();
+
+  const abortController = useRef<AbortController | null>(null);
   const getPatients = () => {
+    // cancel previous request if still pending
+    if (abortController.current) {
+      abortController.current.abort();
+      console.log("Aborting previous.");
+    }
+    // new controller
+    const newAbortController = new AbortController();
+    abortController.current = newAbortController;
+
     setLoading(true);
-    globalParams.user.getPatients(name, email).then((d) => {
-      setData(d ? d.reverse() : []);
-      setCurrentData(d ? d.slice(0, 3) : []);
-      setLoading(false);
-    });
+    globalParams.user
+      .getPatients(name, email)
+      .then((d) => {
+        if (newAbortController.signal.aborted) {
+          console.log("Aborted, not setting data!");
+          return [];
+        }
+        setData(d ? d.reverse() : []);
+        setCurrentData(d ? d.slice(0, 3) : []);
+      })
+      .finally(() => {
+        if (!newAbortController.signal.aborted) {
+          // finished
+          abortController.current = null;
+          setLoading(false);
+        }
+      });
   };
 
   const submitForm = () => {
-    if (name === "" && email === "") {
-      if (currentData[0]) navigate(`/patients/${currentData[0].id}`);
-    } else {
-      setName("");
-      setEmail("");
-      getPatients();
-    }
+    getPatients();
   };
   useEffect(() => {
     setThereIsMoreToSee(data.length > 3);
