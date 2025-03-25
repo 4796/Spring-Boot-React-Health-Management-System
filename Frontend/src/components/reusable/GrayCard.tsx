@@ -16,7 +16,7 @@ const GrayCard = ({
       {!listMoreItems && content[0]}
       {listMoreItems && (
         <>
-          <hr className="border-black" />
+          <hr className="border-dark" />
           <div>
             {content?.map((element, index) => (
               <div className="indent-4" key={index}>

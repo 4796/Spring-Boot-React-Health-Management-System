@@ -17,7 +17,7 @@ const UserListing = ({
     >
       <div className="w-full">
         <div className="font-bold">{data.username}</div>
-        <hr className="border-black" />
+        <hr className="border-dark" />
         <div>Id: {data.id}</div>
         {/* <div>{subjectData?.phoneNumber}</div> */}
       </div>

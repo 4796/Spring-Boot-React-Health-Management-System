@@ -13,7 +13,7 @@ const PatientListingPreview = ({
     >
       <div className="w-full">
         <div className="font-bold">{subjectData?.name}</div>
-        <hr className="border-black" />
+        <hr className="border-dark" />
         <div>{subjectData?.email}</div>
         {/* <div>{subjectData?.phoneNumber}</div> */}
       </div>
