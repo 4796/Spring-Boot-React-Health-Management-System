@@ -6,7 +6,7 @@ const SearchForm = ({
   setSearchQuery,
   submitForm,
   onChangeCall,
-  inputType = "text",
+  inputType = "search",
   className,
 }: {
   placeholder?: string;
