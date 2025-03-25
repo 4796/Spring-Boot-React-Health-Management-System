@@ -66,7 +66,7 @@ const SearchDoctors = () => {
               <Link to={`/book-appointment/${doctor?.id}`} key={doctor.id}>
                 <DoctorListingPreview
                   subjectData={doctor}
-                  addCssStyle="hover:bg-opacity-5 transition-opacity "
+                  addCssStyle="xl:hover:bg-opacity-5 transition-opacity "
                 />
               </Link>
             )

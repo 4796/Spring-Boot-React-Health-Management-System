@@ -65,7 +65,7 @@ const Button = ({
       onClick={onClick}
       className={`${
         stylings.find((s) => s.style === style)?.styling
-      } px-4 py-1 rounded-md font-semibold hover:bg-opacity-80 active:scale-95 transition-all`}
+      } px-4 py-1 rounded-md font-semibold xl:hover:bg-opacity-80 active:scale-95 transition-all`}
     >
       {children}
     </button>

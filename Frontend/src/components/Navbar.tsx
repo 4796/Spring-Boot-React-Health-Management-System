@@ -11,12 +11,12 @@ const Navbar = () => {
       >
         <NavLink
           to="/"
-          className="hover:opacity-80 active:scale-95 transition-all"
+          className="xl:hover:opacity-80 active:scale-95 transition-all"
         >
           <span className="text-xl font-extrabold ">Medical House</span>
         </NavLink>
 
-        <ul className="uppercase font-bold text-2xl active:rotate-90 hover:opacity-80 active:scale-95 transition-all">
+        <ul className="uppercase font-bold text-2xl active:rotate-90 xl:hover:opacity-80 active:scale-95 transition-all">
           <li>
             <NavLink to="/profile">
               <FaGear className="" />

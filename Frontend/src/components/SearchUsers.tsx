@@ -5,7 +5,7 @@ import SearchForm from "./forms/SearchForm";
 
 import UserListing from "./UserListingPreview";
 import { UserType } from "./UserListings";
-import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
+
 import ArrowDownFill from "./reusable/icons/ArrowDownFill";
 import ArrowUpFill from "./reusable/icons/ArrowUpFill";
 
@@ -52,7 +52,7 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
               <Link to={`/users/${d.role}/${d.id}`} key={d.id}>
                 <UserListing
                   data={d}
-                  addCssStyle="hover:bg-opacity-5 transition-opacity"
+                  addCssStyle="xl:hover:bg-opacity-5 transition-opacity"
                 />
               </Link>
             )

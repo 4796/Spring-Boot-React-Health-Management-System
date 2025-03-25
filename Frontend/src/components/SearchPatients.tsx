@@ -104,7 +104,7 @@ const SearchPatients = () => {
             <Link to={`/patients/${patient?.id}`} key={patient.id}>
               <PatientListingPreview
                 subjectData={patient}
-                addCssStyle="hover:bg-opacity-5 transition-opacity"
+                addCssStyle="xl:hover:bg-opacity-5 transition-opacity"
               />
             </Link>
           ))}

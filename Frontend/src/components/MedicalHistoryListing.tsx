@@ -50,7 +50,7 @@ const MedicalHistoryListing = ({
                 <Link to={`/book-appointment/${subjectData?.id}`}>
                   <DoctorListingPreview
                     subjectData={subjectData}
-                    addCssStyle="hover:bg-opacity-5 transition-opacity"
+                    addCssStyle="xl:hover:bg-opacity-5 transition-opacity"
                   />
                 </Link>
               ) : (
