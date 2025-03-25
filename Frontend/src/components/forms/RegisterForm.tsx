@@ -83,7 +83,6 @@ const RegisterForm = ({
         id="name"
         maxLength={30}
         placeholder="Name"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setName(e.target.value)}
         value={name}
         required
@@ -92,7 +91,6 @@ const RegisterForm = ({
         type="tel"
         id="phone"
         placeholder="+123 4567890"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setPhone(e.target.value)}
         value={phone}
         required
@@ -103,7 +101,6 @@ const RegisterForm = ({
             type="text"
             id="image_url"
             placeholder="www.image.com/imgurl"
-            className="w-full border-black border-[1px] rounded-md p-1"
             onChange={(e) => setImageUrl(e.target.value)}
             value={imageUrl}
             required
@@ -112,7 +109,6 @@ const RegisterForm = ({
             type="text"
             id="specialization"
             placeholder="Neurologist"
-            className="w-full border-black border-[1px] rounded-md p-1"
             onChange={(e) => setSpecialization(e.target.value)}
             value={specialization}
             required
@@ -121,7 +117,6 @@ const RegisterForm = ({
             type="number"
             id="salary"
             placeholder="$1000"
-            className="w-full border-black border-[1px] rounded-md p-1"
             onChange={(e) => setSalary(Number(e.target.value))}
             value={salary}
             required
@@ -133,7 +128,6 @@ const RegisterForm = ({
             type="email"
             id="email"
             placeholder="user@mail.com"
-            className="w-full border-black border-[1px] rounded-md p-1"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             required
@@ -142,7 +136,6 @@ const RegisterForm = ({
             type="text"
             id="medical_history"
             placeholder="Medical History"
-            className="w-full border-black border-[1px] rounded-md p-1"
             onChange={(e) => setMedicalHistory(e.target.value)}
             value={medicalHistory}
           />
@@ -155,7 +148,6 @@ const RegisterForm = ({
         autoCapitalize="none"
         id="username"
         placeholder="Username"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
         required
@@ -165,7 +157,6 @@ const RegisterForm = ({
         type="password"
         id="password"
         placeholder="Password"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
         required

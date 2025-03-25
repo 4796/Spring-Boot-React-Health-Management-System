@@ -58,7 +58,6 @@ const EditProfileForm = ({
               type="text"
               id="name"
               placeholder="John Doe"
-              className="w-full border-black border-[1px] rounded-md p-1"
               onChange={(e) => setName(e.target.value)}
               value={name}
               required
@@ -71,7 +70,6 @@ const EditProfileForm = ({
               type="email"
               id="email"
               placeholder="user@mail.com"
-              className="w-full border-black border-[1px] rounded-md p-1"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
@@ -84,7 +82,6 @@ const EditProfileForm = ({
               type="text"
               id="medical_history"
               placeholder="Operations, allergies..."
-              className="w-full border-black border-[1px] rounded-md p-1"
               onChange={(e) => setMedicalHistory(e.target.value)}
               value={medicalHistory}
             />
@@ -97,7 +94,6 @@ const EditProfileForm = ({
           type="tel"
           id="phone"
           placeholder="+123 4567890"
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setPhone(e.target.value)}
           value={phone}
           required

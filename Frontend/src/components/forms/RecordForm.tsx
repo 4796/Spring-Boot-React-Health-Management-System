@@ -62,7 +62,6 @@ const RecordForm = ({
           type="text"
           id="diagnosis"
           placeholder="Diagnosis"
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setDiagnosis(e.target.value)}
           value={diagnosis}
           required
@@ -74,7 +73,6 @@ const RecordForm = ({
           type="text"
           id="treatment"
           placeholder="Treatment"
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setTreatment(e.target.value)}
           value={treatment}
           required
@@ -86,7 +84,6 @@ const RecordForm = ({
           type="text"
           id="medications"
           placeholder="Medications"
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setMedications(e.target.value)}
           value={medications}
           required

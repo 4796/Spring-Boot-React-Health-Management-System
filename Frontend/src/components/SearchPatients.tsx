@@ -8,6 +8,9 @@ import Spinner from "./reusable/Spinner";
 import PatientListingPreview from "./PatientListingPreview";
 import Button from "./reusable/Button";
 import { FaSearch } from "react-icons/fa";
+import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
+import ArrowDownFill from "./reusable/icons/ArrowDownFill";
+import ArrowUpFill from "./reusable/icons/ArrowUpFill";
 
 const SearchPatients = () => {
   const [data, setData] = useState<RegisterArgs[]>([]);
@@ -101,21 +104,23 @@ const SearchPatients = () => {
             <Link to={`/patients/${patient?.id}`} key={patient.id}>
               <PatientListingPreview
                 subjectData={patient}
-                addCssStyle="hover:bg-white"
+                addCssStyle="hover:bg-opacity-5 transition-opacity"
               />
             </Link>
           ))}
-          {thereIsMoreToSee && (
-            <button
-              onClick={() => {
-                setCurrentData(!showingAll ? data : data.slice(0, 3));
-                setShowingAll((prev) => !prev);
-              }}
-              className="underline self-end place-self-start"
-            >
-              {!showingAll ? "See more..." : "See less."}
-            </button>
-          )}
+        </div>
+      )}
+      {thereIsMoreToSee && (
+        <div className="self-center">
+          <button
+            onClick={() => {
+              setCurrentData(!showingAll ? data : data.slice(0, 3));
+              setShowingAll((prev) => !prev);
+            }}
+            className="underline self-end place-self-start"
+          >
+            {!showingAll ? <ArrowDownFill /> : <ArrowUpFill />}
+          </button>
         </div>
       )}
     </div>

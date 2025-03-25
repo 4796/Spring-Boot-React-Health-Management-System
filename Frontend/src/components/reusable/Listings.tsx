@@ -1,5 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
 import Spinner from "./Spinner";
+import Button from "./Button";
+import {
+  BsArrowDown,
+  BsArrowDownCircle,
+  BsArrowDownCircleFill,
+  BsArrowUpCircleFill,
+} from "react-icons/bs";
+import ArrowDownFill from "./icons/ArrowDownFill";
+import ArrowUpFill from "./icons/ArrowUpFill";
 
 const Listings = ({
   useEffectFunction,
@@ -32,15 +41,14 @@ const Listings = ({
         {(listedAll === true ? data : data.slice(0, minListingsToShow)).map(
           mapFunction
         )}
-        {data && data.length > minListingsToShow && (
-          <button
-            className="underline self-end place-self-start"
-            onClick={() => setListedAll((prev) => !prev)}
-          >
-            {listedAll === false ? "See more..." : "See less."}
-          </button>
-        )}
       </div>
+      {data && data.length > minListingsToShow && (
+        <div className="self-end place-self-center mt-4">
+          <button onClick={() => setListedAll((prev) => !prev)}>
+            {listedAll === false ? <ArrowDownFill /> : <ArrowUpFill />}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

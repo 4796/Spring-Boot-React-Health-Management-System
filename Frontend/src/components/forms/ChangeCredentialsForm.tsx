@@ -47,7 +47,6 @@ const EditAuthForm = ({
           autoCapitalize="none"
           id="username"
           placeholder=""
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
           required
@@ -60,7 +59,6 @@ const EditAuthForm = ({
           type="password"
           id="newPassword"
           placeholder=""
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setNewPassword(e.target.value)}
           value={newPassword}
           required
@@ -73,7 +71,6 @@ const EditAuthForm = ({
           type="password"
           id="newPasswordConfirm"
           placeholder=""
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setConfirmNewPassword(e.target.value)}
           value={confirmNewPassword}
           required

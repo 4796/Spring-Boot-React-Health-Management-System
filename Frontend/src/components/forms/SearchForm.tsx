@@ -27,7 +27,6 @@ const SearchForm = ({
         autoCapitalize={autoCapitalize}
         name="search"
         id="search"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => {
           e.preventDefault();
           setSearchQuery(e.target.value);

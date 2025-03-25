@@ -13,7 +13,7 @@ const UserListing = ({
 
   return (
     <div
-      className={`border-black bg-neutral-100 border-[1px] p-4 rounded-md flex xl:flex-row flex-col xl:text-left text-center justify-between items-center ${addCssStyle}`}
+      className={`bg-primary bg-opacity-10 p-4 rounded-md flex xl:flex-row flex-col xl:text-left text-center justify-between items-center ${addCssStyle}`}
     >
       <div className="w-full">
         <div className="font-bold">{data.username}</div>

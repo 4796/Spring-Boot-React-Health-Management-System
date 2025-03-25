@@ -33,7 +33,7 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
     });
   }, []);
   return (
-    <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between">
+    <div className="bg-primary bg-opacity-5 rounded-md p-4 flex flex-col justify-between">
       <h1 className="text-xl font-bold">Appointment for: {data.type}</h1>
       <div>
         {isDoctor ? (
@@ -41,7 +41,7 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
             <Link to={`/patients/${subjectData?.id}`}>
               <PatientListingPreview
                 subjectData={subjectData}
-                addCssStyle="my-4 hover:bg-white"
+                addCssStyle="my-4 hover:bg-opacity-5 transition-opacity "
               />
             </Link>
             {/* <GrayCard
@@ -72,7 +72,7 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
           <Link to={`/book-appointment/${subjectData?.id}`}>
             <DoctorListingPreview
               subjectData={subjectData}
-              addCssStyle="my-4 hover:bg-white"
+              addCssStyle="my-4 hover:bg-opacity-5 transition-opacity"
             />
           </Link>
         )}

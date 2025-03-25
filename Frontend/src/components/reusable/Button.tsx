@@ -26,35 +26,35 @@ const Button = ({
   }[] = [
     {
       style: "REGULAR",
-      styling: "bg-sky-600 text-white",
+      styling: "bg-primary text-light",
     },
     {
       style: "REGULAR_OUTLINE",
-      styling: "bg-inherit text-sky-600 border-2 border-sky-600 ",
+      styling: "bg-inherit text-primary border-2 border-primary ",
     },
     {
       style: "DANGER",
-      styling: "bg-red-600 text-white",
+      styling: "bg-danger text-white",
     },
     {
       style: "DANGER_OUTLINE",
-      styling: "bg-inherit text-red-600 border-2 border-red-600 ",
+      styling: "bg-inherit text-danger border-2 border-danger ",
     },
     {
       style: "GOOD",
-      styling: "bg-green-600 text-white",
+      styling: "bg-good text-white",
     },
     {
       style: "GOOD_OUTLINE",
-      styling: "bg-inherit text-green-600 border-2 border-green-600 ",
+      styling: "bg-inherit text-good border-2 border-good ",
     },
     {
       style: "DISABLED",
-      styling: "bg-neutral-600 text-white",
+      styling: "bg-light text-white",
     },
     {
       style: "DISABLED_OUTLINE",
-      styling: "bg-inherit text-neutral-600 border-2 border-neutral-600 ",
+      styling: "bg-inherit text-dark border-2 border-dark ",
     },
   ];
 
@@ -65,7 +65,7 @@ const Button = ({
       onClick={onClick}
       className={`${
         stylings.find((s) => s.style === style)?.styling
-      } px-4 py-1 rounded-md font-semibold`}
+      } px-4 py-1 rounded-md font-semibold hover:bg-opacity-80 active:scale-95 transition-all`}
     >
       {children}
     </button>

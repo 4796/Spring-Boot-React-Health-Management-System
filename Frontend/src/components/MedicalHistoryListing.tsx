@@ -36,7 +36,7 @@ const MedicalHistoryListing = ({
     });
   }, []);
   return (
-    <div className="border-[1px] border-black shadow-xl rounded-md p-4 flex flex-col justify-between gap-4">
+    <div className="bg-primary bg-opacity-5 rounded-md p-4 flex flex-col justify-between gap-4">
       <h1 className="text-xl font-bold">Diagnosis: {data.diagnosis}</h1>
       <div className="justify-self-end">
         <div className="grid xl:grid-cols-3 gap-4 ">
@@ -50,7 +50,7 @@ const MedicalHistoryListing = ({
                 <Link to={`/book-appointment/${subjectData?.id}`}>
                   <DoctorListingPreview
                     subjectData={subjectData}
-                    addCssStyle="hover:bg-white"
+                    addCssStyle="hover:bg-opacity-5 transition-opacity"
                   />
                 </Link>
               ) : (

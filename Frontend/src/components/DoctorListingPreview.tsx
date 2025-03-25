@@ -9,7 +9,7 @@ const DoctorListingPreview = ({
 }) => {
   return (
     <div
-      className={`border-black bg-neutral-100 border-[1px] p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between  items-center ${addCssStyle}`}
+      className={`border-b-[1px] border-r-[1px] border-primary border-opacity-30 bg-primary bg-opacity-10 p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between  items-center ${addCssStyle}`}
     >
       <div
         className="border-black  max-w-[100px] max-h-[100px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "

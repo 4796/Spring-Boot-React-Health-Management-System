@@ -73,7 +73,6 @@ const BookAppointmentForm = ({
       <input
         type="text"
         placeholder="What's appointment for?"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => {
           setType(e.target.value);
         }}
@@ -83,7 +82,6 @@ const BookAppointmentForm = ({
       />
       <input
         type="date"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => {
           setDate(e.target.value);
         }}
@@ -93,7 +91,6 @@ const BookAppointmentForm = ({
         required
       />
       <select
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => {
           setTime(e.target.value);
           console.log(time);

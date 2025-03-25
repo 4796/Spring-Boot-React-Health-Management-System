@@ -5,6 +5,7 @@ import Spinner from "../reusable/Spinner";
 import { RegisterArgs } from "../forms/RegisterForm";
 import Button from "../reusable/Button";
 import GrayCard from "../reusable/GrayCard";
+import H1 from "../reusable/h/H1";
 
 const YourProfile = ({ user }: { user?: All }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,10 +24,8 @@ const YourProfile = ({ user }: { user?: All }) => {
     <Spinner loading={loading} />
   ) : (
     <>
-      {!user && (
-        <h1 className="text-4xl text-sky-700 font-bold my-4">Your Profile</h1>
-      )}
-      <div className="border-[1px] border-black p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
+      {!user && <H1>Your Profile</H1>}
+      <div className="bg-primary bg-opacity-5 p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
         {data?.imageUrl && (
           <div
             className="border-black w-1/2 h-1/2 max-w-[260px] max-h-[260px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "

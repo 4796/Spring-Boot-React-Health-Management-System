@@ -10,7 +10,7 @@ const GrayCard = ({
   const listMoreItems: boolean = content.length > 1;
   return (
     <div
-      className={`bg-neutral-100 border-[1px] border-black p-4 rounded-md ${addCssStyle}`}
+      className={`border-b-[1px] border-r-[1px] border-primary border-opacity-30 bg-primary bg-opacity-10 p-4 rounded-md ${addCssStyle}`}
     >
       <span className="font-bold">{title}</span>
       {!listMoreItems && content[0]}

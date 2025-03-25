@@ -5,6 +5,9 @@ import SearchForm from "./forms/SearchForm";
 
 import UserListing from "./UserListingPreview";
 import { UserType } from "./UserListings";
+import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
+import ArrowDownFill from "./reusable/icons/ArrowDownFill";
+import ArrowUpFill from "./reusable/icons/ArrowUpFill";
 
 const SearchUsers = ({ data }: { data: UserType[] }) => {
   const [currentData, setCurrentData] = useState<UserType[]>([]);
@@ -47,11 +50,16 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
               <Link to={`/users/${d.role}/${d.id}`} key={d.id}>
-                <UserListing data={d} addCssStyle="hover:bg-white" />
+                <UserListing
+                  data={d}
+                  addCssStyle="hover:bg-opacity-5 transition-opacity"
+                />
               </Link>
             )
         )}
-        {thereIsMoreToSee && (
+      </div>
+      {thereIsMoreToSee && (
+        <div className="self-center">
           <button
             onClick={() => {
               setCurrentData(!showingAll ? data : data.slice(0, 3));
@@ -59,10 +67,10 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
             }}
             className="underline self-end place-self-start"
           >
-            {!showingAll ? "See more..." : "See less."}
+            {!showingAll ? <ArrowDownFill /> : <ArrowUpFill />}
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -51,7 +51,6 @@ const EditDoctorForm = ({
           type="number"
           id="salary"
           placeholder="$1000"
-          className="w-full border-black border-[1px] rounded-md p-1"
           onChange={(e) => setSalary(Number(e.target.value))}
           value={salary}
           required

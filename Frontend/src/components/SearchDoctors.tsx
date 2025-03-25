@@ -7,6 +7,9 @@ import Spinner from "./reusable/Spinner";
 
 import DoctorListingPreview from "./DoctorListingPreview";
 import { Patient } from "../roles/Patient";
+import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
+import ArrowDownFill from "./reusable/icons/ArrowDownFill";
+import ArrowUpFill from "./reusable/icons/ArrowUpFill";
 
 const SearchDoctors = () => {
   const [data, setData] = useState<RegisterArgs[]>([]);
@@ -50,7 +53,6 @@ const SearchDoctors = () => {
         searchQuery={search}
         setSearchQuery={setSearch}
       />
-
       <div
         className={`grid xl:grid-cols-3 gap-4 ${
           currentData.length === 0 ? "hidden" : ""
@@ -64,12 +66,14 @@ const SearchDoctors = () => {
               <Link to={`/book-appointment/${doctor?.id}`} key={doctor.id}>
                 <DoctorListingPreview
                   subjectData={doctor}
-                  addCssStyle="hover:bg-white "
+                  addCssStyle="hover:bg-opacity-5 transition-opacity "
                 />
               </Link>
             )
         )}
-        {thereIsMoreToSee && (
+      </div>
+      {thereIsMoreToSee && (
+        <div className="self-center">
           <button
             onClick={() => {
               setCurrentData(!showingAll ? data : data.slice(0, 3));
@@ -77,10 +81,10 @@ const SearchDoctors = () => {
             }}
             className="underline self-end place-self-start"
           >
-            {!showingAll ? "See more..." : "See less."}
+            {!showingAll ? <ArrowDownFill /> : <ArrowUpFill />}
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

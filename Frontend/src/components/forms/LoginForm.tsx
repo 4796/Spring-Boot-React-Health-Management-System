@@ -48,7 +48,6 @@ const LoginForm = ({
         type="text"
         id="username"
         placeholder="Username"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setUsername(e.target.value)}
         value={username}
         ref={usernameRef}
@@ -59,7 +58,6 @@ const LoginForm = ({
         type="password"
         id="password"
         placeholder="Password"
-        className="w-full border-black border-[1px] rounded-md p-1"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
