@@ -30,7 +30,7 @@ const YourProfile = ({ user }: { user?: All }) => {
       <div className="bg-primary bg-opacity-5 p-4 rounded-md flex xl:flex-row-reverse flex-col xl:text-left text-center justify-between items-center gap-4">
         {data?.imageUrl && (
           <div
-            className="border-dark w-1/2 h-1/2 max-w-[260px] max-h-[260px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
+            className="border-primary border-opacity-30 w-1/2 h-1/2 max-w-[260px] max-h-[260px] min-w-[100px] min-h-[100px] aspect-square rounded-full bg-center bg-contain bg-no-repeat border-[1px] "
             style={{ backgroundImage: `url(${data.imageUrl})` }}
           ></div>
         )}
@@ -42,7 +42,7 @@ const YourProfile = ({ user }: { user?: All }) => {
                 <span className="text-xl font-bold my-4">{data.name}</span>
               </div>
             )}
-            <hr className="border-dark" />
+            <hr />
             {data?.specialization && (
               <div className="xl:text-left text-center">
                 {data.specialization}

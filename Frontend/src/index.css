@@ -7,6 +7,10 @@ body {
 
 }
 
+hr {
+  @apply border-primary border-opacity-30;
+}
+
 input,
 select {
   @apply w-full p-2 rounded-md bg-primary bg-opacity-10 appearance-none border-b-[1px] border-r-[1px] border-primary border-opacity-30;
