@@ -8,6 +8,7 @@ import { UserType } from "./UserListings";
 
 import ArrowDownFill from "./reusable/icons/ArrowDownFill";
 import ArrowUpFill from "./reusable/icons/ArrowUpFill";
+import { getId } from "../services/session";
 
 const SearchUsers = ({ data }: { data: UserType[] }) => {
   const [currentData, setCurrentData] = useState<UserType[]>([]);
@@ -49,7 +50,14 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
             (d.username ? d.username : "")
               .toLowerCase()
               .startsWith(search.toLowerCase()) && (
-              <Link to={`/users/${d.role}/${d.id}`} key={d.id}>
+              <Link
+                to={
+                  "" + d.id === getId()
+                    ? "/profile"
+                    : `/users/${d.role}/${d.id}`
+                }
+                key={d.id}
+              >
                 <UserListing
                   data={d}
                   addCssStyle="xl:hover:bg-opacity-5 transition-opacity"

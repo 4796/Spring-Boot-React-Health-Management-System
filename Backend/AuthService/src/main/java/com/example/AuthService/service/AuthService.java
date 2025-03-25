@@ -189,21 +189,21 @@ public class AuthService {
         	 if(role.equals("ROLE_DOCTOR")) {
         		 response = restTemplate.exchange("https://localhost:8085/doctors/"+id, HttpMethod.DELETE, entity, Object.class);
         	 }
-        		 
-         } catch (Exception e) {
-        	 System.out.println("User maybe deleted from authService but not from doctorService or patientService");
-			e.printStackTrace();
-		}finally {
-			
-	        if(response==null || !response.getStatusCode().is2xxSuccessful()) {
-	        	userRepository.deleteById(id);
+
+					 if(!role.equals("ROLE_ADMIN") &&(response==null || !response.getStatusCode().is2xxSuccessful())) {
+	        	//userRepository.deleteById(id);
 	        	throw new Exception("Autorization problem or internal server error");
-	        }
+	        }	 
+					userRepository.deleteById(id);
+         } 
+				 catch (Exception e) {
+        	 System.out.println("User maybe deleted from authService but not from doctorService or patientService");
+			e.printStackTrace();  throw new Exception("Authorization problem or internal server error");
 		}
 
 		///
 		
-        userRepository.deleteById(id);
+        //userRepository.deleteById(id);
     }
 	
 	//token not needed, its called only localy

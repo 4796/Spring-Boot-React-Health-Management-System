@@ -127,9 +127,6 @@ export class Admin extends All {
       <>
         <H1>Users</H1>
         <UserListings />
-        <Link to="/register-doctor" className="inline-block mt-4">
-          <Button style="GOOD">Register New Doctor</Button>
-        </Link>
       </>
     );
   }

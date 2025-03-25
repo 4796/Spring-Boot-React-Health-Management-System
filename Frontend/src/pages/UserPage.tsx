@@ -36,9 +36,12 @@ const UserPage = () => {
   return (
     <Container>
       <div className="flex flex-col">
-        <H1>User Profile</H1>
-        <YourProfile user={userObj} />
-
+        {userObj.getRole() !== "ROLE_ADMIN" && (
+          <>
+            <H1>User Profile</H1>
+            <YourProfile user={userObj} />
+          </>
+        )}
         <H1>Edit Account</H1>
         <div className="flex flex-col  gap-2">
           {role === "ROLE_DOCTOR" && (
@@ -46,19 +49,23 @@ const UserPage = () => {
               <Button>Change Salary</Button>
             </Link>
           )}
-          <div>
-            <Button
-              onClick={() => {
-                if (confirm("Are you sure you want to delete this account?")) {
-                  user.deleteUser(id ? id : "");
-                  navigate(-1);
-                }
-              }}
-              style="DANGER"
-            >
-              Delete Account
-            </Button>
-          </div>
+          {id !== user.getId() && (
+            <div>
+              <Button
+                onClick={() => {
+                  if (
+                    confirm("Are you sure you want to delete this account?")
+                  ) {
+                    user.deleteUser(id ? id : "");
+                    navigate(-1);
+                  }
+                }}
+                style="DANGER"
+              >
+                Delete Account
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Container>

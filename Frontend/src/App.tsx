@@ -18,6 +18,7 @@ import DoctorRegisterPage from "./pages/DoctorRegisterPage";
 import EditDoctorPage from "./pages/EditDoctorPage";
 import BookAppointmentPage from "./pages/BookAppointmentPage";
 import NotAdminRoute from "./components/reusable/routes/NotAdminRoute";
+import AdminRegisterPage from "./pages/AdminRegisterPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -87,6 +88,15 @@ const App = () => {
           element: (
             <AdminRoute>
               <DoctorRegisterPage />
+            </AdminRoute>
+          ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/register-admin",
+          element: (
+            <AdminRoute>
+              <AdminRegisterPage />
             </AdminRoute>
           ),
           errorElement: <ErrorPage />,

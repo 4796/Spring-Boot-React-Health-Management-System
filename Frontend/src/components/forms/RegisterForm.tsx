@@ -29,10 +29,12 @@ const RegisterForm = ({
   sendData,
   className,
   registerDoctor = false,
+  registerAdmin = false,
 }: {
   sendData: (args: RegisterArgs) => Promise<RegisterResponse | null>;
   className?: string;
   registerDoctor?: boolean;
+  registerAdmin?: boolean;
 }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -46,10 +48,15 @@ const RegisterForm = ({
   const [specialization, setSpecialization] = useState<string>("");
   const [salary, setSalary] = useState<number>(0);
   //
-  const role: Role = registerDoctor ? "ROLE_DOCTOR" : "ROLE_PATIENT";
+  const role: Role = registerAdmin
+    ? "ROLE_ADMIN"
+    : registerDoctor
+    ? "ROLE_DOCTOR"
+    : "ROLE_PATIENT";
   const navigate = useNavigate();
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!confirm("Are you sure you want to register?")) return;
     const data: RegisterArgs = {
       username,
       password,
@@ -78,67 +85,71 @@ const RegisterForm = ({
   };
   return (
     <form onSubmit={submitForm} className={className}>
-      <input
-        type="text"
-        id="name"
-        maxLength={30}
-        placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-        required
-      />
-      <input
-        type="tel"
-        id="phone"
-        placeholder="+123 4567890"
-        onChange={(e) => setPhone(e.target.value)}
-        value={phone}
-        required
-      />
-      {registerDoctor ? (
+      {!registerAdmin && (
         <>
           <input
             type="text"
-            id="image_url"
-            placeholder="www.image.com/imgurl"
-            onChange={(e) => setImageUrl(e.target.value)}
-            value={imageUrl}
+            id="name"
+            maxLength={30}
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
             required
           />
           <input
-            type="text"
-            id="specialization"
-            placeholder="Neurologist"
-            onChange={(e) => setSpecialization(e.target.value)}
-            value={specialization}
+            type="tel"
+            id="phone"
+            placeholder="+123 4567890"
+            onChange={(e) => setPhone(e.target.value)}
+            value={phone}
             required
           />
-          <input
-            type="number"
-            id="salary"
-            placeholder="$1000"
-            onChange={(e) => setSalary(Number(e.target.value))}
-            value={salary}
-            required
-          />
-        </>
-      ) : (
-        <>
-          <input
-            type="email"
-            id="email"
-            placeholder="user@mail.com"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            required
-          />
-          <input
-            type="text"
-            id="medical_history"
-            placeholder="Medical History"
-            onChange={(e) => setMedicalHistory(e.target.value)}
-            value={medicalHistory}
-          />
+          {registerDoctor ? (
+            <>
+              <input
+                type="text"
+                id="image_url"
+                placeholder="www.image.com/imgurl"
+                onChange={(e) => setImageUrl(e.target.value)}
+                value={imageUrl}
+                required
+              />
+              <input
+                type="text"
+                id="specialization"
+                placeholder="Neurologist"
+                onChange={(e) => setSpecialization(e.target.value)}
+                value={specialization}
+                required
+              />
+              <input
+                type="number"
+                id="salary"
+                placeholder="$1000"
+                onChange={(e) => setSalary(Number(e.target.value))}
+                value={salary}
+                required
+              />
+            </>
+          ) : (
+            <>
+              <input
+                type="email"
+                id="email"
+                placeholder="user@mail.com"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+              />
+              <input
+                type="text"
+                id="medical_history"
+                placeholder="Medical History"
+                onChange={(e) => setMedicalHistory(e.target.value)}
+                value={medicalHistory}
+              />
+            </>
+          )}
         </>
       )}
       <input
@@ -161,7 +172,7 @@ const RegisterForm = ({
         value={password}
         required
       />
-      {registerDoctor ? (
+      {registerDoctor || registerAdmin ? (
         <div className="flex justify-between w-full">
           <Button
             onClick={(e) => {
@@ -171,7 +182,7 @@ const RegisterForm = ({
             style="DANGER"
           >
             Cancel
-          </Button>{" "}
+          </Button>
           <Button type="submit">Register</Button>
         </div>
       ) : (

@@ -21,7 +21,7 @@ const YourProfile = ({ user }: { user?: All }) => {
       setLoading(false);
     });
   }, []);
-  if (user?.getRole() === "ROLE_ADMIN") return;
+
   return loading ? (
     <Spinner loading={loading} />
   ) : (

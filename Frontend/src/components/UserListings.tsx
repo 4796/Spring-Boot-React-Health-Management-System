@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 import { Admin } from "../roles/Admin";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { Role } from "../services/auth";
 import H2 from "./reusable/h/H2";
 import SearchUsers from "./SearchUsers";
 import Spinner from "./reusable/Spinner";
+import Button from "./reusable/Button";
 export type UserType = {
   id: number;
   username: string;
@@ -35,13 +36,22 @@ const UserListings = () => {
     <Spinner loading={loading} />
   ) : (
     <>
-      <H2>Admins</H2>
+      <div className="flex items-center justify-between">
+        <H2>Admins</H2>
+        <Link to="/register-admin" className="inline-block">
+          <Button style="GOOD">Register New Admin</Button>
+        </Link>
+      </div>
 
       <SearchUsers data={data ? data[0] : []} />
       <H2>Patients</H2>
       <SearchUsers data={data ? data[1] : []} />
-
-      <H2>Doctors</H2>
+      <div className="flex items-center justify-between">
+        <H2>Doctors</H2>
+        <Link to="/register-doctor" className="inline-block">
+          <Button style="GOOD">Register New Doctor</Button>
+        </Link>
+      </div>
       <SearchUsers data={data ? data[2] : []} />
     </>
   );
