@@ -4,6 +4,7 @@ import Button from "../reusable/Button";
 import { FormEvent, useRef, useState } from "react";
 import { MedicalHistoryType } from "../MedicalHistoryListing";
 import { getId } from "../../services/session";
+import { toast } from "react-toastify";
 
 // export type MedicalHistoryType = {
 //   id?: number;
@@ -54,8 +55,14 @@ const RecordForm = ({
       medications,
     };
 
-    sendData(record);
-    navigate(-1);
+    sendData(record).then((d) => {
+      if (d) {
+        toast.success(
+          oldArgs ? "Data changed successfully." : "Record added successfully."
+        );
+        navigate(-1);
+      } else toast.success("Invalid data.");
+    });
   };
 
   return (

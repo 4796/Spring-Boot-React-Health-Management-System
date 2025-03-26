@@ -25,6 +25,7 @@ const LoginForm = ({
     sendData(data).then((result: LoginResponse | null) => {
       if (result) {
         if (result.status === "SUCCESS") {
+          toast.success("Logged in successfully.");
           navigate("/");
           startSession(result.token, result.role, result.id);
           console.log(result);
@@ -35,7 +36,7 @@ const LoginForm = ({
           usernameRef.current?.focus();
         }
       } else {
-        console.error("Can't login.");
+        toast.error("Can't login.");
       }
     });
   };

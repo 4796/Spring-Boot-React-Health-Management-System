@@ -43,8 +43,12 @@ const EditDoctorForm = ({
       oldArgs ? "" + oldArgs.id : "",
       percentage * Math.sign(percentage),
       percentage > 0 ? "+" : "-"
-    );
-    navigate(-1);
+    ).then((d) => {
+      if (d) {
+        toast.success("Salary changed successfully.");
+        navigate(-1);
+      } else toast.success("Invalid salary.");
+    });
   };
 
   return (

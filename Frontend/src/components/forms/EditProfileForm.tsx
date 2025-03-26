@@ -4,6 +4,7 @@ import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";
 import Button from "../reusable/Button";
+import { toast } from "react-toastify";
 
 const EditProfileForm = ({
   sendData,
@@ -45,8 +46,12 @@ const EditProfileForm = ({
       // doctor and patient
       phoneNumber: phone,
     };
-    sendData(data);
-    navigate(-1);
+    sendData(data).then((d) => {
+      if (d) {
+        toast.success("Data changed successfully.");
+        navigate(-1);
+      } else toast.success("Invalid data.");
+    });
   };
 
   return (

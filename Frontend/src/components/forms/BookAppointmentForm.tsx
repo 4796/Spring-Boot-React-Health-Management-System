@@ -68,8 +68,10 @@ const BookAppointmentForm = ({
     };
 
     sendData(appointment).then((d) => {
-      if (d) navigate(-1);
-      else toast.error("Appointment already taken.");
+      if (d) {
+        toast.success("Appointment booked successfully.");
+        navigate(-1);
+      } else toast.error("Appointment already taken.");
     });
   };
   if (isLoading) return <Spinner loading={isLoading} />;
