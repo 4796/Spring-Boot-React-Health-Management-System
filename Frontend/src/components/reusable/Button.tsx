@@ -75,7 +75,7 @@ const Button = ({
           setClicked(false);
         }}
       >
-        <BiX className="mx-auto stroke-1 inline-block" />
+        <BiX className="mx-auto text-2xl block" />
       </Button>
       <Button
         type="submit"
@@ -85,7 +85,7 @@ const Button = ({
           setClicked(false);
         }}
       >
-        <BiCheck className="mx-auto stroke-1 inline-block" />
+        <BiCheck className="mx-auto text-2xl block" />
       </Button>
     </>
   );
@@ -99,7 +99,7 @@ const Button = ({
       onClick={confirm ? () => setClicked(true) : onClick}
       className={`${
         stylings.find((s) => s.style === style)?.styling
-      } px-4 py-1 rounded-md font-semibold xl:hover:bg-opacity-80 active:scale-95 transition-all border-2`}
+      }  px-4 py-1 rounded-md font-semibold xl:hover:bg-opacity-80 active:scale-95 transition-all border-2 items-center justify-center inline-flex`}
     >
       {children}
     </button>

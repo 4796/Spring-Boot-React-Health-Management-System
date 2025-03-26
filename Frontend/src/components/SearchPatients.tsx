@@ -87,9 +87,7 @@ const SearchPatients = () => {
           setSearchQuery={setEmail}
         />
         <Button type="submit" onClick={submitForm}>
-          <div className="flex items-center justify-center">
-            <FaSearch />
-          </div>
+          <FaSearch className="block" />
         </Button>
       </div>
       {loading ? (
