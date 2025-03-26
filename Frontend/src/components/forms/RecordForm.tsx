@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { MedicalHistoryType } from "../MedicalHistoryListing";
 import { getId } from "../../services/session";
 
@@ -35,27 +35,31 @@ const RecordForm = ({
   const [medications, setMedications] = useState<string>(
     oldArgs?.medications ? oldArgs.medications : ""
   );
-
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (confirm("Are you sure you want to submit this data?")) {
-      const record: MedicalHistoryType = {
-        id: oldArgs?.id,
-        patientId: Number(patientId),
-        doctorId: Number(getId()),
-        // form
-        diagnosis,
-        treatment,
-        medications,
-      };
 
-      sendData(record);
-      navigate(-1);
-    }
+    const record: MedicalHistoryType = {
+      id: oldArgs?.id,
+      patientId: Number(patientId),
+      doctorId: Number(getId()),
+      // form
+      diagnosis,
+      treatment,
+      medications,
+    };
+
+    sendData(record);
+    navigate(-1);
   };
 
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       <div>
         <label htmlFor="diagnosis">Diagnosis: </label>
         <input
@@ -99,7 +103,11 @@ const RecordForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit">Confirm</Button>
+        <div>
+          <Button onClick={handleManualSubmit} confirm={true} type="submit">
+            Confirm
+          </Button>
+        </div>
       </div>
     </form>
   );

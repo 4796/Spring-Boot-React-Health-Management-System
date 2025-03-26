@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
@@ -25,30 +25,32 @@ const EditProfileForm = ({
   const [medicalHistory, setMedicalHistory] = useState<string>(
     oldArgs?.medicalHistory ? oldArgs.medicalHistory : ""
   );
-
-  //
   const globalParams: { user: All } = useOutletContext();
   const navigate = useNavigate();
   // submiting
-
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (confirm("Are you sure you want to apply these changes?")) {
-      const data: RegisterArgs = {
-        // patient only
-        name,
-        email,
-        medicalHistory,
-        // doctor and patient
-        phoneNumber: phone,
-      };
-      sendData(data);
-      navigate(-1);
-    }
+
+    const data: RegisterArgs = {
+      // patient only
+      name,
+      email,
+      medicalHistory,
+      // doctor and patient
+      phoneNumber: phone,
+    };
+    sendData(data);
+    navigate(-1);
   };
 
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       {globalParams.user.getRole() === "ROLE_PATIENT" && (
         <>
           <div>
@@ -109,7 +111,11 @@ const EditProfileForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit">Confirm Changes</Button>
+        <div>
+          <Button onClick={handleManualSubmit} confirm={true} type="submit">
+            Confirm Changes
+          </Button>
+        </div>
       </div>
     </form>
   );

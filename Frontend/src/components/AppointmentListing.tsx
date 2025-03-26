@@ -9,6 +9,7 @@ import { Patient } from "../roles/Patient";
 import DoctorListingPreview from "./DoctorListingPreview";
 import GrayCard from "./reusable/GrayCard";
 import PatientListingPreview from "./PatientListingPreview";
+
 export type AppointmentSuggestions = string[];
 
 export type AppointmentData = {
@@ -85,23 +86,24 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
           ]}
         />
 
-        <div className="flex [&>*]:w-full mt-4">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="flex [&>*]:w-full mt-4"
+        >
           <Button
+            // type="submit"
             style="DANGER"
+            confirm={true}
             onClick={() => {
-              if (
-                confirm("Are you sure you want to cancel this appointment?")
-              ) {
-                globalParams.user.cancelAppointment(
-                  "" + (data.id ? data.id : "")
-                );
-                window.location.reload();
-              }
+              globalParams.user.cancelAppointment(
+                "" + (data.id ? data.id : "")
+              );
+              window.location.reload();
             }}
           >
             Cancel Appointment
           </Button>
-        </div>
+        </form>
       </div>
     </div>
   );

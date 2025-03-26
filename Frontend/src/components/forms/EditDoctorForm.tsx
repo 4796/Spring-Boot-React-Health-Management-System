@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate } from "react-router-dom";
@@ -25,27 +25,30 @@ const EditDoctorForm = ({
 
   const navigate = useNavigate();
   // submiting
-
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (salary <= 0) {
       toast.error("Invalid salary.");
       return;
     }
-    if (confirm("Are you sure you want to apply these changes?")) {
-      const oldSalary = oldArgs && oldArgs.salary ? oldArgs.salary : 1;
-      const percentage = ((salary - oldSalary) * 100) / oldSalary;
-      sendData(
-        oldArgs ? "" + oldArgs.id : "",
-        percentage * Math.sign(percentage),
-        percentage > 0 ? "+" : "-"
-      );
-      navigate(-1);
-    }
+    const oldSalary = oldArgs && oldArgs.salary ? oldArgs.salary : 1;
+    const percentage = ((salary - oldSalary) * 100) / oldSalary;
+    sendData(
+      oldArgs ? "" + oldArgs.id : "",
+      percentage * Math.sign(percentage),
+      percentage > 0 ? "+" : "-"
+    );
+    navigate(-1);
   };
 
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       <div>
         <label htmlFor="salary">New Salary [$]: </label>
         <input
@@ -67,7 +70,11 @@ const EditDoctorForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit">Confirm Changes</Button>
+        <div>
+          <Button type="submit" confirm={true} onClick={handleManualSubmit}>
+            Confirm Changes
+          </Button>
+        </div>
       </div>
     </form>
   );

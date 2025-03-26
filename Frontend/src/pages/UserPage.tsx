@@ -52,13 +52,10 @@ const UserPage = () => {
           {id !== user.getId() && (
             <div>
               <Button
+                confirm={true}
                 onClick={() => {
-                  if (
-                    confirm("Are you sure you want to delete this account?")
-                  ) {
-                    user.deleteUser(id ? id : "");
-                    navigate(-1);
-                  }
+                  user.deleteUser(id ? id : "");
+                  navigate(-1);
                 }}
                 style="DANGER"
               >

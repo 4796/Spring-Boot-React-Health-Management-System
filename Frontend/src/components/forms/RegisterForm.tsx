@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { RegisterResponse, Role } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
@@ -55,9 +55,17 @@ const RegisterForm = ({
     ? "ROLE_DOCTOR"
     : "ROLE_PATIENT";
   const navigate = useNavigate();
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!confirm("Are you sure you want to register?")) return;
+
     const data: RegisterArgs = {
       username,
       password,
@@ -73,19 +81,19 @@ const RegisterForm = ({
       specialization: registerDoctor ? specialization : undefined,
       salary: registerDoctor ? salary : undefined,
     };
+    if (registerDoctor && salary <= 0) {
+      toast.error("Invalid salary.");
+      return;
+    }
     sendData(data).then((result: RegisterResponse | null) => {
-      if (registerDoctor && salary <= 0) {
-        toast.error("Invalid salary.");
-        return;
-      }
       if (result) {
         if (result.status === "ERROR") toast.error("Invalid credentials.");
         else registerDoctor ? navigate(-1) : navigate("/login");
-      } else console.error("REGISTER ERROR.");
+      } else toast.error("Uncaught error.");
     });
   };
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       <ToastContainer />
       {!registerAdmin && (
         <>
@@ -185,10 +193,18 @@ const RegisterForm = ({
           >
             Cancel
           </Button>
-          <Button type="submit">Register</Button>
+          <div>
+            <Button onClick={handleManualSubmit} confirm={true} type="submit">
+              Register
+            </Button>
+          </div>
         </div>
       ) : (
-        <Button type="submit">Register</Button>
+        <div>
+          <Button onClick={handleManualSubmit} confirm={true} type="submit">
+            Register
+          </Button>
+        </div>
       )}
     </form>
   );

@@ -1,9 +1,8 @@
-import { FormEvent, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginArgs } from "./LoginForm";
 import Button from "../reusable/Button";
 import { toast } from "react-toastify";
-import confirmToast from "../reusable/ConfirmToast";
 
 const EditAuthForm = ({
   sendData,
@@ -14,15 +13,17 @@ const EditAuthForm = ({
   className?: string;
 }) => {
   const [username, setUsername] = useState<string>("");
-
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
 
   const navigate = useNavigate();
-  // submiting
-  const globalParams: {
-    setBlockingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
-  } = useOutletContext();
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,33 +33,22 @@ const EditAuthForm = ({
       );
       return;
     }
-
-    globalParams.setBlockingOverlay(true);
-    confirmToast(
-      "Are you sure you want to apply these changes?",
-      () => {
-        const data: LoginArgs = {
-          username,
-          password: newPassword,
-        };
-        sendData(data).then((d) => {
-          if (d) {
-            toast.success("Login credentials changed successfully.");
-            navigate(-1);
-          } else {
-            toast.error("Invalid username.");
-          }
-        });
-        globalParams.setBlockingOverlay(false);
-      },
-      () => {
-        globalParams.setBlockingOverlay(false);
+    const data: LoginArgs = {
+      username,
+      password: newPassword,
+    };
+    sendData(data).then((d) => {
+      if (d) {
+        toast.success("Login credentials changed successfully.");
+        navigate(-1);
+      } else {
+        toast.error("Invalid username.");
       }
-    );
+    });
   };
 
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       <div>
         <label htmlFor="username">New Username: </label>
         <input
@@ -107,7 +97,11 @@ const EditAuthForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit">Change</Button>
+        <div>
+          <Button type="submit" confirm={true} onClick={handleManualSubmit}>
+            Change
+          </Button>
+        </div>
       </div>
     </form>
   );

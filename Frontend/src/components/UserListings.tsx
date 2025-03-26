@@ -31,7 +31,7 @@ const UserListings = () => {
       setData([admins, patients, doctors]);
       setLoading(false);
     });
-  }, []);
+  }, [globalParams.user]);
   return loading ? (
     <Spinner loading={loading} />
   ) : (

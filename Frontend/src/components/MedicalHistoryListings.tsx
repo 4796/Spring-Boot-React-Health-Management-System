@@ -21,6 +21,7 @@ const MedicalHistoryListings = ({
   return (
     <div className="[&>*>*]:grid-cols-1">
       <Listings
+        useEffectParams={[patient, globalParams.user]}
         useEffectFunction={() => {
           (patient ? patient : globalParams.user)
             .getMedicalRecords()

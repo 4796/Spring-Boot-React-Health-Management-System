@@ -1,8 +1,8 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Button from "../reusable/Button";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
-import { AppointmentData, AppointmentSuggestions } from "../AppointmentListing";
+import { AppointmentData } from "../AppointmentListing";
 import { All } from "../../roles/All";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../reusable/Spinner";
@@ -39,13 +39,19 @@ const BookAppointmentForm = ({
   const [time, setTime] = useState<string>("");
   const globalParams: { user: All } = useOutletContext();
 
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleManualSubmit = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   const { data, isLoading, error } = useQuery<string[] | null>({
     queryKey: ["date", date],
     queryFn: (): Promise<string[] | null> => {
       return globalParams.user.getAppointmentSuggestions("" + doctorId, date);
     },
-
-    staleTime: 1000 * 60 * 5, // 5 mins
+    staleTime: 0,
   });
   useEffect(() => {
     setTime(data ? data[0] : "");
@@ -53,24 +59,23 @@ const BookAppointmentForm = ({
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (confirm("Are you sure you want to book this appointment?")) {
-      const appointment: AppointmentData = {
-        appointmentTime: [date, time].join("T"),
-        doctorId,
-        patientId,
-        type,
-      };
 
-      sendData(appointment).then((d) => {
-        if (d) navigate(-1);
-        else toast.error("There is an error!");
-      });
-    }
+    const appointment: AppointmentData = {
+      appointmentTime: [date, time].join("T"),
+      doctorId,
+      patientId,
+      type,
+    };
+
+    sendData(appointment).then((d) => {
+      if (d) navigate(-1);
+      else toast.error("Appointment already taken.");
+    });
   };
   if (isLoading) return <Spinner loading={isLoading} />;
 
   return (
-    <form onSubmit={submitForm} className={className}>
+    <form ref={formRef} onSubmit={submitForm} className={className}>
       <input
         type="text"
         placeholder="What's appointment for?"
@@ -114,7 +119,11 @@ const BookAppointmentForm = ({
         >
           Cancel
         </Button>
-        <Button type="submit">Confirm</Button>
+        <div>
+          <Button type="submit" onClick={handleManualSubmit} confirm={true}>
+            Confirm
+          </Button>
+        </div>
       </div>
     </form>
   );
