@@ -1,7 +1,9 @@
 import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { LoginArgs } from "./LoginForm";
 import Button from "../reusable/Button";
+import { toast } from "react-toastify";
+import confirmToast from "../reusable/ConfirmToast";
 
 const EditAuthForm = ({
   sendData,
@@ -18,22 +20,41 @@ const EditAuthForm = ({
 
   const navigate = useNavigate();
   // submiting
+  const globalParams: {
+    setBlockingOverlay: React.Dispatch<React.SetStateAction<boolean>>;
+  } = useOutletContext();
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      alert("New Password and Confirm New Password fields must be the same!");
+      toast.error(
+        "New Password and Confirm New Password fields must be the same!"
+      );
       return;
     }
-    if (confirm("Are you sure you want to apply these changes?")) {
-      const data: LoginArgs = {
-        username,
-        password: newPassword,
-      };
 
-      sendData(data);
-      navigate(-1);
-    }
+    globalParams.setBlockingOverlay(true);
+    confirmToast(
+      "Are you sure you want to apply these changes?",
+      () => {
+        const data: LoginArgs = {
+          username,
+          password: newPassword,
+        };
+        sendData(data).then((d) => {
+          if (d) {
+            toast.success("Login credentials changed successfully.");
+            navigate(-1);
+          } else {
+            toast.error("Invalid username.");
+          }
+        });
+        globalParams.setBlockingOverlay(false);
+      },
+      () => {
+        globalParams.setBlockingOverlay(false);
+      }
+    );
   };
 
   return (

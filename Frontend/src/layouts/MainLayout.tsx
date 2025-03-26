@@ -6,6 +6,8 @@ import { Patient } from "../roles/Patient";
 import { Doctor } from "../roles/Doctor";
 import { All } from "../roles/All";
 import { Admin } from "../roles/Admin";
+import { ToastContainer } from "react-toastify";
+import Container from "../components/reusable/Container";
 
 const MainLayout = () => {
   let userObj: All | null = null;
@@ -30,10 +32,22 @@ const MainLayout = () => {
   }, [pathname]);
 
   const [user] = useState<All>(userObj);
+
+  const [blockingOverlay, setBlockingOverlay] = useState<boolean>(false);
   return (
     <>
+      {blockingOverlay && (
+        <div className="fixed inset-0 bg-dark bg-opacity-30 z-10"></div>
+      )}
       <Navbar />
-      <Outlet context={{ user }} />
+      <Container styleCssOverride=" ">
+        <div className="relative">
+          <ToastContainer
+            className={"container max-w-[1000px] my-0 mx-auto absolute z-20"}
+          />
+        </div>
+      </Container>
+      <Outlet context={{ user, setBlockingOverlay }} />
     </>
   );
 };

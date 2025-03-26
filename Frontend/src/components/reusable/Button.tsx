@@ -12,12 +12,14 @@ const Button = ({
   onClick,
   style = "REGULAR",
   disabled = false,
+  ref,
   children,
 }: {
   type?: "submit" | "reset" | "button";
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   style?: styleType;
   disabled?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
   children: React.ReactNode;
 }) => {
   const stylings: {
@@ -60,6 +62,7 @@ const Button = ({
 
   return (
     <button
+      ref={ref}
       disabled={disabled}
       type={type}
       onClick={onClick}

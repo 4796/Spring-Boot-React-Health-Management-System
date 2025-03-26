@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { RegisterResponse, Role } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import Button from "../reusable/Button";
+import { toast, ToastContainer } from "react-toastify";
 
 export type RegisterArgs = {
   id?: number;
@@ -74,17 +75,18 @@ const RegisterForm = ({
     };
     sendData(data).then((result: RegisterResponse | null) => {
       if (registerDoctor && salary <= 0) {
-        alert("Invalid Salary Number.");
+        toast.error("Invalid salary.");
         return;
       }
       if (result) {
-        if (result.status === "ERROR") console.log("KONFLIKT");
+        if (result.status === "ERROR") toast.error("Invalid credentials.");
         else registerDoctor ? navigate(-1) : navigate("/login");
       } else console.error("REGISTER ERROR.");
     });
   };
   return (
     <form onSubmit={submitForm} className={className}>
+      <ToastContainer />
       {!registerAdmin && (
         <>
           <input

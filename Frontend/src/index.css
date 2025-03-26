@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+  --toastify-color-light: theme(colors.light);
+  --toastify-color-dark: theme(colors.dark);
+  --toastify-color-info: theme(colors.primary);
+  --toastify-color-success: theme(colors.good);
+  --toastify-color-warning: #f1c40f;
+  --toastify-color-error: theme(colors.danger);
+  --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+  --toastify-font-family: theme(fontFamily.sans);
+}
+
+
 body {
   @apply bg-light text-dark;
 

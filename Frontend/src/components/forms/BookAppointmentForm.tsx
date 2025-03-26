@@ -6,6 +6,7 @@ import { AppointmentData, AppointmentSuggestions } from "../AppointmentListing";
 import { All } from "../../roles/All";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../reusable/Spinner";
+import { toast } from "react-toastify";
 
 const BookAppointmentForm = ({
   doctorId,
@@ -62,7 +63,7 @@ const BookAppointmentForm = ({
 
       sendData(appointment).then((d) => {
         if (d) navigate(-1);
-        else alert("There is an error!");
+        else toast.error("There is an error!");
       });
     }
   };

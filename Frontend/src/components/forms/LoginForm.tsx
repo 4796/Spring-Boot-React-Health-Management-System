@@ -3,6 +3,7 @@ import { LoginResponse } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { startSession } from "../../services/session";
 import Button from "../reusable/Button";
+import { toast, ToastContainer } from "react-toastify";
 
 export type LoginArgs = { username?: string; password?: string };
 const LoginForm = ({
@@ -28,7 +29,7 @@ const LoginForm = ({
           startSession(result.token, result.role, result.id);
           console.log(result);
         } else {
-          alert("Invalid credentials.");
+          toast.error("Invalid credentials.");
           // setUsername("");
           // setPassword("");
           usernameRef.current?.focus();
@@ -41,6 +42,7 @@ const LoginForm = ({
 
   return (
     <form onSubmit={submitForm} className={className}>
+      <ToastContainer />
       <input
         minLength={3}
         maxLength={20}

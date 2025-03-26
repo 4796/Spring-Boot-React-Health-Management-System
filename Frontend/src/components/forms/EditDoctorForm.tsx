@@ -4,6 +4,7 @@ import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../reusable/Button";
+import { toast } from "react-toastify";
 
 const EditDoctorForm = ({
   sendData,
@@ -28,7 +29,7 @@ const EditDoctorForm = ({
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (salary <= 0) {
-      alert("Invalid Salary Number.");
+      toast.error("Invalid salary.");
       return;
     }
     if (confirm("Are you sure you want to apply these changes?")) {
