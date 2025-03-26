@@ -33,12 +33,8 @@ const MainLayout = () => {
 
   const [user] = useState<All>(userObj);
 
-  const [blockingOverlay, setBlockingOverlay] = useState<boolean>(false);
   return (
     <>
-      {blockingOverlay && (
-        <div className="fixed inset-0 bg-dark bg-opacity-30 z-10"></div>
-      )}
       <Navbar />
       <Container styleCssOverride=" ">
         <div className="relative">
@@ -47,7 +43,7 @@ const MainLayout = () => {
           />
         </div>
       </Container>
-      <Outlet context={{ user, setBlockingOverlay }} />
+      <Outlet context={{ user }} />
     </>
   );
 };

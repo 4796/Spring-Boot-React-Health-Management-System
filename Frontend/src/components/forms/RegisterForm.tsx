@@ -88,13 +88,18 @@ const RegisterForm = ({
     sendData(data).then((result: RegisterResponse | null) => {
       if (result) {
         if (result.status === "ERROR") toast.error("Invalid credentials.");
-        else registerDoctor ? navigate(-1) : navigate("/login");
-      } else toast.error("Uncaught error.");
+        else {
+          toast.success("Registered successfully.");
+          if (registerDoctor || registerAdmin) {
+            navigate(-1);
+          } else navigate("/login");
+        }
+      } else toast.error("Invalid credentials.");
     });
   };
   return (
     <form ref={formRef} onSubmit={submitForm} className={className}>
-      <ToastContainer />
+      {!registerDoctor && !registerAdmin && <ToastContainer />}
       {!registerAdmin && (
         <>
           <input
