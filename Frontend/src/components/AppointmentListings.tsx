@@ -32,7 +32,7 @@ const AppointmentListings = () => {
       loading={loading}
       minListingsToShow={3}
       data={data}
-      noDataText="No appointments left!"
+      noDataText="No appointments booked."
       mapFunction={(appointment) => (
         <AppointmentListing data={appointment} key={appointment.id} />
       )}
