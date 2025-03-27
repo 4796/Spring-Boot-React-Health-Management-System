@@ -28,11 +28,11 @@ export const login = async (args: LoginArgs): Promise<LoginResponse | null> => {
     }
 
     const data = await res.json();
-    // console.log(data);
+    // //debug console.log(data);
 
     return data;
   } catch (error) {
-    console.log("Login error:", error);
+    //debug console.log("Login error:", error);
     return null;
   }
 };
@@ -63,10 +63,10 @@ export const register = async (
     }
 
     const data = await res.json();
-    console.log(data);
+    //debug console.log(data);
     return data;
   } catch (error) {
-    console.log("Register error:", error);
+    //debug console.log("Register error:", error);
     return null;
   }
 };

@@ -1,7 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-
 import { useNavigate, useOutletContext } from "react-router-dom";
-
 import { AppointmentData } from "../listing/AppointmentListing";
 import { All } from "../../roles/All";
 import { useQuery } from "@tanstack/react-query";
@@ -105,7 +103,7 @@ const BookAppointmentForm = ({
           <select
             onChange={(e) => {
               setTime(e.target.value);
-              console.log(time);
+              //debug console.log(time);
             }}
             value={time}
             required

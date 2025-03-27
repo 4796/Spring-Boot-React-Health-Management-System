@@ -39,14 +39,14 @@ export abstract class All {
       if (res.ok) {
         return true;
       } else {
-        console.log(res);
-        console.log("Unathorized access.");
+        //debug console.log(res);
+        //debug console.log("Unathorized access.");
 
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }
@@ -69,23 +69,23 @@ export abstract class All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return data;
       } else {
-        console.log(res);
-        console.log("Unathorized access.");
+        //debug console.log(res);
+        //debug console.log("Unathorized access.");
 
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
 
   async bookAppointment(args: AppointmentData): Promise<boolean> {
-    console.log(args);
+    //debug console.log(args);
     try {
       const res = await fetch(`/api/appointments`, {
         method: "POST",
@@ -98,14 +98,14 @@ export abstract class All {
       if (res.ok) {
         return true;
       } else {
-        console.log(res);
-        console.log("Unathorized access.");
+        //debug console.log(res);
+        //debug console.log("Unathorized access.");
 
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }
@@ -124,14 +124,14 @@ export abstract class All {
 
         return true;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }
@@ -148,14 +148,14 @@ export abstract class All {
 
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -173,14 +173,14 @@ export abstract class All {
         const data = await res.json();
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }

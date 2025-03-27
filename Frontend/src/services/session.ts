@@ -6,7 +6,7 @@ export const startSession = (token: string, role: Role, id: number) => {
   localStorage.setItem("id", `${id}`);
   const expirationDate = Date.now() + 3600 * 1000;
   localStorage.setItem("exp", `${expirationDate}`);
-  console.log(expirationDate);
+  //debug console.log(expirationDate);
 
   setTimeout(() => {
     destroySession();

@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-
 import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";

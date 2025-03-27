@@ -26,11 +26,12 @@ const Listings = ({
   useEffect(() => {
     useEffectFunction();
   }, useEffectParams);
+
   if (loading) {
     return <Spinner loading={loading} />;
   }
   return !data || data?.length === 0 ? (
-    <div>{noDataText}</div>
+    <div className={noDataText === "" ? "hidden" : ""}>{noDataText}</div>
   ) : (
     <div>
       <div className="grid xl:grid-cols-3 grid-cols-1 gap-4">

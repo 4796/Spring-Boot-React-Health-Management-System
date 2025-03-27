@@ -16,7 +16,7 @@ const YourProfile = ({ user }: { user?: All }) => {
   useEffect(() => {
     if (user?.getRole() === "ROLE_ADMIN") return;
     (user ? user : globalParams.user).getUserInfo().then((d) => {
-      console.log(d);
+      //debug console.log(d);
       setData(d);
       setLoading(false);
     });

@@ -7,7 +7,7 @@ const UserListing = ({
   data: UserType;
   addCssStyle?: string;
 }) => {
-  console.log(data);
+  //debug console.log(data);
 
   return (
     <div

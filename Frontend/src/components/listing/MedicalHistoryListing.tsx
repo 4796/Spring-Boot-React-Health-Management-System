@@ -23,7 +23,7 @@ const MedicalHistoryListing = ({
   data: MedicalHistoryType;
   doctorId?: string;
 }) => {
-  console.log(data);
+  //debug console.log(data);
   const doctor: Doctor = new Doctor("" + data.doctorId, getToken());
   const canDoctorEdit: boolean = doctorId === "" + data.doctorId;
   const isPatient: boolean = doctorId === "";
@@ -32,7 +32,7 @@ const MedicalHistoryListing = ({
   useEffect(() => {
     doctor.getUserInfo().then((d) => {
       setSubjectData(d);
-      console.log(d);
+      //debug console.log(d);
     });
   }, []);
   return (

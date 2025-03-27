@@ -1,30 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchForm from "../reusable/forms/SearchForm";
 import UserListing from "../listing/UserListingPreview";
 import { UserType } from "../UserListings";
-import ArrowDownFill from "../reusable/icons/ArrowDownFill";
-import ArrowUpFill from "../reusable/icons/ArrowUpFill";
 import { getId } from "../../services/session";
+import Listings from "../reusable/Listings";
 
-const SearchUsers = ({ data }: { data: UserType[] }) => {
+const SearchUsers = ({
+  data,
+  loading,
+}: {
+  data: UserType[];
+  loading: boolean;
+}) => {
   const [currentData, setCurrentData] = useState<UserType[]>([]);
-  const [showingAll, setShowingAll] = useState<boolean>(false);
-  const [thereIsMoreToSee, setThereIsMoreToSee] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
 
-  useEffect(() => {
-    const filtered = data
-      ? data.filter((d) =>
-          (d.username ? d.username : "")
-            .toLowerCase()
-            .startsWith(search.toLowerCase())
-        )
-      : [];
-    setThereIsMoreToSee(filtered.length > 3);
-
-    setCurrentData(showingAll ? filtered : filtered.slice(0, 3));
-  }, [search, data, showingAll]);
   return (
     <div className="flex flex-col gap-4">
       <SearchForm
@@ -36,46 +27,41 @@ const SearchUsers = ({ data }: { data: UserType[] }) => {
         searchQuery={search}
         setSearchQuery={setSearch}
       />
+      <Listings
+        useEffectFunction={() => {
+          const filtered = data
+            ? data.filter((d) =>
+                (d.username ? d.username : "")
+                  .toLowerCase()
+                  .startsWith(search.toLowerCase())
+              )
+            : [];
 
-      <div
-        className={`grid xl:grid-cols-3 gap-4 ${
-          currentData.length === 0 ? "hidden" : ""
-        }`}
-      >
-        {currentData.map(
-          (d) =>
-            (d.username ? d.username : "")
-              .toLowerCase()
-              .startsWith(search.toLowerCase()) && (
-              <Link
-                to={
-                  "" + d.id === getId()
-                    ? "/profile"
-                    : `/users/${d.role}/${d.id}`
-                }
-                key={d.id}
-              >
-                <UserListing
-                  data={d}
-                  addCssStyle="xl:hover:bg-opacity-5 transition-opacity"
-                />
-              </Link>
-            )
-        )}
-      </div>
-      {thereIsMoreToSee && (
-        <div className="self-center">
-          <button
-            onClick={() => {
-              setCurrentData(!showingAll ? data : data.slice(0, 3));
-              setShowingAll((prev) => !prev);
-            }}
-            className="underline self-end place-self-start"
-          >
-            {!showingAll ? <ArrowDownFill /> : <ArrowUpFill />}
-          </button>
-        </div>
-      )}
+          setCurrentData(filtered);
+        }}
+        useEffectParams={[search]}
+        loading={loading}
+        minListingsToShow={3}
+        data={currentData}
+        noDataText={""}
+        mapFunction={(d) =>
+          (d.username ? d.username : "")
+            .toLowerCase()
+            .startsWith(search.toLowerCase()) && (
+            <Link
+              to={
+                "" + d.id === getId() ? "/profile" : `/users/${d.role}/${d.id}`
+              }
+              key={d.id}
+            >
+              <UserListing
+                data={d}
+                addCssStyle="xl:hover:bg-opacity-5 transition-opacity"
+              />
+            </Link>
+          )
+        }
+      />
     </div>
   );
 };

@@ -41,16 +41,16 @@ const UserListings = () => {
         </Link>
       </div>
 
-      <SearchUsers data={data ? data[0] : []} />
+      <SearchUsers loading={loading} data={data ? data[0] : []} />
       <H2>Patients</H2>
-      <SearchUsers data={data ? data[1] : []} />
+      <SearchUsers loading={loading} data={data ? data[1] : []} />
       <div className="flex items-center justify-between">
         <H2>Doctors</H2>
         <Link to="/register-doctor" className="inline-block">
           <Button style="GOOD">Register New Doctor</Button>
         </Link>
       </div>
-      <SearchUsers data={data ? data[2] : []} />
+      <SearchUsers loading={loading} data={data ? data[2] : []} />
     </>
   );
 };

@@ -22,17 +22,17 @@ export class Doctor extends All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return true;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -48,17 +48,17 @@ export class Doctor extends All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return true;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -72,17 +72,17 @@ export class Doctor extends All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return data.medicalRecord; // return data
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -98,17 +98,17 @@ export class Doctor extends All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return true;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -127,14 +127,14 @@ export class Doctor extends All {
       if (res.ok) {
         return true;
       } else {
-        console.log(res);
-        console.log("Unathorized access.");
+        //debug console.log(res);
+        //debug console.log("Unathorized access.");
 
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }
@@ -148,17 +148,17 @@ export class Doctor extends All {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -180,17 +180,17 @@ export class Doctor extends All {
       );
       if (res.ok) {
         const data = await res.json();
-        console.log(data);
+        //debug console.log(data);
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }

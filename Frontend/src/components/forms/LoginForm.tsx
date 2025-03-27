@@ -28,7 +28,7 @@ const LoginForm = ({
           toast.success("Logged in successfully.");
           navigate("/");
           startSession(result.token, result.role, result.id);
-          console.log(result);
+          //debug console.log(result);
         } else {
           toast.error("Invalid credentials.");
           // setUsername("");

@@ -29,20 +29,20 @@ export class Admin extends All {
       if (res.ok) {
         return true;
       } else {
-        console.log(res);
-        console.log("Unathorized access.");
+        //debug console.log(res);
+        //debug console.log("Unathorized access.");
 
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }
   async registerDoctor(args: RegisterArgs): Promise<RegisterResponse | null> {
     try {
-      console.log(args);
+      //debug console.log(args);
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
@@ -55,14 +55,14 @@ export class Admin extends All {
         const data = await res.json();
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -78,14 +78,14 @@ export class Admin extends All {
         const data = await res.json();
         return data;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return null;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return null;
     }
   }
@@ -101,14 +101,14 @@ export class Admin extends All {
         //const data = await res.json();
         return true;
       } else {
-        console.log(res);
+        //debug console.log(res);
 
-        console.log("Unathorized access.");
+        //debug console.log("Unathorized access.");
         //destroySession();
         return false;
       }
     } catch (error) {
-      console.log(error);
+      //debug console.log(error);
       return false;
     }
   }

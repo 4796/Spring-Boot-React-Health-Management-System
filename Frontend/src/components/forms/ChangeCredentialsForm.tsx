@@ -1,7 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginArgs } from "./LoginForm";
-
 import { toast } from "react-toastify";
 import MyForm from "../reusable/forms/MyForm";
 

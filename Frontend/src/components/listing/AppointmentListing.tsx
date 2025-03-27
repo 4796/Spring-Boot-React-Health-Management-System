@@ -29,7 +29,7 @@ const AppointmentListing = ({ data }: { data: AppointmentData }) => {
   useEffect(() => {
     subject.getUserInfo().then((d) => {
       setSubjectData(d);
-      console.log(d);
+      //debug console.log(d);
     });
   }, []);
   return (
