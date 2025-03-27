@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import Container from "../components/reusable/Container";
-import EditProfileForm from "../components/forms/EditProfileForm";
+import Container from "../../components/reusable/Container";
+import EditProfileForm from "../../components/forms/EditProfileForm";
 import { useOutletContext } from "react-router-dom";
-import { RegisterArgs } from "../components/forms/RegisterForm";
-import Spinner from "../components/reusable/Spinner";
-import { All } from "../roles/All";
-import H1 from "../components/reusable/h/H1";
+import { RegisterArgs } from "../../components/forms/RegisterForm";
+import Spinner from "../../components/reusable/Spinner";
+import { All } from "../../roles/All";
+import H1 from "../../components/reusable/h/H1";
 
 const EditProfilePage = () => {
   const [loading, setLoading] = useState<boolean>(true);

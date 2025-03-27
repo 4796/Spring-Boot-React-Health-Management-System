@@ -1,12 +1,12 @@
 import { useParams, useOutletContext, Navigate } from "react-router-dom";
-import { Doctor } from "../roles/Doctor";
+import { Doctor } from "../../roles/Doctor";
 import { useEffect, useState } from "react";
-import Spinner from "../components/reusable/Spinner";
-import { MedicalHistoryType } from "../components/MedicalHistoryListing";
-import Container from "../components/reusable/Container";
-import RecordForm from "../components/forms/RecordForm";
-import { getId } from "../services/session";
-import H1 from "../components/reusable/h/H1";
+import Spinner from "../../components/reusable/Spinner";
+import { MedicalHistoryType } from "../../components/listing/MedicalHistoryListing";
+import Container from "../../components/reusable/Container";
+import RecordForm from "../../components/forms/RecordForm";
+import { getId } from "../../services/session";
+import H1 from "../../components/reusable/h/H1";
 
 const EditRecordPage = () => {
   const { id } = useParams();

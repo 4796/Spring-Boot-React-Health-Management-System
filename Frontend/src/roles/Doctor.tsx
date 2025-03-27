@@ -2,12 +2,10 @@ import { JSX } from "react";
 import { Role } from "../services/auth";
 import { All } from "./All";
 import { RegisterArgs } from "../components/forms/RegisterForm";
-
 import AppointmentListings from "../components/AppointmentListings";
-import { MedicalHistoryType } from "../components/MedicalHistoryListing";
+import { MedicalHistoryType } from "../components/listing/MedicalHistoryListing";
 import H1 from "../components/reusable/h/H1";
-
-import SearchPatients from "../components/SearchPatients";
+import SearchPatients from "../components/search/SearchPatients";
 
 export class Doctor extends All {
   constructor(id: string, token: string) {

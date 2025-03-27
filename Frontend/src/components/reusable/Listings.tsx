@@ -1,12 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
 import Spinner from "./Spinner";
-import Button from "./Button";
-import {
-  BsArrowDown,
-  BsArrowDownCircle,
-  BsArrowDownCircleFill,
-  BsArrowUpCircleFill,
-} from "react-icons/bs";
 import ArrowDownFill from "./icons/ArrowDownFill";
 import ArrowUpFill from "./icons/ArrowUpFill";
 

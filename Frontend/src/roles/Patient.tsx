@@ -5,7 +5,7 @@ import AppointmentListings from "../components/AppointmentListings";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import MedicalHistoryListings from "../components/MedicalHistoryListings";
 import H1 from "../components/reusable/h/H1";
-import SearchDoctors from "../components/SearchDoctors";
+import SearchDoctors from "../components/search/SearchDoctors";
 
 export class Patient extends All {
   constructor(id: string, token: string) {

@@ -1,11 +1,9 @@
 import { Link, useOutletContext } from "react-router-dom";
-
 import { Admin } from "../roles/Admin";
 import { useEffect, useState } from "react";
-
 import { Role } from "../services/auth";
 import H2 from "./reusable/h/H2";
-import SearchUsers from "./SearchUsers";
+import SearchUsers from "./search/SearchUsers";
 import Spinner from "./reusable/Spinner";
 import Button from "./reusable/Button";
 export type UserType = {

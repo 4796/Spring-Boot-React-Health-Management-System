@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { getExpiration, getId, getRole, getToken } from "../services/session";
+import { getId, getRole, getToken } from "../services/session";
 import Navbar from "../components/Navbar";
 import { Patient } from "../roles/Patient";
 import { Doctor } from "../roles/Doctor";
@@ -31,9 +31,7 @@ const MainLayout = () => {
   }, [pathname]);
 
   const [user] = useState<All>(userObj);
-  // setInterval(() => {
-  //   console.log(getExpiration() - Date.now());
-  // }, 1000);
+
   return (
     <>
       <Navbar />

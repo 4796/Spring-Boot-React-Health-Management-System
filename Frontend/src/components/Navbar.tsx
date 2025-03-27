@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import Container from "./reusable/Container";
-
 import { FaGear } from "react-icons/fa6";
 const Navbar = () => {
   return (

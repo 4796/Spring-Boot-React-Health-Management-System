@@ -1,6 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import Button from "./reusable/Button";
-import { UserType } from "./UserListings";
+import { UserType } from "../UserListings";
 
 const UserListing = ({
   data,

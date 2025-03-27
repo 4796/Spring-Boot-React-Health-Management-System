@@ -1,10 +1,10 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 
 import { RegisterArgs } from "./../forms/RegisterForm";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { All } from "../../roles/All";
-import Button from "../reusable/Button";
 import { toast } from "react-toastify";
+import MyForm from "../reusable/forms/MyForm";
 
 const EditProfileForm = ({
   sendData,
@@ -29,12 +29,6 @@ const EditProfileForm = ({
   const globalParams: { user: All } = useOutletContext();
   const navigate = useNavigate();
   // submiting
-  const formRef = useRef<HTMLFormElement>(null);
-  const handleManualSubmit = () => {
-    if (formRef.current) {
-      formRef.current.requestSubmit();
-    }
-  };
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -55,33 +49,48 @@ const EditProfileForm = ({
   };
 
   return (
-    <form ref={formRef} onSubmit={submitForm} className={className}>
-      {globalParams.user.getRole() === "ROLE_PATIENT" && (
-        <>
-          <div>
-            <label htmlFor="name">Name: </label>
-            <input
-              maxLength={30}
-              type="text"
-              id="name"
-              placeholder="John Doe"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              required
-            />
-          </div>
+    <MyForm submitText="Change" onSubmit={submitForm} className={className}>
+      <>
+        {globalParams.user.getRole() === "ROLE_PATIENT" && (
+          <>
+            <div>
+              <label htmlFor="name">Name: </label>
+              <input
+                maxLength={30}
+                type="text"
+                id="name"
+                placeholder="John Doe"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+              />
+            </div>
 
-          <div>
-            <label htmlFor="email">Email: </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="user@mail.com"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              required
-            />
-          </div>
+            <div>
+              <label htmlFor="email">Email: </label>
+              <input
+                type="email"
+                id="email"
+                placeholder="user@mail.com"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+              />
+            </div>
+          </>
+        )}
+        <div>
+          <label htmlFor="phone">Phone Number: </label>
+          <input
+            type="tel"
+            id="phone"
+            placeholder="+123 4567890"
+            onChange={(e) => setPhone(e.target.value)}
+            value={phone}
+            required
+          />
+        </div>
+        {globalParams.user.getRole() === "ROLE_PATIENT" && (
           <div>
             <label htmlFor="medical_history">Medical History: </label>
 
@@ -93,36 +102,9 @@ const EditProfileForm = ({
               value={medicalHistory}
             />
           </div>
-        </>
-      )}
-      <div>
-        <label htmlFor="phone">Phone Number: </label>
-        <input
-          type="tel"
-          id="phone"
-          placeholder="+123 4567890"
-          onChange={(e) => setPhone(e.target.value)}
-          value={phone}
-          required
-        />
-      </div>
-      <div className="flex justify-between">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          style="DANGER"
-        >
-          Cancel
-        </Button>
-        <div>
-          <Button onClick={handleManualSubmit} confirm={true} type="submit">
-            Confirm Changes
-          </Button>
-        </div>
-      </div>
-    </form>
+        )}
+      </>
+    </MyForm>
   );
 };
 

@@ -1,8 +1,9 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginArgs } from "./LoginForm";
-import Button from "../reusable/Button";
+
 import { toast } from "react-toastify";
+import MyForm from "../reusable/forms/MyForm";
 
 const EditAuthForm = ({
   sendData,
@@ -15,15 +16,7 @@ const EditAuthForm = ({
   const [username, setUsername] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
-
   const navigate = useNavigate();
-
-  const formRef = useRef<HTMLFormElement>(null);
-  const handleManualSubmit = () => {
-    if (formRef.current) {
-      formRef.current.requestSubmit();
-    }
-  };
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,7 +41,7 @@ const EditAuthForm = ({
   };
 
   return (
-    <form ref={formRef} onSubmit={submitForm} className={className}>
+    <MyForm submitText="Change" onSubmit={submitForm} className={className}>
       <div>
         <label htmlFor="username">New Username: </label>
         <input
@@ -87,23 +80,7 @@ const EditAuthForm = ({
           required
         />
       </div>
-      <div className="flex justify-between">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          style="DANGER"
-        >
-          Cancel
-        </Button>
-        <div>
-          <Button type="submit" confirm={true} onClick={handleManualSubmit}>
-            Change
-          </Button>
-        </div>
-      </div>
-    </form>
+    </MyForm>
   );
 };
 

@@ -1,16 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import { Doctor } from "../roles/Doctor";
-import { RegisterArgs } from "./forms/RegisterForm";
-import SearchForm from "./forms/SearchForm";
-import Spinner from "./reusable/Spinner";
-
-import PatientListingPreview from "./PatientListingPreview";
-import Button from "./reusable/Button";
+import { Doctor } from "../../roles/Doctor";
+import { RegisterArgs } from "../forms/RegisterForm";
+import SearchForm from "../reusable/forms/SearchForm";
+import Spinner from "../reusable/Spinner";
+import PatientListingPreview from "../listing/PatientListingPreview";
+import Button from "../reusable/Button";
 import { FaSearch } from "react-icons/fa";
-import { BsArrowDownCircleFill, BsArrowUpCircleFill } from "react-icons/bs";
-import ArrowDownFill from "./reusable/icons/ArrowDownFill";
-import ArrowUpFill from "./reusable/icons/ArrowUpFill";
+import ArrowDownFill from "../reusable/icons/ArrowDownFill";
+import ArrowUpFill from "../reusable/icons/ArrowUpFill";
 
 const SearchPatients = () => {
   const [data, setData] = useState<RegisterArgs[]>([]);

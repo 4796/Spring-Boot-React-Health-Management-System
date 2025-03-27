@@ -1,9 +1,9 @@
 import { useOutletContext, useParams } from "react-router-dom";
-import BookAppointmentForm from "../components/forms/BookAppointmentForm";
-import Container from "../components/reusable/Container";
-import H1 from "../components/reusable/h/H1";
-import { Doctor } from "../roles/Doctor";
-import { Patient } from "../roles/Patient";
+import BookAppointmentForm from "../../components/forms/BookAppointmentForm";
+import Container from "../../components/reusable/Container";
+import H1 from "../../components/reusable/h/H1";
+import { Doctor } from "../../roles/Doctor";
+import { Patient } from "../../roles/Patient";
 
 const BookAppointmentPage = () => {
   const globalParams: { user: Patient | Doctor } = useOutletContext();

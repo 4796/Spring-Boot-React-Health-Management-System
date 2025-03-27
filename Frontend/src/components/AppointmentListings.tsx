@@ -1,7 +1,8 @@
 import { useState } from "react";
-import AppointmentListing, { AppointmentData } from "./AppointmentListing";
+import AppointmentListing, {
+  AppointmentData,
+} from "./listing/AppointmentListing";
 import Listings from "./reusable/Listings";
-
 import { useOutletContext } from "react-router-dom";
 import { All } from "../roles/All";
 

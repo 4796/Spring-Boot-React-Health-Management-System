@@ -1,8 +1,8 @@
 import { useOutletContext, useParams } from "react-router-dom";
-import RecordForm from "../components/forms/RecordForm";
-import { Doctor } from "../roles/Doctor";
-import Container from "../components/reusable/Container";
-import H1 from "../components/reusable/h/H1";
+import RecordForm from "../../components/forms/RecordForm";
+import { Doctor } from "../../roles/Doctor";
+import Container from "../../components/reusable/Container";
+import H1 from "../../components/reusable/h/H1";
 
 const AddRecordPage = () => {
   const { id } = useParams();

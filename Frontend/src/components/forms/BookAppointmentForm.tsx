@@ -1,12 +1,13 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
-import Button from "../reusable/Button";
+import { FormEvent, useEffect, useState } from "react";
+
 import { useNavigate, useOutletContext } from "react-router-dom";
 
-import { AppointmentData } from "../AppointmentListing";
+import { AppointmentData } from "../listing/AppointmentListing";
 import { All } from "../../roles/All";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../reusable/Spinner";
 import { toast } from "react-toastify";
+import MyForm from "../reusable/forms/MyForm";
 
 const BookAppointmentForm = ({
   doctorId,
@@ -38,21 +39,17 @@ const BookAppointmentForm = ({
   const [date, setDate] = useState<string>(getTomorrow());
   const [time, setTime] = useState<string>("");
   const globalParams: { user: All } = useOutletContext();
-
-  const formRef = useRef<HTMLFormElement>(null);
-  const handleManualSubmit = () => {
-    if (formRef.current) {
-      formRef.current.requestSubmit();
-    }
-  };
-
-  const { data, isLoading, error } = useQuery<string[] | null>({
+  const {
+    data,
+    isLoading, //error
+  } = useQuery<string[] | null>({
     queryKey: ["date", date],
     queryFn: (): Promise<string[] | null> => {
       return globalParams.user.getAppointmentSuggestions("" + doctorId, date);
     },
     staleTime: 0,
   });
+
   useEffect(() => {
     setTime(data ? data[0] : "");
   }, [data]);
@@ -74,71 +71,59 @@ const BookAppointmentForm = ({
       } else toast.error("Appointment already taken.");
     });
   };
-  if (isLoading) return <Spinner loading={isLoading} />;
 
+  if (isLoading) return <Spinner loading={isLoading} />;
   return (
-    <form ref={formRef} onSubmit={submitForm} className={className}>
-      <input
-        type="text"
-        placeholder="What's appointment for?"
-        onChange={(e) => {
-          setType(e.target.value);
-        }}
-        minLength={3}
-        value={type}
-        required
-      />
-      <input
-        type="date"
-        onChange={(e) => {
-          setDate(e.target.value);
-        }}
-        value={date}
-        min={getTomorrow()}
-        max={getNextWeekMax()}
-        required
-      />
-      {data && data.length > 0 ? (
-        <select
-          onChange={(e) => {
-            setTime(e.target.value);
-            console.log(time);
-          }}
-          value={time}
-          required
-        >
-          {data?.map((time, i) => (
-            <option key={i}>{time}</option>
-          ))}
-        </select>
-      ) : (
+    <MyForm
+      submitText="Book"
+      showSubmit={data && data.length > 0}
+      onSubmit={submitForm}
+      className={className}
+    >
+      <>
         <input
           type="text"
-          className="text-danger"
-          disabled
-          value={"All appointments are booked for this day."}
-        />
-      )}
-
-      <div className="flex justify-between">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
+          placeholder="What's appointment for?"
+          onChange={(e) => {
+            setType(e.target.value);
           }}
-          style="DANGER"
-        >
-          Cancel
-        </Button>
-        {data && data.length > 0 && (
-          <div>
-            <Button type="submit" onClick={handleManualSubmit} confirm={true}>
-              Confirm
-            </Button>
-          </div>
+          minLength={3}
+          value={type}
+          required
+        />
+        <input
+          type="date"
+          onChange={(e) => {
+            setDate(e.target.value);
+          }}
+          value={date}
+          min={getTomorrow()}
+          max={getNextWeekMax()}
+          required
+        />
+        {data && data.length > 0 ? (
+          <select
+            onChange={(e) => {
+              setTime(e.target.value);
+              console.log(time);
+            }}
+            value={time}
+            required
+          >
+            {data?.map((time, i) => (
+              <option key={i}>{time}</option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type="text"
+            className="text-danger"
+            disabled
+            value={"All appointments are booked for this day."}
+          />
         )}
-      </div>
-    </form>
+      </>
+    </MyForm>
   );
 };
 

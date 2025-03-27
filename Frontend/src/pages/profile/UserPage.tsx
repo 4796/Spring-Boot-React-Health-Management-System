@@ -4,16 +4,16 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
-import Container from "../components/reusable/Container";
-import { Role } from "../services/auth";
-import YourProfile from "../components/profile_page/YourProfile";
-import { All } from "../roles/All";
-import { getToken } from "../services/session";
-import { Admin } from "../roles/Admin";
-import { Doctor } from "../roles/Doctor";
-import { Patient } from "../roles/Patient";
-import Button from "../components/reusable/Button";
-import H1 from "../components/reusable/h/H1";
+import Container from "../../components/reusable/Container";
+import { Role } from "../../services/auth";
+import YourProfile from "../../components/profile_page/YourProfile";
+import { All } from "../../roles/All";
+import { getToken } from "../../services/session";
+import { Admin } from "../../roles/Admin";
+import { Doctor } from "../../roles/Doctor";
+import { Patient } from "../../roles/Patient";
+import Button from "../../components/reusable/Button";
+import H1 from "../../components/reusable/h/H1";
 
 const UserPage = () => {
   const { id, role } = useParams<{ id: string; role: Role }>();

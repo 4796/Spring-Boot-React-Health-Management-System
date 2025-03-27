@@ -2,11 +2,8 @@ import { JSX } from "react";
 import { Role } from "../services/auth";
 import { RegisterArgs } from "../components/forms/RegisterForm";
 import { LoginArgs } from "../components/forms/LoginForm";
-import {
-  AppointmentData,
-  AppointmentSuggestions,
-} from "../components/AppointmentListing";
-import { MedicalHistoryType } from "../components/MedicalHistoryListing";
+import { AppointmentData } from "../components/listing/AppointmentListing";
+import { MedicalHistoryType } from "../components/listing/MedicalHistoryListing";
 
 export abstract class All {
   protected id: string;

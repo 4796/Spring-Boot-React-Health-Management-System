@@ -1,8 +1,8 @@
-import Container from "../components/reusable/Container";
-import ChangeCredentialsForm from "../components/forms/ChangeCredentialsForm";
+import Container from "../../components/reusable/Container";
+import ChangeCredentialsForm from "../../components/forms/ChangeCredentialsForm";
 import { useOutletContext } from "react-router-dom";
-import { All } from "../roles/All";
-import H1 from "../components/reusable/h/H1";
+import { All } from "../../roles/All";
+import H1 from "../../components/reusable/h/H1";
 
 const ChangeCredentialsPage = () => {
   const globalParams: { user: All } = useOutletContext();

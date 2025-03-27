@@ -1,24 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import MainLayout from "./layouts/MainLayout";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/auth/LoginPage";
 import HomePage from "./pages/HomePage";
 import PrivateRoute from "./components/reusable/routes/PrivateRoute";
-import ProfilePage from "./pages/ProfilePage";
-import RegisterPage from "./pages/RegisterPage";
-import ChangeCredentialsPage from "./pages/ChangeCredentialsPage";
-import EditProfilePage from "./pages/EditProfilePage";
+import ProfilePage from "./pages/profile/ProfilePage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import ChangeCredentialsPage from "./pages/edit/ChangeCredentialsPage";
+import EditProfilePage from "./pages/edit/EditProfilePage";
 import AdminRoute from "./components/reusable/routes/AdminRoute";
-import UserPage from "./pages/UserPage";
+import UserPage from "./pages/profile/UserPage";
 import DoctorRoute from "./components/reusable/routes/DoctorRoute";
-import PatientPage from "./pages/PatientPage";
-import AddRecordPage from "./pages/AddRecordPage";
-import EditRecordPage from "./pages/EditRecordPage";
-import DoctorRegisterPage from "./pages/DoctorRegisterPage";
-import EditDoctorPage from "./pages/EditDoctorPage";
-import BookAppointmentPage from "./pages/BookAppointmentPage";
+import PatientPage from "./pages/profile/PatientPage";
+import AddRecordPage from "./pages/post/AddRecordPage";
+import EditRecordPage from "./pages/edit/EditRecordPage";
+import DoctorRegisterPage from "./pages/auth/DoctorRegisterPage";
+import EditDoctorPage from "./pages/edit/EditDoctorPage";
+import BookAppointmentPage from "./pages/post/BookAppointmentPage";
 import NotAdminRoute from "./components/reusable/routes/NotAdminRoute";
-import AdminRegisterPage from "./pages/AdminRegisterPage";
+import AdminRegisterPage from "./pages/auth/AdminRegisterPage";
 
 const App = () => {
   const router = createBrowserRouter([

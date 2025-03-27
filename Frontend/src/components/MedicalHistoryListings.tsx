@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { All } from "../roles/All";
-
 import Listings from "./reusable/Listings";
 import MedicalHistoryListing, {
   MedicalHistoryType,
-} from "./MedicalHistoryListing";
+} from "./listing/MedicalHistoryListing";
 import { Patient } from "../roles/Patient";
 
 const MedicalHistoryListings = ({

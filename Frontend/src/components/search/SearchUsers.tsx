@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-import SearchForm from "./forms/SearchForm";
-
-import UserListing from "./UserListingPreview";
-import { UserType } from "./UserListings";
-
-import ArrowDownFill from "./reusable/icons/ArrowDownFill";
-import ArrowUpFill from "./reusable/icons/ArrowUpFill";
-import { getId } from "../services/session";
+import SearchForm from "../reusable/forms/SearchForm";
+import UserListing from "../listing/UserListingPreview";
+import { UserType } from "../UserListings";
+import ArrowDownFill from "../reusable/icons/ArrowDownFill";
+import ArrowUpFill from "../reusable/icons/ArrowUpFill";
+import { getId } from "../../services/session";
 
 const SearchUsers = ({ data }: { data: UserType[] }) => {
   const [currentData, setCurrentData] = useState<UserType[]>([]);

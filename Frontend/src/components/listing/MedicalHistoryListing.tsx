@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Doctor } from "../roles/Doctor";
-import { getToken } from "../services/session";
+import { Doctor } from "../../roles/Doctor";
+import { getToken } from "../../services/session";
 import DoctorListingPreview from "./DoctorListingPreview";
-import { RegisterArgs } from "./forms/RegisterForm";
-import Button from "./reusable/Button";
-import GrayCard from "./reusable/GrayCard";
+import { RegisterArgs } from "../forms/RegisterForm";
+import Button from "../reusable/Button";
+import GrayCard from "../reusable/GrayCard";
 import { Link, useNavigate } from "react-router-dom";
 
 export type MedicalHistoryType = {

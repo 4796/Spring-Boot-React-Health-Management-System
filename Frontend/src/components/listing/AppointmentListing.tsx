@@ -1,14 +1,13 @@
 import { Link, useOutletContext } from "react-router-dom";
-
-import Button from "./reusable/Button";
+import Button from "../reusable/Button";
 import { useEffect, useState } from "react";
-import { Doctor } from "../roles/Doctor";
-import { getToken } from "../services/session";
-import { RegisterArgs } from "./forms/RegisterForm";
-import { Patient } from "../roles/Patient";
-import DoctorListingPreview from "./DoctorListingPreview";
-import GrayCard from "./reusable/GrayCard";
-import PatientListingPreview from "./PatientListingPreview";
+import { Doctor } from "../../roles/Doctor";
+import { getToken } from "../../services/session";
+import { RegisterArgs } from "../forms/RegisterForm";
+import { Patient } from "../../roles/Patient";
+import DoctorListingPreview from "../listing/DoctorListingPreview";
+import GrayCard from "../reusable/GrayCard";
+import PatientListingPreview from "../listing/PatientListingPreview";
 
 export type AppointmentSuggestions = string[];
 

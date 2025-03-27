@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import Container from "../components/reusable/Container";
-import LoginForm from "../components/forms/LoginForm";
-import { login } from "../services/auth";
+import Container from "../../components/reusable/Container";
+import LoginForm from "../../components/forms/LoginForm";
+import { login } from "../../services/auth";
 import { useEffect, useState } from "react";
-import Spinner from "../components/reusable/Spinner";
-import { isLoggedIn } from "../services/session";
+import Spinner from "../../components/reusable/Spinner";
+import { isLoggedIn } from "../../services/session";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(true);

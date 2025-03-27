@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-
-import { RegisterArgs } from "../components/forms/RegisterForm";
-import Container from "../components/reusable/Container";
-import Spinner from "../components/reusable/Spinner";
-
-import { Doctor } from "../roles/Doctor";
-import { getToken } from "../services/session";
-import EditDoctorForm from "../components/forms/EditDoctorForm";
-import { Admin } from "../roles/Admin";
-import H1 from "../components/reusable/h/H1";
+import { RegisterArgs } from "../../components/forms/RegisterForm";
+import Container from "../../components/reusable/Container";
+import Spinner from "../../components/reusable/Spinner";
+import { Doctor } from "../../roles/Doctor";
+import { getToken } from "../../services/session";
+import EditDoctorForm from "../../components/forms/EditDoctorForm";
+import { Admin } from "../../roles/Admin";
+import H1 from "../../components/reusable/h/H1";
 
 const EditDoctorPage = () => {
   const [loading, setLoading] = useState<boolean>(true);

@@ -1,20 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../reusable/Button";
-
-import { FormEvent, useRef, useState } from "react";
-import { MedicalHistoryType } from "../MedicalHistoryListing";
+import { FormEvent, useState } from "react";
+import { MedicalHistoryType } from "../listing/MedicalHistoryListing";
 import { getId } from "../../services/session";
 import { toast } from "react-toastify";
+import MyForm from "../reusable/forms/MyForm";
 
-// export type MedicalHistoryType = {
-//   id?: number;
-//   patientId: number;
-//   doctorId: number;
-//   diagnosis: string;
-//   treatment: string;
-//   medications: string;
-//   recordDate: string;
-// };
 const RecordForm = ({
   patientId,
   oldArgs,
@@ -36,12 +26,7 @@ const RecordForm = ({
   const [medications, setMedications] = useState<string>(
     oldArgs?.medications ? oldArgs.medications : ""
   );
-  const formRef = useRef<HTMLFormElement>(null);
-  const handleManualSubmit = () => {
-    if (formRef.current) {
-      formRef.current.requestSubmit();
-    }
-  };
+
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -66,7 +51,11 @@ const RecordForm = ({
   };
 
   return (
-    <form ref={formRef} onSubmit={submitForm} className={className}>
+    <MyForm
+      submitText={oldArgs ? "Change" : "Add"}
+      onSubmit={submitForm}
+      className={className}
+    >
       <div>
         <label htmlFor="diagnosis">Diagnosis: </label>
         <input
@@ -100,23 +89,7 @@ const RecordForm = ({
           required
         />
       </div>
-      <div className="flex justify-between">
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-          style="DANGER"
-        >
-          Cancel
-        </Button>
-        <div>
-          <Button onClick={handleManualSubmit} confirm={true} type="submit">
-            Confirm
-          </Button>
-        </div>
-      </div>
-    </form>
+    </MyForm>
   );
 };
 

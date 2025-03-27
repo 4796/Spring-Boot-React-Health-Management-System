@@ -1,4 +1,4 @@
-import { RegisterArgs } from "./forms/RegisterForm";
+import { RegisterArgs } from "../forms/RegisterForm";
 
 const PatientListingPreview = ({
   subjectData,
