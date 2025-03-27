@@ -15,7 +15,15 @@ const SearchDoctors = () => {
 
   useEffect(() => {
     globalParams.user.getDoctors().then((d) => {
-      setData(d ? d : []);
+      setData(
+        d
+          ? d.sort((a, b) => {
+              const specA = a.specialization || "";
+              const specB = b.specialization || "";
+              return specA > specB ? 1 : specA < specB ? -1 : 0;
+            })
+          : []
+      );
       setCurrentData(d ? d : []);
       setLoading(false);
     });
@@ -24,6 +32,7 @@ const SearchDoctors = () => {
   return (
     <div className="flex flex-col gap-4">
       <SearchForm
+        placeholder="Neurosurgeon"
         searchQuery={search}
         setSearchQuery={setSearch}
         submitForm={(e) => {
