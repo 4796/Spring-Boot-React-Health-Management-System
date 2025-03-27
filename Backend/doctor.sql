@@ -34,13 +34,13 @@ CREATE TABLE `doctor` (
 /*Data for the table `doctor` */
 
 insert  into `doctor`(`id`,`hire_date`,`name`,`phone_number`,`salary`,`specialization`,`image_url`) values 
-(132,'2025-03-07','Blagoje','543224321',15000,'cardiology','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m1.jpeg'),
-(133,'2025-03-07','Stanislav Binicki','5432',20000,'neurosurgeon','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m2.jpeg'),
-(134,'2025-03-07','Nemanja Ciric','3461036',10000,'neurosurgeon','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m3.jpeg'),
-(135,'2025-03-07','Lidija Pesic','3461036',10000,'Dermatologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f1.jpeg'),
-(136,'2025-03-07','Nestorovic','0656',9000,'pulmonologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/m4.jpeg'),
-(138,'2025-03-07','Jovana Jovanovic','0656242',10000,'Oncologist','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f3.jpeg'),
-(139,'2025-03-07','Bojana','06562423634635634265',5000,'Pediatrician','https://health-management-system-torage.s3.eu-north-1.amazonaws.com/doctorPhotos/f2.jpeg');
+(132,'2025-03-07','Blagoje Novakovic','543224321',15000,'cardiology','https://static.vecteezy.com/system/resources/thumbnails/026/375/249/small_2x/ai-generative-portrait-of-confident-male-doctor-in-white-coat-and-stethoscope-standing-with-arms-crossed-and-looking-at-camera-photo.jpg'),
+(133,'2025-03-07','Stanislav Binicki','5432',20000,'neurosurgeon','https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg'),
+(134,'2025-03-07','Nemanja Ciric','3461036',10000,'neurosurgeon','https://www.shutterstock.com/image-vector/male-doctors-white-medical-coats-260nw-2380152965.jpg'),
+(135,'2025-03-07','Lidija Pesic','3461036',10000,'Dermatologist','https://media.istockphoto.com/id/1372002650/photo/cropped-portrait-of-an-attractive-young-female-doctor-standing-with-her-arms-folded-in-the.jpg?s=612x612&w=0&k=20&c=o1QtStNsowOU0HSof6xQ_jZMglU8ZK565gHd655U6S4='),
+(136,'2025-03-07','Nestor Nestorovic','0656',9000,'pulmonologist','https://www.shutterstock.com/image-vector/male-doctor-smiling-happy-face-600nw-2481032615.jpg'),
+(138,'2025-03-07','Jovana Jovanovic','0656242',10000,'Oncologist','https://media.cnn.com/api/v1/images/stellar/prod/230217092727-02-us-black-doctors-shortage.jpg?c=original'),
+(139,'2025-03-07','Bojana Bojanic','06562423634635634265',5000,'Pediatrician','https://img.freepik.com/premium-vector/female-doctor-cartoon-character-with-stethoscope-vector-illustration-female-doctor-uniform_1142-72453.jpg');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
