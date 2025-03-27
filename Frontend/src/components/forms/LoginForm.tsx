@@ -43,7 +43,7 @@ const LoginForm = ({
 
   return (
     <form onSubmit={submitForm} className={className}>
-      <ToastContainer />
+      <ToastContainer className={"fixed"} />
       <input
         minLength={3}
         maxLength={20}

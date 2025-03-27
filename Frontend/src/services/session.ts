@@ -4,11 +4,18 @@ export const startSession = (token: string, role: Role, id: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("role", role);
   localStorage.setItem("id", `${id}`);
+  const expirationDate = Date.now() + 3600 * 1000;
+  localStorage.setItem("exp", `${expirationDate}`);
+  console.log(expirationDate);
 
-  localStorage.setItem("exp", `${Date.now() + 3600 * 1000}`);
-  console.log(Date.now() + (3600 - 10) * 1000);
+  setTimeout(() => {
+    destroySession();
+  }, expirationDate - Date.now());
 };
-
+export const getExpiration = (): number => {
+  const exp = Number(localStorage.getItem("exp"));
+  return exp ? exp : 0;
+};
 export const getToken = (): string => {
   const token = localStorage.getItem("token");
   return token ? token : "";

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { getId, getRole, getToken } from "../services/session";
+import { getExpiration, getId, getRole, getToken } from "../services/session";
 import Navbar from "../components/Navbar";
 import { Patient } from "../roles/Patient";
 import { Doctor } from "../roles/Doctor";
 import { All } from "../roles/All";
 import { Admin } from "../roles/Admin";
 import { ToastContainer } from "react-toastify";
-import Container from "../components/reusable/Container";
 
 const MainLayout = () => {
   let userObj: All | null = null;
@@ -32,17 +31,15 @@ const MainLayout = () => {
   }, [pathname]);
 
   const [user] = useState<All>(userObj);
-
+  // setInterval(() => {
+  //   console.log(getExpiration() - Date.now());
+  // }, 1000);
   return (
     <>
       <Navbar />
-      <Container styleCssOverride=" ">
-        <div className="relative">
-          <ToastContainer
-            className={"container max-w-[1000px] my-0 mx-auto absolute z-20"}
-          />
-        </div>
-      </Container>
+
+      <ToastContainer className={"fixed"} />
+
       <Outlet context={{ user }} />
     </>
   );

@@ -99,7 +99,9 @@ const RegisterForm = ({
   };
   return (
     <form ref={formRef} onSubmit={submitForm} className={className}>
-      {!registerDoctor && !registerAdmin && <ToastContainer />}
+      {!registerDoctor && !registerAdmin && (
+        <ToastContainer className={"fixed"} />
+      )}
       {!registerAdmin && (
         <>
           <input

@@ -59,7 +59,7 @@ const BookAppointmentForm = ({
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    if (data && data.length === 0) return;
     const appointment: AppointmentData = {
       appointmentTime: [date, time].join("T"),
       doctorId,
@@ -98,18 +98,27 @@ const BookAppointmentForm = ({
         max={getNextWeekMax()}
         required
       />
-      <select
-        onChange={(e) => {
-          setTime(e.target.value);
-          console.log(time);
-        }}
-        value={time}
-        required
-      >
-        {data?.map((time, i) => (
-          <option key={i}>{time}</option>
-        ))}
-      </select>
+      {data && data.length > 0 ? (
+        <select
+          onChange={(e) => {
+            setTime(e.target.value);
+            console.log(time);
+          }}
+          value={time}
+          required
+        >
+          {data?.map((time, i) => (
+            <option key={i}>{time}</option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type="text"
+          className="text-danger"
+          disabled
+          value={"All appointments are booked for this day."}
+        />
+      )}
 
       <div className="flex justify-between">
         <Button
@@ -121,11 +130,13 @@ const BookAppointmentForm = ({
         >
           Cancel
         </Button>
-        <div>
-          <Button type="submit" onClick={handleManualSubmit} confirm={true}>
-            Confirm
-          </Button>
-        </div>
+        {data && data.length > 0 && (
+          <div>
+            <Button type="submit" onClick={handleManualSubmit} confirm={true}>
+              Confirm
+            </Button>
+          </div>
+        )}
       </div>
     </form>
   );
