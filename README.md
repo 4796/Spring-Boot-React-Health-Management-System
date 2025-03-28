@@ -65,7 +65,7 @@ This application provides a seamless experience for patients, doctors, and admin
 
 3. **Run the backend**:
 
-   - Navigate to the backend folder and run the Java application.
+   - Navigate to the backend folder and run all Java applications.
    - Make sure all required dependencies are installed and the application is running.
 
 4. **Set up the frontend**:
@@ -87,5 +87,3 @@ This application provides a seamless experience for patients, doctors, and admin
      ```
 
 Once everything is set up, the application should be ready to use!
-
-This system simplifies medical appointment scheduling and patient management, making healthcare services more efficient and accessible. 🌍
