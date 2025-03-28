@@ -245,7 +245,7 @@ public class AppointmentService {
 		LocalDateTime datum=LocalDateTime.now();//nebitan dan, bitni sati
 		datum=datum.withHour(8).withMinute(0).withSecond(0).withNano(0);
 		List<String> lista=new LinkedList<String>();
-		LocalDateTime kraj=datum.withHour(13).withMinute(30);
+		LocalDateTime kraj=datum.withHour(14).withMinute(0);
 		while(true) {
 			String sat=""+datum.getHour();
 			if(sat.length()==1)
