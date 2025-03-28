@@ -3,6 +3,7 @@
 ## Overview
 
 This application provides a seamless experience for patients, doctors, and administrators to manage medical appointments, patient records, and user accounts efficiently.
+<br />
 The microservices architecture employs synchronous API communication with a reverse proxy managing client requests, security, and service abstraction.
 
 ## Features
@@ -39,7 +40,8 @@ The microservices architecture employs synchronous API communication with a reve
 - **Backend:** Spring Boot, MySQL, XAMPP
   - **MySQL** is used for the database.
   - **XAMPP** is used to run the MySQL and Apache servers.
-
+  - **JWT-based authentication** is used for authentication and security
+  - **RESTful API** is used for comunication
 ## Contributors
 
 - **Frontend:** Mateja Bogdanović [GitHub](https://github.com/matejabogdanovic) 💻
@@ -88,3 +90,26 @@ The microservices architecture employs synchronous API communication with a reve
      ```
 
 Once everything is set up, the application should be ready to use!
+
+
+
+# Program walk-through
+<div align="center">
+  
+### Log in:  <br/>
+<img src="https://drive.google.com/uc?id=1r_HihTc7dNEAAc0LdTyAHV70TG0kb8eB" height="30%" width="30%" alt="1"/>
+<br />
+<br />
+
+### Register:  <br/>
+<img src="https://drive.google.com/uc?id=1998dc4S1v3uvbj9aELQbXuzhrA_b4YyE" height="30%" width="30%" alt="1"/>
+<br />
+<br />
+
+### Patient dashboard:  <br/>
+<img src="https://drive.google.com/uc?id=1wWUitGQ8rF0CY6BLJ2BOr9cnE_TxXyQb" height="30%" width="30%" alt="1"/> <br />
+Patient can choose the doctor to make an appointment or cancel the appointment from the list
+<br />
+<br />
+
+</div>
