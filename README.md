@@ -66,7 +66,7 @@ This application provides a seamless experience for patients, doctors, and admin
 3. **Run the backend**:
 
    - Navigate to the backend folder and run all Java applications.
-   - Make sure all required dependencies are installed and the application is running.
+   - Make sure all required dependencies are installed and all the applications are running.
 
 4. **Set up the frontend**:
    - Navigate to the frontend folder:
