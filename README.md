@@ -3,6 +3,7 @@
 ## Overview
 
 This application provides a seamless experience for patients, doctors, and administrators to manage medical appointments, patient records, and user accounts efficiently.
+The microservices architecture employs synchronous API communication with a reverse proxy managing client requests, security, and service abstraction.
 
 ## Features
 
