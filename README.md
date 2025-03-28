@@ -25,7 +25,7 @@ This application provides a seamless experience for patients, doctors, and admin
 - Register new doctors and admins.
 - Update and manage doctor salaries.
 
-## Appointment Scheduling
+### Appointment Scheduling
 
 - Available from **8:00 AM to 2:00 PM** in **30-minute slots**.
 - Appointments can be booked **up to one week in advance**.
